@@ -140,7 +140,7 @@
                 
                 <div onclick="loadCase('pancreatic')" class="case-card p-3 rounded-lg border border-cyan-500/10 bg-cyan-950/20 hover:border-cyan-400/40 cursor-pointer transition-all mb-2">
                     <div class="flex justify-between items-center mb-1">
-                        <span class="text-xs font-bold text-white">Панкреатичен аденокарцином</span>
+                        <span data-i18n="case-pancreatic" class="text-xs font-bold text-white">Панкреатичен аденокарцином</span>
                         <span class="text-[9px] bg-red-500/10 text-red-400 border border-red-500/20 px-1 rounded">Stage IV</span>
                     </div>
                     <div class="text-[10px] text-gray-400 font-mono">ID: Patient_K-902 | TP53+/KRAS G12D</div>
@@ -148,7 +148,7 @@
 
                 <div onclick="loadCase('nsclc')" class="case-card p-3 rounded-lg border border-white/5 hover:border-cyan-400/40 cursor-pointer transition-all mb-2">
                     <div class="flex justify-between items-center mb-1">
-                        <span class="text-xs font-bold text-gray-300">Недребноклетъчен рак на б. дроб</span>
+                        <span data-i18n="case-nsclc" class="text-xs font-bold text-gray-300">Недребноклетъчен рак на б. дроб</span>
                         <span class="text-[9px] bg-orange-500/10 text-orange-400 border border-orange-500/20 px-1 rounded">Stage III</span>
                     </div>
                     <div class="text-[10px] text-gray-500 font-mono">ID: Patient_L-410 | EGFR L858R</div>
@@ -156,7 +156,7 @@
 
                 <div onclick="loadCase('breast')" class="case-card p-3 rounded-lg border border-white/5 hover:border-cyan-400/40 cursor-pointer transition-all">
                     <div class="flex justify-between items-center mb-1">
-                        <span class="text-xs font-bold text-gray-300">Инвазивен дуктален карцином</span>
+                        <span data-i18n="case-breast" class="text-xs font-bold text-gray-300">Инвазивен дуктален карцином</span>
                         <span class="text-[9px] bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 px-1 rounded">Stage II</span>
                     </div>
                     <div class="text-[10px] text-gray-500 font-mono">ID: Patient_B-112 | BRCA1- / HER2+</div>
@@ -190,11 +190,35 @@
                  <div class="flex items-center justify-between">
                      <span class="text-[9px] font-bold text-gray-500 tracking-widest uppercase">NEURAL LINK</span>
                      <span id="neural-link-status" class="text-[9px] font-black text-rose-500 font-mono tracking-widest uppercase flex items-center gap-1">
-                         <span class="inline-block w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse shadow-[0_0_6px_#ef4444]"></span> SEVERED
+                          <span class="inline-block w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse shadow-[0_0_6px_#ef4444]"></span> SEVERED
                      </span>
                  </div>
                  <div id="neural-link-mode" class="text-[8px] text-rose-400 font-mono uppercase text-right mt-1 tracking-wider">
-                     Emergency_Local_Mode (Offline)
+                      Emergency_Local_Mode (Offline)
+                 </div>
+
+                 <!-- Actionable Severed Alert Card -->
+                 <div id="neural-link-alert" class="mt-3 p-3 bg-rose-500/10 border border-rose-500/20 rounded-xl space-y-2 hidden">
+                     <div class="flex items-center gap-2 text-rose-400 font-black text-[9px] uppercase tracking-wider">
+                         <i data-lucide="alert-triangle" class="w-3.5 h-3.5 animate-pulse"></i> 
+                         <span data-i18n="alert-header">Изисква се Спешна Навигация</span>
+                     </div>
+                     <p data-i18n="alert-desc" class="text-[9px] text-gray-400 leading-normal">
+                         Невронната връзка е прекъсната. Криптографският Knox буфер (TEE) успешно изолира данните на пациента локално в терминала.
+                     </p>
+                     <div class="flex flex-col gap-1">
+                         <div class="text-[8px] text-cyan-400 font-bold flex items-center gap-1">
+                             <span class="w-1 h-1 rounded-full bg-cyan-400"></span>
+                             <span data-i18n="alert-step1">1. Използвайте локално симулираните онко-модели.</span>
+                         </div>
+                         <div class="text-[8px] text-cyan-400 font-bold flex items-center gap-1">
+                             <span class="w-1 h-1 rounded-full bg-cyan-400"></span>
+                             <span data-i18n="alert-step2">2. Проверете локалната Ryzen IPC мрежа.</span>
+                         </div>
+                     </div>
+                     <button onclick="retryNeuralConnection()" class="w-full py-1 bg-rose-500/20 border border-rose-500/40 text-[9px] font-black uppercase text-rose-300 rounded hover:bg-rose-500 hover:text-black transition-all">
+                         <span data-i18n="alert-retry">Опитай повторно свързване</span>
+                     </button>
                  </div>
              </div>
         </div>
@@ -204,10 +228,10 @@
     <main class="flex-grow p-8 overflow-y-auto z-10 custom-scroll flex flex-col justify-between">
         
         <!-- TOP HUD SUMMARY BAR (Always Visible) -->
-        <div class="grid grid-cols-4 gap-6 mb-8 shrink-0">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 shrink-0">
             <div class="glass-panel p-5 rounded-2xl border-l-4 border-cyan-400 flex items-center justify-between">
                 <div>
-                    <div class="text-gray-400 text-[10px] font-bold uppercase mb-1 tracking-widest flex items-center gap-1.5">
+                    <div data-i18n="card-tumor-mass" class="text-gray-400 text-[9px] sm:text-[10px] font-bold uppercase mb-1 tracking-widest flex items-center gap-1.5">
                         <i data-lucide="heart-pulse" class="w-3.5 h-3.5 text-cyan-400"></i> Tumor Mass Index
                     </div>
                     <div id="metric-tumor-mass" class="text-3xl font-black text-white glow-cyan tracking-tight">84.2%</div>
@@ -219,7 +243,7 @@
 
             <div class="glass-panel p-5 rounded-2xl border-l-4 border-emerald-400 flex items-center justify-between">
                 <div>
-                    <div class="text-gray-400 text-[10px] font-bold uppercase mb-1 tracking-widest flex items-center gap-1.5">
+                    <div data-i18n="card-apoptosis" class="text-gray-400 text-[9px] sm:text-[10px] font-bold uppercase mb-1 tracking-widest flex items-center gap-1.5">
                         <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i> Apoptosis Velocity
                     </div>
                     <div id="metric-apoptosis-velocity" class="text-3xl font-black text-white glow-green tracking-tight">12.4%</div>
@@ -231,7 +255,7 @@
 
             <div class="glass-panel p-5 rounded-2xl border-l-4 border-purple-400 flex items-center justify-between">
                 <div>
-                    <div class="text-gray-400 text-[10px] font-bold uppercase mb-1 tracking-widest flex items-center gap-1.5">
+                    <div data-i18n="card-mutation" class="text-gray-400 text-[9px] sm:text-[10px] font-bold uppercase mb-1 tracking-widest flex items-center gap-1.5">
                         <i data-lucide="dna" class="w-3.5 h-3.5 text-purple-400"></i> Mutation Correction
                     </div>
                     <div id="metric-mutation-correction" class="text-3xl font-black text-white tracking-tight text-purple-400">0.00%</div>
@@ -243,7 +267,7 @@
 
             <div class="glass-panel p-5 rounded-2xl border-l-4 border-rose-500 flex items-center justify-between">
                 <div>
-                    <div class="text-gray-400 text-[10px] font-bold uppercase mb-1 tracking-widest flex items-center gap-1.5">
+                    <div data-i18n="card-immune" class="text-gray-400 text-[9px] sm:text-[10px] font-bold uppercase mb-1 tracking-widest flex items-center gap-1.5">
                         <i data-lucide="flame" class="w-3.5 h-3.5 text-rose-500"></i> Immune Infiltration
                     </div>
                     <div id="metric-immune-infiltration" class="text-3xl font-black text-white tracking-tight text-rose-400">4.12%</div>
@@ -897,7 +921,7 @@
                         <div class="p-3 bg-amber-950/20 rounded-lg border border-amber-500/20">
                             <div class="text-[10px] text-amber-400 uppercase font-mono tracking-wider mb-1">HL7 FHIR API Сървър</div>
                             <div class="text-sm font-bold text-white">https://fhir.aeterna.site/r4</div>
-                            <div class="text-[9px] text-emerald-400 mt-1 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Active Connection</div>
+                                    <div class="text-[9px] text-emerald-400 mt-1 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Active Connection</div>
                         </div>
 
                         <div class="space-y-3">
@@ -950,9 +974,6 @@
     <script>
         lucide.createIcons();
 
-        // ==========================================
-        // DYNAMIC LOCALIZATION ENGINE (BG / EN)
-        // ==========================================
         let currentLanguage = 'bg';
 
         const i18n = {
@@ -962,38 +983,43 @@
                 "quick-sub": "Интуитивно ръководство за оценка на онкологични случаи и автоматизиране на терапевтични протоколи",
                 "quick-badge": "Готов за клинична диагностика",
                 
-                // Step 1
+                "case-pancreatic": "Панкреатичен аденокарцином",
+                "case-nsclc": "Недребноклетъчен рак на б. дроб",
+                "case-breast": "Инвазивен дуктален карцином",
+
+                "alert-header": "Изисква се Спешна Навигация",
+                "alert-desc": "Невронната връзка е прекъсната. Knox буферът (TEE) успешно изолира локалните пациентски данни.",
+                "alert-step1": "1. Използвайте локално симулираните онко-модели.",
+                "alert-step2": "2. Проверете локалната Ryzen IPC мрежа.",
+                "alert-retry": "Опитай повторно свързване",
+
+                "card-tumor-mass": "Туморен Индекс",
+                "card-apoptosis": "Скорост на Апоптоз",
+                "card-mutation": "ДНК Корекция",
+                "card-immune": "Имунен Инфилтрат",
+                
                 "step1-title": "Избор на Пациент",
                 "step1-desc": "Кликнете на някой от пациентските профили в секция <strong>\"Clinical Case Profiles\"</strong> (вляво). Това автоматично ще зареди реалните биомаркери и геномна структура на пациента.",
-                
-                // Step 2
                 "step2-title": "Дозиране (OncoCalc)",
                 "step2-desc": "Отидете на десния панел, таб <strong>\"OncoCalc (Дозиране)\"</strong>. Въведете туморния обем и биомаркерите. Системата автоматично ще изчисли точната терапевтична доза.",
-                
-                // Step 3
                 "step3-title": "Сценарен Тест",
                 "step3-desc": "Изберете клиничен сценарий от долния <strong>\"Сценарен Симулационен Терминал\"</strong> (Chemo, AP-90 или Codon Repair), за да видите как се променя симулацията в реално време.",
-                
-                // Step 4
                 "step4-title": "Таргетиран Апоптоз",
                 "step4-desc": "Натиснете светещия бутон <strong>\"Инициирай Таргетиран Апоптоз\"</strong> вдясно. Наблюдавайте на живо в центъра как Т-клетките атакуват и унищожават тумора.",
                 
-                // Tumor Simulator
                 "sim-title": "Многомащабен Симулатор на Туморна Микросреда",
                 "legend-healthy": "Здрава Тъкан",
                 "legend-cancer": "Карцином",
                 "legend-tcell": "Т-Лимфоцити",
-                "label-dose": "Концентрация на лекарство (Drug Dose)",
-                "label-immune": "Имунна реакция (T-Cell Activation)",
-                "label-vegf": "Нива на ангиогенеза (Anti-VEGF)",
+                "label-dose": "Концентрация на лекарство",
+                "label-immune": "Имунна реакция",
+                "label-vegf": "Нива на ангиогенеза",
                 
-                // Right Panel
                 "analysis-title": "Терапевтичен Анализ",
                 "tab-biomarkers-lbl": "Биомаркери",
-                "tab-moa-lbl": "Механизъм (MoA)",
-                "tab-oncocalc-lbl": "OncoCalc (Дозиране)",
+                "tab-moa-lbl": "Механизъм",
+                "tab-oncocalc-lbl": "Дозиране (OncoCalc)",
                 
-                // Biomarkers tab
                 "regimen-lbl": "Терапевтичен Режим",
                 "no-drug-lbl": "Няма въведено лекарство. Използвайте Drug Docking.",
                 "awaiting-lbl": "VHT ядрото очаква инжектиране на инхибитор в реално време.",
@@ -1003,7 +1029,6 @@
                 "ki67-lbl": "Пролиферационен индекс Ki-67",
                 "vegf-lbl": "Ангиогенезен фактор VEGFA",
                 
-                // MoA tab
                 "moa-stages-lbl": "Етапи на клетъчна лиза и разрушаване",
                 "moa-s1-title": "1. Геномна поправка (TP53)",
                 "moa-s1-desc": "Възстановяване на дивия тип p53 за реактивиране на апоптозната машина.",
@@ -1016,13 +1041,12 @@
                 "moa-s5-title": "5. Т-клетъчна лиза (Cytolysis)",
                 "moa-s5-desc": "Цитотоксичните Т-лимфоцити разграждат и поглъщат клетъчните остатъци.",
                 
-                // OncoCalc tab
                 "oncocalc-title": "Мултимащабен Онкологичен Калкулатор",
                 "calc-vol-lbl": "Туморен Обем (Tumor Volume, cm³)",
                 "calc-pdl1-lbl": "PD-L1 Експресия (%)",
-                "calc-ki67-lbl": "Ki-67 Индекс (%)",
+                "calc-ki67-lbl": "Ki-67 Index (%)",
                 "calc-kras-lbl": "KRAS Мутация",
-                "calc-tp53-lbl": "TP53 Статус",
+                "calc-tp53-lbl": "TP53 Status",
                 "calc-btn": "Изчисли Оптимална Терапия",
                 "calc-res-lbl": "Резултат от изчислението",
                 "calc-ligand": "Препоръчителен Лиганд:",
@@ -1032,11 +1056,9 @@
                 "calc-note": "* Изчислено въз основа на многомащабната тъканна симулация. Лигандите се свързват с точност ΔG в реално време.",
                 "apply-btn": "Приложи в симулацията",
                 
-                // Big Actions
                 "action-apoptosis": "Инициирай Таргетиран Апоптоз",
                 "action-restart": "Рестартирай Симулационния Модел",
 
-                // Sidebar items that had BG parts
                 "nav-control": "Клиничен Контрол",
                 "nav-cases": "Пациентски Профили"
             },
@@ -1046,38 +1068,43 @@
                 "quick-sub": "Intuitive guide for oncological case assessment and automated therapeutic protocols",
                 "quick-badge": "Ready for Clinical Diagnostics",
                 
-                // Step 1
+                "case-pancreatic": "Pancreatic Adenocarcinoma",
+                "case-nsclc": "NSCLC (Lung Cancer)",
+                "case-breast": "Invasive Ductal Carcinoma",
+
+                "alert-header": "Emergency Navigation Required",
+                "alert-desc": "Neural Link severed. Knox Cryptographic buffer (TEE) successfully isolated patient data local to terminal.",
+                "alert-step1": "1. Run local simulated oncology models.",
+                "alert-step2": "2. Verify local Ryzen IPC web array.",
+                "alert-retry": "Attempt Reconnection",
+
+                "card-tumor-mass": "Tumor Index",
+                "card-apoptosis": "Apoptosis Velocity",
+                "card-mutation": "Mutation Correction",
+                "card-immune": "Immune Infiltration",
+
                 "step1-title": "Patient Selection",
                 "step1-desc": "Click on any patient profile in the <strong>\"Clinical Case Profiles\"</strong> section (left). This automatically loads their biomarkers and genomic structure.",
-                
-                // Step 2
                 "step2-title": "Dosing (OncoCalc)",
-                "step2-desc": "Go to the right panel, <strong>\"OncoCalc (Dosing)\"</strong> tab. Input tumor volume and biomarkers. The system will automatically compute the precise dose.",
-                
-                // Step 3
+                "step2-desc": "Go to the right panel, <strong>\"OncoCalc (Dosing)\"</strong> tab. Input the tumor volume and biomarkers. The system will automatically calculate the exact therapeutic dose.",
                 "step3-title": "Scenario Test",
-                "step3-desc": "Select a clinical scenario from the lower <strong>\"Scenario Simulation Terminal\"</strong> (Chemo, AP-90, or Codon Repair) to view real-time changes.",
-                
-                // Step 4
+                "step3-desc": "Select a clinical scenario from the lower <strong>\"Scenario Simulation Terminal\"</strong> (Chemo, AP-90 or Codon Repair) to view how the simulation shifts in real-time.",
                 "step4-title": "Targeted Apoptosis",
-                "step4-desc": "Click the glowing <strong>\"Initiate Targeted Apoptosis\"</strong> button on the right. Observe live in the center as T-cells attack and destroy the tumor.",
+                "step4-desc": "Click the glowing <strong>\"Initiate Targeted Apoptosis\"</strong> button on the right. Observe live in the center how T-cells attack and destroy the tumor.",
                 
-                // Tumor Simulator
                 "sim-title": "Multiscale Tumor Microenvironment Simulator",
                 "legend-healthy": "Healthy Tissue",
                 "legend-cancer": "Carcinoma",
                 "legend-tcell": "T-Lymphocytes",
-                "label-dose": "Drug Concentration (Drug Dose)",
-                "label-immune": "Immune Response (T-Cell Activation)",
-                "label-vegf": "Angiogenesis Levels (Anti-VEGF)",
+                "label-dose": "Drug Concentration",
+                "label-immune": "Immune Response",
+                "label-vegf": "Angiogenesis Levels",
                 
-                // Right Panel
                 "analysis-title": "Therapeutic Analysis",
                 "tab-biomarkers-lbl": "Biomarkers",
                 "tab-moa-lbl": "Mechanism (MoA)",
                 "tab-oncocalc-lbl": "OncoCalc (Dosing)",
                 
-                // Biomarkers tab
                 "regimen-lbl": "Therapeutic Regimen",
                 "no-drug-lbl": "No drug administered. Use Drug Docking.",
                 "awaiting-lbl": "VHT core is awaiting live inhibitor injection.",
@@ -1134,18 +1161,41 @@
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (dict[key]) {
-                    if (el.innerHTML.includes('<') && !el.tagName.match(/^(BUTTON|SPAN|H1|H2|H3)$/i)) {
-                        el.innerHTML = dict[key];
+                    const icon = el.querySelector('i') || el.querySelector('svg');
+                    if (icon) {
+                        const iconHtml = icon.outerHTML;
+                        el.innerHTML = iconHtml + " " + dict[key];
                     } else {
-                        el.innerText = dict[key];
+                        el.innerHTML = dict[key];
                     }
                 }
             });
+
+            // Update active case elements
+            const data = cases[activeCaseKey];
+            if (data) {
+                const isBg = lang === 'bg';
+                const p53Text = isBg ? data.p53 : (data.p53En || data.p53);
+                const krasText = isBg ? data.kras : (data.krasEn || data.kras);
+                
+                const p53El = document.getElementById('insight-p53');
+                if (p53El) {
+                    p53El.innerText = p53Text;
+                    p53El.className = (p53Text.includes("Мутирал") || p53Text.includes("Mutated")) ? "font-bold text-rose-500" : "font-bold text-emerald-400";
+                }
+                
+                const krasEl = document.getElementById('insight-kras');
+                if (krasEl) {
+                    krasEl.innerText = krasText;
+                    krasEl.className = (krasText.includes("Свръхактивна") || krasText.includes("Hyperactive")) ? "font-bold text-rose-500" : "font-bold text-emerald-400";
+                }
+            }
             
             // Special update for lang toggle display text
             const indicator = document.getElementById('lang-indicator');
             if (indicator) indicator.innerText = dict['lang-indicator'];
             
+            if (window.lucide) window.lucide.createIcons();
             log(`[SYSTEM] Language set to: ${lang.toUpperCase()}`, "text-cyan-400 font-bold");
         }
 
@@ -1157,8 +1207,6 @@
                 setLanguage('bg');
             }
         }
-
-        // ==========================================
         // NEURAL LINK REAL-TIME IPC BRIDGE CLIENT
         // ==========================================
         let isEmergencyLocalMode = false; // Start as false so trigger function runs on sever
@@ -1185,6 +1233,9 @@
                     linkModeEl.innerText = "Sovereign_Realtime_Mode (Online)";
                     linkModeEl.className = "text-[8px] text-emerald-400 font-mono uppercase text-right mt-1 tracking-wider";
                 }
+
+                const alertCard = document.getElementById('neural-link-alert');
+                if (alertCard) alertCard.classList.add('hidden');
             };
 
             ws.onmessage = (event) => {
@@ -1252,6 +1303,15 @@
             if (entropyEl) entropyEl.innerText = "0.0000 LwaS";
             if (computeEl) computeEl.innerText = "4.10 PFLOPS";
             if (computeProgress) computeProgress.style.width = "41%";
+
+            const alertCard = document.getElementById('neural-link-alert');
+            if (alertCard) alertCard.classList.remove('hidden');
+        }
+
+        function retryNeuralConnection() {
+            log("[IPC] Manual reconnection initiated by clinician...", "text-amber-400 font-bold");
+            isEmergencyLocalMode = false;
+            connectNeuralLink();
         }
 
         // Start connection sequence
@@ -1599,6 +1659,7 @@
         const cases = {
             pancreatic: {
                 title: "Панкреатичен аденокарцином",
+                titleEn: "Pancreatic Adenocarcinoma",
                 stage: "Stage IV",
                 id: "Patient_K-902",
                 originalDna: "ATCGGGCTAGCTAGCTAG <span class='bg-rose-500/20 text-rose-400 border border-rose-500/40 px-1 rounded'>CCT</span> TGATCGATCGATCGATCGATCGATCGATC",
@@ -1607,7 +1668,9 @@
                 apoptosis: 12.4,
                 immune: 4.12,
                 p53: "Мутирал (Неактивен)",
+                p53En: "Mutated (Inactive)",
                 kras: "Свръхактивна (G12D)",
+                krasEn: "Hyperactive (G12D)",
                 ki67: "85.0%",
                 vegf: "780 pg/mL",
                 json: `{
@@ -1650,6 +1713,7 @@
             },
             nsclc: {
                 title: "Недребноклетъчен рак на б. дроб",
+                titleEn: "NSCLC (Lung Cancer)",
                 stage: "Stage III",
                 id: "Patient_L-410",
                 originalDna: "CGATCGATCGATCGATCG <span class='bg-rose-500/20 text-rose-400 border border-rose-500/40 px-1 rounded'>GAT</span> CGATCGATCGATCGATCGATCGATCGATC",
@@ -1658,7 +1722,9 @@
                 apoptosis: 18.2,
                 immune: 8.50,
                 p53: "Див тип (Активен)",
+                p53En: "Wildtype (Active)",
                 kras: "Нормална пътека",
+                krasEn: "Normal Pathway",
                 ki67: "52.0%",
                 vegf: "410 pg/mL",
                 json: `{
@@ -1693,6 +1759,7 @@
             },
             breast: {
                 title: "Инвазивен дуктален карцином",
+                titleEn: "Invasive Ductal Carcinoma",
                 stage: "Stage II",
                 id: "Patient_B-112",
                 originalDna: "TGCATGCATGCATGCATG <span class='bg-rose-500/20 text-rose-400 border border-rose-500/40 px-1 rounded'>AAA</span> TGCATGCATGCATGCATGCATGCATGCATG",
@@ -1701,7 +1768,9 @@
                 apoptosis: 24.1,
                 immune: 12.8,
                 p53: "Див тип (Активен)",
+                p53En: "Wildtype (Active)",
                 kras: "Нормална пътека",
+                krasEn: "Normal Pathway",
                 ki67: "34.0%",
                 vegf: "280 pg/mL",
                 json: `{
@@ -1734,7 +1803,10 @@
             }
         };
 
+        let activeCaseKey = 'pancreatic';
+
         function loadCase(caseKey) {
+            activeCaseKey = caseKey;
             const data = cases[caseKey];
             simState.tumorMass = data.tumorMass;
             simState.apoptosisRate = data.apoptosis;
@@ -1754,10 +1826,14 @@
             document.getElementById('dna-corrected').innerHTML = data.correctedDna;
 
             // Details updates
-            document.getElementById('insight-p53').innerText = data.p53;
-            document.getElementById('insight-p53').className = data.p53.includes("Мутирал") ? "font-bold text-rose-500" : "font-bold text-emerald-400";
-            document.getElementById('insight-kras').innerText = data.kras;
-            document.getElementById('insight-kras').className = data.kras.includes("Свръхактивна") ? "font-bold text-rose-500" : "font-bold text-emerald-400";
+            const isBg = currentLanguage === 'bg';
+            const p53Text = isBg ? data.p53 : (data.p53En || data.p53);
+            const krasText = isBg ? data.kras : (data.krasEn || data.kras);
+
+            document.getElementById('insight-p53').innerText = p53Text;
+            document.getElementById('insight-p53').className = (p53Text.includes("Мутирал") || p53Text.includes("Mutated")) ? "font-bold text-rose-500" : "font-bold text-emerald-400";
+            document.getElementById('insight-kras').innerText = krasText;
+            document.getElementById('insight-kras').className = (krasText.includes("Свръхактивна") || krasText.includes("Hyperactive")) ? "font-bold text-rose-500" : "font-bold text-emerald-400";
             document.getElementById('insight-ki67').innerText = data.ki67;
             document.getElementById('insight-vegf').innerText = data.vegf;
 
@@ -1774,7 +1850,8 @@
 
             // Reset simulation canvas with new sizes
             initSimulationData();
-            log(`[PATIENT] Loaded clinical case study: ${data.title} (${data.id})`, "text-amber-400 font-bold");
+            const caseTitle = isBg ? data.title : data.titleEn;
+            log(`[PATIENT] Loaded clinical case study: ${caseTitle} (${data.id})`, "text-amber-400 font-bold");
             switchAnalysisTab('biomarkers');
             resetMoAStepDOM();
         }

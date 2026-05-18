@@ -1,7 +1,10 @@
 # 🧬 CLINICAL SPECIFICATION & USER MANUAL: AETERNA-VHT COMPUTATIONAL ONCOLOGY HUD
 **Author**: Dimitar Prodromov (Architect) & Neural QA Nexus  
-**Status**: VERITAS VALIDATED // PHASE 1 ENTERPRISE FOUNDATION DEPLOYED  
+**Status**: VERITAS VALIDATED // SUBMITTED TO EUROPEAN COMMISSION  
+**Horizon Europe Cancer Mission (RIA)** — Proposal ID: `101347293` (Requested contribution: **€9.85M**)  
+**EIC Accelerator (2026)** — Proposal ID: `101327948` (Requested scale-up budget: **€7.5M**)  
 **System Target**: Ryzen 7000 Substrate | 24GB RAM | Zero Entropy Execution  
+
 
 ---
 
