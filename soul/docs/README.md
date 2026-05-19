@@ -13,7 +13,7 @@
 ## 🌌 Sovereign Masterpiece Showcase
 Developed and signed by **Dimitar Prodromov (Architect)**.
 
-![Aeterna VHT Sovereign Masterpiece](https://raw.githubusercontent.com/papica777-eng/VIRTUAL-HUMAN-TWIN/main/docs/refined_purple_twins_signed.png)
+![Aeterna VHT Sovereign Masterpiece](https://raw.githubusercontent.com/papica777-eng/VIRTUAL-HUMAN-TWIN/main/soul/docs/refined_purple_twins_signed.png)
 
 *The official clinical-grade concept art of the AETERNA-VHT platform, visualizing the multi-scale biological twins in a Webb stellar void space environment, signed by the Sovereign Architect.*
 

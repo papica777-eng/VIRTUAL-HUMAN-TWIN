@@ -9,7 +9,7 @@
 [![Standard: HL7 / FHIR compliant](https://img.shields.io/badge/Standards-HL7_%2F_FHIR-cyan.svg)](#data-ingress-standards)
 
 
-![Aeterna VHT Sovereign Masterpiece](refined_purple_twins_signed.png)
+![Aeterna VHT Sovereign Masterpiece](https://raw.githubusercontent.com/papica777-eng/VIRTUAL-HUMAN-TWIN/main/soul/docs/refined_purple_twins_signed.png)
 
 *The official clinical-grade concept art of the AETERNA-VHT platform, visualizing the multi-scale biological twins in a Webb stellar void space environment, signed by the Sovereign Architect.*
 
