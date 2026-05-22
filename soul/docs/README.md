@@ -112,6 +112,15 @@ To enable seamless and legally-compliant hospital deployments, AETERNA-VHT align
 *   **Academic & RUO Deploys**: Distributed under a **Research Use Only (RUO)** license for clinical partners to run parallel simulations alongside active patient treatments without affecting direct care, bypassing initial trial bottlenecks.
 *   **Legacy HIS / PACS (DICOM) Ingress**: Incorporates the **Legacy Ingress Adaptor (LIA)** to query hospital PACS via DICOM and map older pipe-delimited HL7 v2 messages into standard, secure FHIR JSON Observation profiles locally on-premise (fully GDPR compliant).
 
+### 5. AURA Active Safeguard & Knox TEE Lockout (Layer 4)
+To guarantee patient safety during in-silico kinetic sweeps and automated therapeutic dosing, AETERNA-VHT incorporates the **AURA Active Safeguard (Layer 4)**. This closed-loop physiological validation module operates at runtime with absolute deterministic precision:
+*   **Composite Z-Score Verification:** Continuously tracks and calculates real-time patient homeostatic deviation for blood pH (Norm: 7.35–7.45) and Oxygen Saturation ($O_2$):
+    $$\text{pH}_{Z} = \frac{|\text{pH} - 7.40|}{0.05}$$
+    $$\text{O}_{2Z} = \frac{|\text{O}_2 - 97.5|}{2.5}$$
+    $$\text{Composite}_{Z} = \sqrt{\text{pH}_{Z}^2 + \text{O}_{2Z}^2}$$
+*   **3-Sigma (3.0σ) Threshold Enforcement:** If the physiological deviance exceeds the critical **`3.0σ`** boundary, the homeostatic watchdog immediately flags a critical exception.
+*   **Samsung Knox TEE Lockout:** Upon a 3.0σ breach, a hardware-anchored **TEE Lockout** command is cryptographically signed and issued via Samsung Knox APIs, instantly suspending all automated infusion pumps and physical actuators to prevent acute metabolic injury.
+
 ---
 
 ## 📁 Repository Directory Registry & Sovereign Source Separation

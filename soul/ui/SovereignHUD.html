@@ -795,7 +795,7 @@
             } else if (state.activeTab === "pillars") {
                 tabContent = `
                     <div style="display: flex; flex-direction: column; gap: 24px;">
-                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
                             <div class="glass-card ${state.emergencyMode ? 'emergency-card' : ''}">
                                 <div style="font-size: 0.75rem; color: var(--neon-blue); font-weight: 700; margin-bottom: 8px;">СТЪЛБ 1</div>
                                 <h3 style="font-size: 1.2rem; font-weight: 900; margin-bottom: 8px;">Фармакотерапевтичен Синхрон</h3>
@@ -817,6 +817,13 @@
                                     Моделиране на GLUT4 транслокацията при аеробни спортове. Превантивно 30% до 50% свиване на болуса за предотвратяване на хипогликемии.
                                 </p>
                             </div>
+                            <div class="glass-card ${state.emergencyMode ? 'emergency-card' : ''}">
+                                <div style="font-size: 0.75rem; color: var(--neon-pink); font-weight: 700; margin-bottom: 8px;">СТЪЛБ 4</div>
+                                <h3 style="font-size: 1.2rem; font-weight: 900; margin-bottom: 8px;">AURA Integrity Guard</h3>
+                                <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.6;">
+                                    Реалновремево изчисляване на Z-Score за pH и кислородно насищане. Превишаването на 3.0σ прага задейства TEE Knox lockout.
+                                </p>
+                            </div>
                         </div>
 
                         <div class="glass-card ${state.emergencyMode ? 'emergency-card' : ''}">
@@ -835,6 +842,19 @@ process CALCULATE_ICR(time_of_day: Time, base_icr: Decimal) -> Decimal {
         return base_icr * morning_cortisol_factor;
     }
     return base_icr;
+}
+
+// ═══ LAYER_4_AURA_SAFEGUARD: Физиологичен Z-Score контрол ═══
+process VERIFY_AURA_INTEGRITY(ph: Decimal, o2: Decimal) -> Boolean {
+    let ph_z = abs(ph - 7.40) / 0.05;
+    let o2_z = abs(o2 - 97.5) / 2.5;
+    let composite_z = sqrt(ph_z * ph_z + o2_z * o2_z);
+
+    if (composite_z > 3.0) {
+        tee_enforce_hardware_lockout(composite_z); // Samsung Knox TEE подпис
+        return false;
+    }
+    return true;
 }
                             </pre>
                         </div>
