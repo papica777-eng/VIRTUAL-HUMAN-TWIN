@@ -367,6 +367,19 @@
             oxygen: 98,
             zScore: 0.42,
             empathyAnomaly: false,
+            fesStimulationActive: false,
+            hebbianConfidence: 8.8,
+            bdnfLevel: 1.0,
+            glut4Upregulation: 1.0,
+            fesStatus: "STANDBY",
+            gaitPhase: 0,
+            catuskotiState: "SYNERGY",
+            fesActiveChannels: {
+                plantar: 0,
+                dorsiflex: 0,
+                quad: 0,
+                hamstring: 0
+            },
             logs: [
                 "[12:12:00] INIT: AETERNA VHT core online. Knox offline sandbox engaged.",
                 "[12:12:01] INGEST: Loaded 900 patient twins from Bulgaria 2015 national registry.",
@@ -460,7 +473,6 @@
         }
 
         function handleNeuralLinkToggle(e) {
-            // ДИРЕКТИВА: При прекъсване на Neural Link, SovereignHUD.tsx автоматически преминава в Emergency_Local_Mode, докато Knox не потвърди нов Heartbeat.
             state.neuralLinkConnected = e.checked;
             state.emergencyMode = !state.neuralLinkConnected;
             
@@ -480,7 +492,89 @@
             renderVanillaHUD();
         }
 
-        // SVG Render helpers
+        let gaitTimer = null;
+        function toggleGaitSimulation() {
+            if (state.fesStimulationActive) {
+                clearInterval(gaitTimer);
+                state.fesStimulationActive = false;
+                state.fesActiveChannels = { plantar: 0, dorsiflex: 0, quad: 0, hamstring: 0 };
+                state.fesStatus = "STANDBY";
+                addLogEntry("[FES_STOP] Спиране на closed-loop FES локомоцията.");
+                renderVanillaHUD();
+                return;
+            }
+
+            state.fesStimulationActive = true;
+            state.catuskotiState = "SYNERGY";
+            state.bdnfLevel = 1.0;
+            state.glut4Upregulation = 1.0;
+            addLogEntry("[FES_START] Иницииране на 4-канален Teslasuit локомоторен режим...");
+            
+            gaitTimer = setInterval(() => {
+                state.gaitPhase = (state.gaitPhase + 4) % 104;
+                if (state.gaitPhase >= 100) state.gaitPhase = 0;
+
+                const phase = state.gaitPhase;
+                if (phase < 60) {
+                    state.fesActiveChannels.plantar = 45.0 + Math.sin(phase / 10) * 5;
+                    state.fesActiveChannels.dorsiflex = 0;
+                    state.fesActiveChannels.quad = 0;
+                    state.fesActiveChannels.hamstring = 0;
+                    state.fesStatus = "STANCE_PHASE";
+                } else if (phase >= 60 && phase < 80) {
+                    state.fesActiveChannels.plantar = 0;
+                    state.fesActiveChannels.dorsiflex = 35.0 + Math.cos(phase / 5) * 4;
+                    state.fesActiveChannels.quad = 30.0 + Math.sin(phase / 4) * 3;
+                    state.fesActiveChannels.hamstring = 0;
+                    state.fesStatus = "SWING_PHASE";
+                } else {
+                    state.fesActiveChannels.plantar = 0;
+                    state.fesActiveChannels.dorsiflex = 35.0;
+                    state.fesActiveChannels.quad = 0;
+                    state.fesActiveChannels.hamstring = 25.0 + Math.sin(phase / 4) * 3;
+                    state.fesStatus = "SWING_PHASE";
+                }
+
+                if (state.bdnfLevel < 2.49) state.bdnfLevel += 0.05;
+                else state.bdnfLevel = 2.49;
+
+                if (state.glut4Upregulation < 1.47) state.glut4Upregulation += 0.02;
+                else state.glut4Upregulation = 1.47;
+
+                if (!state.curedState) {
+                    currentGlucose = currentGlucose.map(item => {
+                        let newVal = item.val - 0.05;
+                        if (newVal < 5.8) newVal = 5.8;
+                        return { val: parseFloat(newVal.toFixed(2)) };
+                    });
+                    addLogEntry(`[AMPK_GLUT4] Инсулин-независимо изчистване: GLUT4 уп-регулация = ${state.glut4Upregulation.toFixed(2)}x`);
+                }
+
+                renderVanillaHUD();
+            }, 150);
+        }
+
+        function triggerFesSpasticityLockout() {
+            if (!state.fesStimulationActive) {
+                toggleGaitSimulation();
+            }
+
+            state.fesStimulationActive = false;
+            clearInterval(gaitTimer);
+            
+            state.fesActiveChannels.plantar = 42.0;
+            state.fesActiveChannels.dorsiflex = 35.0;
+            state.fesActiveChannels.quad = 15.0;
+            state.fesActiveChannels.hamstring = 20.0;
+            state.catuskotiState = "SPASTICITY_LOCKOUT";
+            
+            addLogEntry("[WARNING] TISSUE_MOTOR_RESOLVER: Засечено нефизиологично повишаване на Dorsiflexor до 35.0 mA при опора (0.48s)!");
+            addLogEntry("[CHRONOS_LOCKOUT] CHRONOS LOOK-AHEAD: Засечен тренд на антагонистичен ко-спазъм. Изключване на FES каналите!");
+            addLogEntry("[KNOX_SAFETY] Safe-Mode:engage. PID gains preemptively damped to kp=0.42, kd=0.21.");
+            
+            renderVanillaHUD();
+        }
+
         const width = 600;
         const height = 240;
         const padding = 35;
@@ -505,7 +599,6 @@
             return `${path} L ${last.x.toFixed(1)} ${height - padding} L ${first.x.toFixed(1)} ${height - padding} Z`;
         }
 
-        // Render function mapping pure HTML
         function renderVanillaHUD() {
             const root = document.getElementById("app-root");
             if (!root) return;
@@ -521,6 +614,9 @@
                         </button>
                         <button class="tab-btn ${state.activeTab === 'pillars' ? 'active' : ''}" onclick="switchTab('pillars')">
                             <i data-lucide="shield" class="w-4 h-4 inline-block mr-2 text-blue-400"></i>Трите Стълба на Сигурност
+                        </button>
+                        <button class="tab-btn ${state.activeTab === 'fes' ? 'active' : ''}" onclick="switchTab('fes')">
+                            <i data-lucide="activity" class="w-4 h-4 inline-block mr-2 text-pink-400"></i>BCI-FES Невро-Локомоция
                         </button>
                     </div>
                     <div>
@@ -860,6 +956,171 @@ process VERIFY_AURA_INTEGRITY(ph: Decimal, o2: Decimal) -> Boolean {
                         </div>
                     </div>
                 `;
+            } else if (state.activeTab === "fes") {
+                // Determine channel percentages
+                const plantarPercent = (state.fesActiveChannels.plantar / 50.0) * 100;
+                const dorsiflexPercent = (state.fesActiveChannels.dorsiflex / 50.0) * 100;
+                const quadPercent = (state.fesActiveChannels.quad / 50.0) * 100;
+                const hamstringPercent = (state.fesActiveChannels.hamstring / 50.0) * 100;
+
+                tabContent = `
+                    <div class="dashboard-grid">
+                        <!-- Left Panel: 4-Channel Teslasuit Locomotion Controller -->
+                        <div class="glass-card glow-purple ${state.emergencyMode ? 'emergency-card' : ''}" style="display: flex; flex-direction: column; gap: 24px;">
+                            <div>
+                                <h2 style="font-size: 1.5rem; font-weight: 900; display: flex; align-items: center; gap: 10px;">
+                                    <i data-lucide="activity" class="w-5 h-5 inline-block mr-2 text-pink-400"></i>4-Канален Teslasuit Локомоторен Режим
+                                </h2>
+                                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 4px;">
+                                    Динамично картографиране на биоелектрическа стимулация за периферно мускулно активиране и Hebbian pairing.
+                                </p>
+                            </div>
+
+                            <!-- Channel Progress Bars -->
+                            <div style="display: flex; flex-direction: column; gap: 20px;">
+                                <!-- Plantar Flexors (Gastroc/Soleus) -->
+                                <div>
+                                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 6px;" class="mono">
+                                        <span style="color: var(--text-secondary);">1. PLANTAR FLEXORS (Gastroc/Soleus)</span>
+                                        <span style="font-weight: 700; color: var(--neon-emerald);">${state.fesActiveChannels.plantar.toFixed(1)} mA</span>
+                                    </div>
+                                    <div style="width: 100%; height: 10px; background: rgba(255,255,255,0.03); border-radius: 5px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);">
+                                        <div style="width: ${plantarPercent}%; height: 100%; background: linear-gradient(90deg, var(--neon-emerald), #00bb88); border-radius: 5px; box-shadow: 0 0 10px var(--neon-emerald-glow); transition: width 0.15s ease;"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Dorsiflexors (Tibialis Anterior) -->
+                                <div>
+                                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 6px;" class="mono">
+                                        <span style="color: var(--text-secondary);">2. DORSIFLEXORS (Tibialis Anterior)</span>
+                                        <span style="font-weight: 700; color: var(--neon-blue);">${state.fesActiveChannels.dorsiflex.toFixed(1)} mA</span>
+                                    </div>
+                                    <div style="width: 100%; height: 10px; background: rgba(255,255,255,0.03); border-radius: 5px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);">
+                                        <div style="width: ${dorsiflexPercent}%; height: 100%; background: linear-gradient(90deg, var(--neon-blue), #0088ff); border-radius: 5px; box-shadow: 0 0 10px var(--neon-blue-glow); transition: width 0.15s ease;"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Quadriceps (Knee Extensors) -->
+                                <div>
+                                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 6px;" class="mono">
+                                        <span style="color: var(--text-secondary);">3. QUADRICEPS (Knee Extensors)</span>
+                                        <span style="font-weight: 700; color: var(--neon-purple);">${state.fesActiveChannels.quad.toFixed(1)} mA</span>
+                                    </div>
+                                    <div style="width: 100%; height: 10px; background: rgba(255,255,255,0.03); border-radius: 5px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);">
+                                        <div style="width: ${quadPercent}%; height: 100%; background: linear-gradient(90deg, var(--neon-purple), #8800ff); border-radius: 5px; box-shadow: 0 0 10px var(--purple-glow); transition: width 0.15s ease;"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Hamstrings (Knee Flexors) -->
+                                <div>
+                                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 6px;" class="mono">
+                                        <span style="color: var(--text-secondary);">4. HAMSTRINGS (Knee Flexors)</span>
+                                        <span style="font-weight: 700; color: var(--neon-amber);">${state.fesActiveChannels.hamstring.toFixed(1)} mA</span>
+                                    </div>
+                                    <div style="width: 100%; height: 10px; background: rgba(255,255,255,0.03); border-radius: 5px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);">
+                                        <div style="width: ${hamstringPercent}%; height: 100%; background: linear-gradient(90deg, var(--neon-amber), #ff8800); border-radius: 5px; box-shadow: 0 0 10px rgba(255, 184, 0, 0.3); transition: width 0.15s ease;"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Gait Cycle Timeline Slider -->
+                            <div style="margin-top: 10px; background: #070311; border-radius: 14px; padding: 18px; border: 1px solid rgba(181,95,230,0.08);">
+                                <div style="display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 10px;" class="mono">
+                                    <span style="color: var(--text-secondary);">Времева скала на стъпката (Gait Cycle Phase)</span>
+                                    <span style="font-weight: bold; color: ${state.fesStimulationActive ? 'var(--neon-emerald)' : 'var(--text-secondary)'};">
+                                        ${state.gaitPhase}% (${state.fesStatus})
+                                    </span>
+                                </div>
+                                <div style="position: relative; width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; margin-bottom: 12px;">
+                                    <!-- Stance Phase indicator bar (0-60%) -->
+                                    <div style="position: absolute; left: 0; width: 60%; height: 100%; background: rgba(0, 255, 170, 0.1); border-right: 1px dashed rgba(0, 255, 170, 0.35); border-radius: 3px 0 0 3px;"></div>
+                                    <!-- Swing Phase indicator bar (60-100%) -->
+                                    <div style="position: absolute; left: 60%; width: 40%; height: 100%; background: rgba(0, 240, 255, 0.05); border-radius: 0 3px 3px 0;"></div>
+                                    
+                                    <!-- Active cursor -->
+                                    <div style="position: absolute; left: ${state.gaitPhase}%; top: -5px; width: 16px; height: 16px; background: var(--neon-purple); border: 2px solid #fff; border-radius: 50%; box-shadow: 0 0 10px var(--neon-purple); transform: translateX(-50%); transition: left 0.15s ease;"></div>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.65rem; color: #555;" class="mono">
+                                    <span>Удар на пета (0%)</span>
+                                    <span>Вдигане на пета (48% spastic check)</span>
+                                    <span>Начало на замах (60%)</span>
+                                    <span>Терминален замах (100%)</span>
+                                </div>
+                            </div>
+
+                            <!-- Locomotor Controls -->
+                            <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 16px; margin-top: 10px;">
+                                <button onclick="toggleGaitSimulation()" class="cure-btn" style="background: ${state.fesStimulationActive ? 'linear-gradient(135deg, var(--neon-amber), #ff8800)' : 'linear-gradient(135deg, var(--neon-purple), var(--neon-pink))'}; box-shadow: 0 0 25px ${state.fesStimulationActive ? 'rgba(255, 184, 0, 0.3)' : 'rgba(181, 95, 230, 0.3)'}; border-radius: 12px; padding: 14px 20px; justify-content: center; font-size: 0.85rem; letter-spacing: 1px;">
+                                    <i data-lucide="${state.fesStimulationActive ? 'square' : 'play'}" class="w-4 h-4 text-white inline mr-1"></i>
+                                    ${state.fesStimulationActive ? 'СПИРАНЕ НА CLOSED-LOOP FES' : 'СТАРТ НА CLOSED-LOOP FES'}
+                                </button>
+                                <button onclick="triggerFesSpasticityLockout()" class="cure-btn" style="background: linear-gradient(135deg, var(--neon-red), #b91c1c); box-shadow: 0 0 25px rgba(255, 59, 111, 0.3); border-radius: 12px; padding: 14px 20px; justify-content: center; font-size: 0.85rem; letter-spacing: 1px;">
+                                    <i data-lucide="shield-alert" class="w-4 h-4 text-white inline mr-1"></i>ИНЖЕКТИРАНЕ НА СПАЗЪМ
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Neuroplastic & Molecular Metrics -->
+                        <div class="column-flex">
+                            <!-- Neuroplasticity & Glucose Clearance Cards -->
+                            <div class="glass-card glow-purple ${state.emergencyMode ? 'emergency-card' : ''}" style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; gap: 16px;">
+                                <h3 style="font-size: 1.2rem; font-weight: 900; display: flex; align-items: center; gap: 8px;">
+                                    <i data-lucide="brain" class="w-5 h-5 inline-block mr-2 text-pink-400"></i>Невро-метаболитни доказателства & биомаркери
+                                </h3>
+
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                                    <!-- BDNF Card -->
+                                    <div style="background: rgba(181, 95, 230, 0.04); border: 1px solid rgba(181, 95, 230, 0.15); border-radius: 12px; padding: 16px; text-align: center;">
+                                        <div style="font-size: 0.7rem; color: var(--text-secondary);" class="mono">BDNF NEUROPLASTICITY</div>
+                                        <div style="font-size: 2.2rem; font-weight: 900; color: var(--neon-pink); margin: 6px 0;" class="mono glow-text-red">
+                                            ${state.bdnfLevel.toFixed(2)}x
+                                        </div>
+                                        <div style="font-size: 0.7rem; color: var(--neon-pink);" class="mono">2.49x Peak Achieved</div>
+                                    </div>
+
+                                    <!-- GLUT4 Translocation Card -->
+                                    <div style="background: rgba(0, 240, 255, 0.04); border: 1px solid rgba(0, 240, 255, 0.15); border-radius: 12px; padding: 16px; text-align: center;">
+                                        <div style="font-size: 0.7rem; color: var(--text-secondary);" class="mono">GLUT4 TRANSLOCATION</div>
+                                        <div style="font-size: 2.2rem; font-weight: 900; color: var(--neon-blue); margin: 6px 0;" class="mono glow-text-blue">
+                                            ${state.glut4Upregulation.toFixed(2)}x
+                                        </div>
+                                        <div style="font-size: 0.7rem; color: var(--neon-blue);" class="mono">1.47x Insulin-Independent</div>
+                                    </div>
+                                </div>
+
+                                <div style="padding: 16px; background: rgba(181, 95, 230, 0.03); border-radius: 12px; border: 1px solid rgba(181, 95, 230, 0.12); font-size: 0.8rem; line-height: 1.5; color: var(--text-secondary);">
+                                    <span style="color: #fff; font-weight: bold; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                                        <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>Биомеханичен трансфер и Hebbian pairing:
+                                    </span>
+                                    Чрез синхронизиране на когнитивното намерение на пациента (BCI) с електрическото задействане на Teslasuit (под 50 ms латентност), системата отключва Hebbian пластичност.
+                                    Увеличената сила на съкращението задейства AMPK/CaMKII пътищата в скелетните мускули, заставяйки GLUT4 везикулите да се преместят към клетъчната мембрана и да почистят глюкозата самостоятелно.
+                                </div>
+                            </div>
+
+                            <!-- Chronos Fatigue & Safeguard Gauge -->
+                            <div class="glass-card glow-emerald ${state.emergencyMode ? 'emergency-card' : ''}" style="padding: 20px; display: flex; flex-direction: column; justify-content: space-between; border-color: rgba(0, 255, 170, 0.15);">
+                                <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                                    <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>CHRONOS PREDICTIVE SHIELD & MOTOR RESOLVER
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center;" class="mono">
+                                    <div style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4;">
+                                        Предиктивен статус: <span style="font-weight: bold; color: ${state.catuskotiState === 'SPASTICITY_LOCKOUT' ? 'var(--neon-red)' : 'var(--neon-emerald)'};">
+                                            ${state.catuskotiState === 'SPASTICITY_LOCKOUT' ? 'DAMPENED (SAFE LOCKOUT)' : 'SHIELD INTACT (ACTIVE)'}
+                                        </span><br>
+                                        Hebbian BCI Confidence: <span style="color: #fff;">${state.hebbianConfidence.toFixed(1)} / 10.0</span><br>
+                                        Chronos PID Gains: <span style="color: #fff;">${state.catuskotiState === 'SPASTICITY_LOCKOUT' ? 'kp=0.42, kd=0.21' : 'kp=1.50, kd=0.50'}</span>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <div style="font-size: 0.65rem; color: var(--text-secondary);">CATUSKOTI STATE</div>
+                                        <div style="font-size: 1.2rem; font-weight: 900; color: ${state.catuskotiState === 'SPASTICITY_LOCKOUT' ? 'var(--neon-red)' : 'var(--neon-emerald)'};">
+                                            ${state.catuskotiState}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
             }
 
             root.innerHTML = `
@@ -921,6 +1182,19 @@ process VERIFY_AURA_INTEGRITY(ph: Decimal, o2: Decimal) -> Boolean {
         }
 
         function resetHUD() {
+            if (gaitTimer) {
+                clearInterval(gaitTimer);
+                gaitTimer = null;
+            }
+            state.fesStimulationActive = false;
+            state.fesActiveChannels = { plantar: 0, dorsiflex: 0, quad: 0, hamstring: 0 };
+            state.fesStatus = "STANDBY";
+            state.gaitPhase = 0;
+            state.catuskotiState = "SYNERGY";
+            state.bdnfLevel = 1.0;
+            state.glut4Upregulation = 1.0;
+            currentGlucose = [...rawChaoticData];
+
             state.ph = 7.41;
             state.oxygen = 98;
             state.zScore = 0.42;
