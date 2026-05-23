@@ -146,6 +146,150 @@
             letter-spacing: 1px;
             margin-top: 1rem;
         }
+
+        /* Premium Portfolio Layouts matching clinical standards */
+        .portfolio-section {
+            margin-top: 5rem;
+            margin-bottom: 5rem;
+            text-align: center;
+        }
+
+        .portfolio-badge {
+            background: rgba(255, 184, 0, 0.1);
+            border: 1px solid #ffb800;
+            color: #ffb800;
+            padding: 6px 14px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+
+        .portfolio-title {
+            font-size: 2.2rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .portfolio-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto 3rem auto;
+            font-weight: 300;
+            line-height: 1.5;
+        }
+
+        .portfolio-header-dot {
+            text-align: left;
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .portfolio-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--neon-magenta);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 10px var(--neon-magenta);
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 5rem;
+        }
+
+        .portfolio-card {
+            background: rgba(12, 5, 24, 0.5);
+            border: 1px solid rgba(180, 0, 255, 0.18);
+            border-radius: 16px;
+            padding: 18px;
+            backdrop-filter: blur(25px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            text-align: left;
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 0, 255, 0.5);
+            box-shadow: 0 15px 35px rgba(180, 0, 255, 0.22);
+        }
+
+        .portfolio-img-container {
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 1.2rem;
+            position: relative;
+        }
+
+        .portfolio-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .portfolio-card:hover .portfolio-img-container img {
+            transform: scale(1.03);
+        }
+
+        .portfolio-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            font-size: 0.7rem;
+            font-weight: 900;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .tag-purple {
+            background: rgba(170, 0, 255, 0.15);
+            color: #d880ff;
+            border: 1px solid rgba(170, 0, 255, 0.3);
+        }
+
+        .tag-emerald {
+            background: rgba(0, 255, 170, 0.15);
+            color: #80ffcf;
+            border: 1px solid rgba(0, 255, 170, 0.3);
+        }
+
+        .portfolio-card h4 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #fff;
+            margin: 0 0 0.5rem 0;
+            letter-spacing: 0.5px;
+        }
+
+        .portfolio-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin: 0;
+            font-weight: 300;
+        }
     </style>
 </head>
 <body>
@@ -159,6 +303,46 @@
     <div class="poster-container">
         <!-- Incorporating the new Purple Neon Poster -->
         <img src="VHT_BRAIN_POSTER_PURPLE.png" alt="VHT-BRAIN Cyber-Physical Shield">
+    </div>
+
+    <!-- Clinical & Research Sovereign Twins Portfolio -->
+    <div class="portfolio-section">
+        <div class="portfolio-badge">
+            ⚡ TRL 6 CLOSED-LOOP NEURO-METABOLIC TWINS & SaMD CLASS III
+        </div>
+        <div class="portfolio-title">
+            CLINICAL & RESEARCH PORTFOLIO
+        </div>
+        <div class="portfolio-subtitle">
+            Sovereign clinical models and industrial grant proposals validated on bare-metal architectures. 100% transparent and reproducible mathematical formulations.
+        </div>
+
+        <div class="portfolio-header-dot">
+            <span class="portfolio-dot"></span>
+            INTERACTIVE SOVEREIGN HUD VISUAL LAYOUTS
+        </div>
+
+        <div class="portfolio-grid">
+            <!-- VHT-BRAIN HUD Card -->
+            <div class="portfolio-card">
+                <div class="portfolio-img-container">
+                    <img src="vht_brain_hud_preview.png" alt="VHT-BRAIN 3D Volumetric Raymarching HUD">
+                </div>
+                <span class="portfolio-tag tag-purple">BRAIN LIVE</span>
+                <h4>VHT-BRAIN: 3D Volumetric Raymarching HUD</h4>
+                <p>Sovereign 3D neural simulation mapping volumetric DICOM scans directly to VRAM. Features real-time EEG telemetry, dynamic clipping planes, and BCI-FES locomotor integration.</p>
+            </div>
+
+            <!-- VHT-DIABET HUD Card -->
+            <div class="portfolio-card">
+                <div class="portfolio-img-container">
+                    <img src="vht_diabet_hud_preview.png" alt="VHT-DIABETES Zero-Entropy Glycemic HUD">
+                </div>
+                <span class="portfolio-tag tag-emerald">DIABET LIVE</span>
+                <h4>VHT-DIABET: Zero-Entropy Glycemic HUD</h4>
+                <p>Closed-loop metabolic trajectory governor with Knox TEE hardware safety blocks. Prevents critical glycemic excursions through deterministic security layers.</p>
+            </div>
+        </div>
     </div>
 
     <div class="grid">
