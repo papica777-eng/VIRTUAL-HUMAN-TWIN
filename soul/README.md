@@ -1,7 +1,7 @@
 # VHT-BRAIN: Virtual Human Twin (Brain)
 **Deterministic Neurological Engineering & Cyber-Physical Shield**
 
-![VHT-BRAIN Cyber-Physical Shield](VHT_BRAIN_POSTER.png)
+![VHT-BRAIN Cyber-Physical Shield](VHT_BRAIN_POSTER_PURPLE.png)
 
 ## Architect: Dimitar Prodromov
 **Category:** European Innovation Council (EIC) Accelerator / Horizon Europe
