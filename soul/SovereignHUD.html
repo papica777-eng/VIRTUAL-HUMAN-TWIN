@@ -322,9 +322,52 @@
             from { opacity: 1; }
             to { opacity: 0.4; }
         }
+
+        /* 3D Visualizer & Immersive Mode transitions */
+        .hud-transition {
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .hud-hidden {
+            opacity: 0 !important;
+            pointer-events: none !important;
+            transform: translateY(-20px);
+        }
+        
+        /* Floating surgical controls card */
+        .surgical-controls-card {
+            position: fixed;
+            top: 100px;
+            left: 40px;
+            width: 320px;
+            z-index: 50;
+            max-height: calc(100vh - 160px);
+            overflow-y: auto;
+            border-color: rgba(181, 95, 230, 0.3) !important;
+            box-shadow: 0 0 30px rgba(181, 95, 230, 0.15) !important;
+        }
+
+        .surgical-coords-card {
+            position: fixed;
+            bottom: 40px;
+            left: 40px;
+            width: 320px;
+            z-index: 50;
+            border-color: var(--neon-emerald) !important;
+            box-shadow: 0 0 30px var(--neon-emerald-glow) !important;
+        }
+
+        /* Sovereign pointer events mapping */
+        #app-root, main, header, footer {
+            pointer-events: none;
+        }
+        .glass-card, button, input, select, .tab-btn, a, header > div, footer > div, .surgical-controls-card, .surgical-coords-card {
+            pointer-events: auto;
+        }
     </style>
 </head>
 <body>
+    <!-- VHT-BRAIN Volume Raymarching Substrate Canvas -->
+    <canvas id="vht-brain-core" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; background-color: #030107;"></canvas>
 
     <div id="app-root">
         <!-- Self-Healing Fallback Visual preloaded -->
@@ -375,7 +418,21 @@
                 { time: "12:12:00", bg: "INIT: AETERNA VHT ядрото е онлайн. Knox офлайн пясъчник е активиран.", en: "INIT: AETERNA VHT core online. Knox offline sandbox engaged." },
                 { time: "12:12:01", bg: "INGEST: Заредени 900 близнака от Националния регистър на България за 2015 г.", en: "INGEST: Loaded 900 patient twins from Bulgaria 2015 national registry." },
                 { time: "12:12:02", bg: "TELEMETRY: Активно високоентропийно състояние (Ентропия = 3.56). Некомпенсирани глюкозни криви.", en: "TELEMETRY: High-entropy state active (Entropy = 3.56). Uncompensated glucose curves." }
-            ]
+            ],
+            hudVisible: true,
+            clipX: 1.0,
+            clipY: 1.0,
+            clipZ: 1.0,
+            windowVal: 0.60,
+            levelVal: 0.30,
+            renderMode: 1, // Default to BDNF for stunning visual impact!
+            autoRotate: true,
+            rotationX: 0.3,
+            rotationY: 0.5,
+            clickCoords: null,
+            bdnfIntensity: 1.0,
+            invModelViewProj: new Float32Array(16),
+            modelMatrixInverse: new Float32Array(16)
         };
 
         const rawChaoticData = [
@@ -1358,7 +1415,7 @@ process VERIFY_AURA_INTEGRITY(ph: Decimal, o2: Decimal) -> Boolean {
             }
 
             root.innerHTML = `
-                <header style="border-bottom: 1px solid var(--purple-border); padding: 18px 40px; background: rgba(5, 2, 12, 0.8); backdrop-filter: blur(25px); position: sticky; top: 0; z-index: 40; display: flex; justify-content: space-between; align-items: center;">
+                <header class="hud-transition ${state.hudVisible ? '' : 'hud-hidden'}" style="border-bottom: 1px solid var(--purple-border); padding: 18px 40px; background: rgba(5, 2, 12, 0.8); backdrop-filter: blur(25px); position: sticky; top: 0; z-index: 40; display: flex; justify-content: space-between; align-items: center;">
                     <div style="display: flex; align-items: center; gap: 12px;">
                         <div class="status-dot ${state.emergencyMode ? 'bg-red' : 'bg-purple'}"></div>
                         <span style="font-weight: 900; font-size: 1.25rem; letter-spacing: 1.5px;">AETERNA // <span style="color: var(--neon-purple);" class="glow-text-purple">${t('hudTitle')}</span></span>
@@ -1386,15 +1443,19 @@ process VERIFY_AURA_INTEGRITY(ph: Decimal, o2: Decimal) -> Boolean {
                     </div>
                 </header>
 
-                <main style="flex: 1; padding: 40px; max-width: 1600px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; gap: 28px;">
+                <main class="hud-transition ${state.hudVisible ? '' : 'hud-hidden'}" style="flex: 1; padding: 40px; max-width: 1600px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; gap: 28px;">
                     ${tabHeader}
                     ${emergencyBanner}
                     ${tabContent}
                 </main>
 
-                <footer style="border-top: 1px solid var(--purple-border); padding: 24px; text-align: center; font-size: 0.75rem; color: var(--text-secondary); background: rgba(3, 1, 8, 0.95);" class="mono">
+                <footer class="hud-transition ${state.hudVisible ? '' : 'hud-hidden'}" style="border-top: 1px solid var(--purple-border); padding: 24px; text-align: center; font-size: 0.75rem; color: var(--text-secondary); background: rgba(3, 1, 8, 0.95);" class="mono">
                     ${t('footerText')}
                 </footer>
+                
+                ${renderSurgicalControlsCard()}
+                ${renderSurgicalCoordsCard()}
+                ${renderHudToggleButton()}
             `;
             if (window.lucide) {
                 setTimeout(() => lucide.createIcons(), 0);
@@ -1404,32 +1465,889 @@ process VERIFY_AURA_INTEGRITY(ph: Decimal, o2: Decimal) -> Boolean {
             const overlay = document.getElementById("emergency-overlay");
             if (overlay) {
                 overlay.style.display = state.empathyAnomaly ? "flex" : "none";
-                if (state.empathyAnomaly) {
-                    overlay.innerHTML = `
-                        <div class="glass-card emergency-card scale-in animate-pulse" style="max-width: 600px; text-align: center; display: flex; flex-direction: column; gap: 24px; padding: 40px; border-color: var(--neon-red);">
-                            <div style="font-size: 3.5rem; color: var(--neon-red);"><i data-lucide="alert-triangle"></i></div>
-                            <div>
-                                <div style="font-size: 0.8rem; font-weight: 800; color: var(--neon-red); letter-spacing: 2px; margin-bottom: 8px;" class="mono">
-                                    ${t('criticalAlert')}
-                                </div>
-                                <h1 style="font-size: 2rem; font-weight: 900; line-height: 1.2; margin-bottom: 16px; color: #fff;">
-                                    ${t('lockoutEnforced')}
-                                </h1>
-                                <p style="color: #fda4af; font-size: 0.95rem; line-height: 1.6;" class="mono">
-                                    ${t('lockoutDesc', { zScore: state.zScore.toFixed(4) })}
-                                </p>
-                            </div>
-                            <div style="display: flex; gap: 16px; justify-content: center;">
-                                <button class="cure-btn" style="background: linear-gradient(135deg, #475569, #1e293b); box-shadow: none; border-color: rgba(255,255,255,0.1); border-radius: 12px; padding: 14px 24px;" onclick="resetHUD()">
-                                    <i data-lucide="refresh-cw" class="w-4 h-4 text-slate-300"></i>${t('btnResetSimulation')}
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                    setTimeout(() => lucide.createIcons(), 0);
+            }
+
+    // =========================================================================
+    // SOVEREIGN 3D VOLUME RAYMARCHING SUBSTRATE (GLSL & Inverse Projection Lock)
+    // =========================================================================
+    
+    const volWidth = 128, volHeight = 128, volDepth = 128;
+    const volSize = volWidth * volHeight * volDepth;
+    
+    let wasmSharedBuffer;
+    try {
+        wasmSharedBuffer = new SharedArrayBuffer(volSize);
+    } catch(e) {
+        wasmSharedBuffer = new ArrayBuffer(volSize);
+    }
+    const volumeData = new Uint8Array(wasmSharedBuffer);
+    
+    let bdnfSharedBuffer;
+    try {
+        bdnfSharedBuffer = new SharedArrayBuffer(volSize);
+    } catch(e) {
+        bdnfSharedBuffer = new ArrayBuffer(volSize);
+    }
+    const bdnfData = new Uint8Array(bdnfSharedBuffer);
+    
+    function normalize(v) {
+        const len = Math.sqrt(v[0]*v[0] + v[1]*v[1] + v[2]*v[2]);
+        return len > 0 ? [v[0]/len, v[1]/len, v[2]/len] : [0, 0, 0];
+    }
+    function subtract(a, b) {
+        return [a[0]-b[0], a[1]-b[1], a[2]-b[2]];
+    }
+    function add(a, b) {
+        return [a[0]+b[0], a[1]+b[1], a[2]+b[2]];
+    }
+    function scale(v, s) {
+        return [v[0]*s, v[1]*s, v[2]*s];
+    }
+    function cross(a, b) {
+        return [
+            a[1]*b[2] - a[2]*b[1],
+            a[2]*b[0] - a[0]*b[2],
+            a[0]*b[1] - a[1]*b[0]
+        ];
+    }
+    function dot(a, b) {
+        return a[0]*b[0] + a[1]*b[1] + a[2]*b[2];
+    }
+    
+    function multiplyMat4(A, B) {
+        const C = new Float32Array(16);
+        for (let col = 0; col < 4; col++) {
+            for (let row = 0; row < 4; row++) {
+                let sum = 0;
+                for (let i = 0; i < 4; i++) {
+                    sum += A[i * 4 + row] * B[col * 4 + i];
+                }
+                C[col * 4 + row] = sum;
+            }
+        }
+        return C;
+    }
+    
+    function rotateX(rad) {
+        const c = Math.cos(rad);
+        const s = Math.sin(rad);
+        return new Float32Array([
+            1, 0, 0, 0,
+            0, c, s, 0,
+            0, -s, c, 0,
+            0, 0, 0, 1
+        ]);
+    }
+    
+    function rotateY(rad) {
+        const c = Math.cos(rad);
+        const s = Math.sin(rad);
+        return new Float32Array([
+            c, 0, -s, 0,
+            0, 1, 0, 0,
+            s, 0, c, 0,
+            0, 0, 0, 1
+        ]);
+    }
+    
+    function perspective(fov, aspect, near, far) {
+        const f = 1.0 / Math.tan(fov / 2);
+        const nf = 1.0 / (near - far);
+        return new Float32Array([
+            f / aspect, 0, 0, 0,
+            0, f, 0, 0,
+            0, 0, (far + near) * nf, -1,
+            0, 0, (2 * far * near) * nf, 0
+        ]);
+    }
+    
+    function invertMat4(m) {
+        const out = new Float32Array(16);
+        const a00 = m[0], a01 = m[1], a02 = m[2], a03 = m[3];
+        const a10 = m[4], a11 = m[5], a12 = m[6], a13 = m[7];
+        const a20 = m[8], a21 = m[9], a22 = m[10], a23 = m[11];
+        const a30 = m[12], a31 = m[13], a32 = m[14], a33 = m[15];
+
+        const b00 = a00 * a11 - a01 * a10;
+        const b01 = a00 * a12 - a02 * a10;
+        const b02 = a00 * a13 - a03 * a10;
+        const b03 = a01 * a12 - a02 * a11;
+        const b04 = a01 * a13 - a03 * a11;
+        const b05 = a02 * a13 - a03 * a12;
+        const b06 = a20 * a31 - a21 * a30;
+        const b07 = a20 * a32 - a22 * a30;
+        const b08 = a20 * a33 - a23 * a30;
+        const b09 = a21 * a32 - a22 * a31;
+        const b10 = a21 * a33 - a23 * a31;
+        const b11 = a22 * a33 - a23 * a32;
+
+        let det = b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
+
+        if (!det) return null;
+        det = 1.0 / det;
+
+        out[0] = (a11 * b11 - a12 * b10 + a13 * b09) * det;
+        out[1] = (-a01 * b11 + a02 * b10 - a03 * b09) * det;
+        out[2] = (a31 * b05 - a32 * b04 + a33 * b03) * det;
+        out[3] = (-a21 * b05 + a22 * b04 - a23 * b03) * det;
+        out[4] = (-a10 * b11 + a12 * b08 - a13 * b07) * det;
+        out[5] = (a00 * b11 - a02 * b08 + a03 * b07) * det;
+        out[6] = (-a30 * b05 + a32 * b02 - a33 * b01) * det;
+        out[7] = (a20 * b05 - a22 * b02 + a23 * b01) * det;
+        out[8] = (a10 * b10 - a11 * b08 + a13 * b06) * det;
+        out[9] = (-a00 * b10 + a01 * b08 - a03 * b06) * det;
+        out[10] = (a30 * b04 - a31 * b02 + a33 * b00) * det;
+        out[11] = (-a20 * b04 + a21 * b02 - a23 * b00) * det;
+        out[12] = (-a10 * b09 + a11 * b07 - a12 * b06) * det;
+        out[13] = (a00 * b09 - a01 * b07 + a02 * b06) * det;
+        out[14] = (-a30 * b03 + a31 * b01 - a32 * b00) * det;
+        out[15] = (a20 * b03 - a21 * b01 + a22 * b00) * det;
+
+        return out;
+    }
+    
+    function vec4MulMat4(v, m) {
+        const out = new Float32Array(4);
+        for (let i = 0; i < 4; i++) {
+            out[i] = v[0] * m[0 * 4 + i] + v[1] * m[1 * 4 + i] + v[2] * m[2 * 4 + i] + v[3] * m[3 * 4 + i];
+        }
+        return out;
+    }
+    
+    function vec3MulMat4(v, m) {
+        const out = new Float32Array(3);
+        const w = v[0] * m[3] + v[1] * m[7] + v[2] * m[11] + m[15];
+        out[0] = (v[0] * m[0] + v[1] * m[4] + v[2] * m[8] + m[12]) / w;
+        out[1] = (v[0] * m[1] + v[1] * m[5] + v[2] * m[9] + m[13]) / w;
+        out[2] = (v[0] * m[2] + v[1] * m[6] + v[2] * m[10] + m[14]) / w;
+        return out;
+    }
+    
+    function vec3MulMat3(v, m) {
+        const out = new Float32Array(3);
+        out[0] = v[0] * m[0] + v[1] * m[4] + v[2] * m[8];
+        out[1] = v[0] * m[1] + v[1] * m[5] + v[2] * m[9];
+        out[2] = v[0] * m[2] + v[1] * m[6] + v[2] * m[10];
+        return out;
+    }
+    
+    function intersectBoxJS(ro, rd, t0, t1) {
+        const boxMin = [0, 0, 0];
+        const boxMax = [1, 1, 1];
+        let near = -Infinity;
+        let far = Infinity;
+        
+        for (let i = 0; i < 3; i++) {
+            if (Math.abs(rd[i]) < 1e-6) {
+                if (ro[i] < boxMin[i] || ro[i] > boxMax[i]) return false;
+            } else {
+                const invD = 1.0 / rd[i];
+                let tbot = (boxMin[i] - ro[i]) * invD;
+                let ttop = (boxMax[i] - ro[i]) * invD;
+                if (tbot > ttop) {
+                    const tmp = tbot; tbot = ttop; ttop = tmp;
+                }
+                near = Math.max(near, tbot);
+                far = Math.min(far, ttop);
+            }
+        }
+        t0[0] = Math.max(near, 0.0);
+        t1[0] = far;
+        return near < far && far > 0.0;
+    }
+
+    function generateBrainVoxels() {
+        for (let z = 0; z < volDepth; z++) {
+            for (let y = 0; y < volHeight; y++) {
+                for (let x = 0; x < volWidth; x++) {
+                    const idx = x + y * volWidth + z * volWidth * volHeight;
+                    
+                    const nx = (x / (volWidth - 1)) * 2.0 - 1.0;
+                    const ny = (y / (volHeight - 1)) * 2.0 - 1.0;
+                    const nz = (z / (volDepth - 1)) * 2.0 - 1.0;
+                    
+                    const distToCenter = Math.sqrt(nx*nx + ny*ny + nz*nz);
+                    let density = 0;
+                    
+                    if (distToCenter > 0.82 && distToCenter < 0.88) {
+                        density = 220; // Skull
+                    } else if (distToCenter <= 0.80) {
+                        const ellipsoid = Math.sqrt(nx*nx*1.2 + ny*ny*1.0 + nz*nz*0.9);
+                        if (ellipsoid <= 0.8) {
+                            density = 85;
+                            const sulci = Math.sin(nx * 14) * Math.sin(ny * 14) * Math.sin(nz * 14);
+                            if (sulci > 0.15) {
+                                density -= 25;
+                            } else {
+                                density += 15;
+                            }
+                            
+                            if (Math.abs(nx) < 0.035) {
+                                density = 10;
+                            }
+                            
+                            const tumorDx = nx - 0.33;
+                            const tumorDy = ny - 0.22;
+                            const tumorDz = nz + 0.18;
+                            const tumorDist = Math.sqrt(tumorDx*tumorDx + tumorDy*tumorDy + tumorDz*tumorDz);
+                            if (tumorDist < 0.16) {
+                                density = 190 + Math.sin(tumorDist * 45) * 25;
+                            }
+                        }
+                    }
+                    volumeData[idx] = Math.max(0, Math.min(255, density));
                 }
             }
         }
+    }
+    
+    function generateBdnfVoxels() {
+        for (let z = 0; z < volDepth; z++) {
+            for (let y = 0; y < volHeight; y++) {
+                for (let x = 0; x < volWidth; x++) {
+                    const idx = x + y * volWidth + z * volWidth * volHeight;
+                    
+                    const nx = (x / (volWidth - 1)) * 2.0 - 1.0;
+                    const ny = (y / (volHeight - 1)) * 2.0 - 1.0;
+                    const nz = (z / (volDepth - 1)) * 2.0 - 1.0;
+                    
+                    const h1Dx = nx + 0.22;
+                    const h1Dy = ny + 0.15;
+                    const h1Dz = nz + 0.2;
+                    const h1Dist = Math.sqrt(h1Dx*h1Dx*2.5 + h1Dy*h1Dy + h1Dz*h1Dz*1.2);
+                    
+                    const h2Dx = nx - 0.22;
+                    const h2Dy = ny + 0.15;
+                    const h2Dz = nz + 0.2;
+                    const h2Dist = Math.sqrt(h2Dx*h2Dx*2.5 + h2Dy*h2Dy + h2Dz*h2Dz*1.2);
+                    
+                    let bdnfVal = 0;
+                    if (h1Dist < 0.26) {
+                        bdnfVal = Math.floor((1.0 - h1Dist / 0.26) * 255);
+                    }
+                    if (h2Dist < 0.26) {
+                        bdnfVal = Math.max(bdnfVal, Math.floor((1.0 - h2Dist / 0.26) * 255));
+                    }
+                    
+                    const fiberVal = Math.sin(nx * 8 - ny * 4) * Math.sin(nz * 6);
+                    if (fiberVal > 0.82 && Math.sqrt(nx*nx + ny*ny + nz*nz) < 0.7) {
+                        bdnfVal = Math.max(bdnfVal, 95);
+                    }
+                    
+                    bdnfData[idx] = Math.max(0, Math.min(255, bdnfVal));
+                }
+            }
+        }
+    }
+    
+    function solveClickCoordinates(ndcX, ndcY) {
+        const ndcNear = [ndcX, ndcY, -1, 1];
+        const ndcFar = [ndcX, ndcY, 1, 1];
+        
+        const worldNear = vec4MulMat4(ndcNear, state.invModelViewProj);
+        const worldFar = vec4MulMat4(ndcFar, state.invModelViewProj);
+        
+        const ro = [worldNear[0]/worldNear[3], worldNear[1]/worldNear[3], worldNear[2]/worldNear[3]];
+        const worldFarPos = [worldFar[0]/worldFar[3], worldFar[1]/worldFar[3], worldFar[2]/worldFar[3]];
+        const rd = normalize(subtract(worldFarPos, ro));
+        
+        const localRo = vec3MulMat4(ro, state.modelMatrixInverse);
+        const localRd = normalize(vec3MulMat3(rd, state.modelMatrixInverse));
+        
+        const t0 = [0], t1 = [0];
+        if (intersectBoxJS(localRo, localRd, t0, t1)) {
+            const steps = 150;
+            const stepSize = (t1[0] - t0[0]) / steps;
+            for (let i = 0; i < steps; i++) {
+                const t = t0[0] + i * stepSize;
+                const p = add(localRo, scale(localRd, t));
+                
+                if (p[0] > state.clipX || p[1] > state.clipY || p[2] > state.clipZ) {
+                    continue;
+                }
+                
+                const vx = Math.floor(p[0] * (volWidth - 1));
+                const vy = Math.floor(p[1] * (volHeight - 1));
+                const vz = Math.floor(p[2] * (volDepth - 1));
+                
+                if (vx >= 0 && vx < volWidth && vy >= 0 && vy < volHeight && vz >= 0 && vz < volDepth) {
+                    const idx = vx + vy * volWidth + vz * volWidth * volHeight;
+                    const d = volumeData[idx];
+                    
+                    if (d > 45) {
+                        const x_mm = (p[0] - 0.5) * 300;
+                        const y_mm = (p[1] - 0.5) * 300;
+                        const z_mm = (p[2] - 0.5) * 300;
+                        
+                        state.clickCoords = { x: x_mm, y: y_mm, z: z_mm, density: d };
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    const vsRaymarching = `#version 300 es
+    in vec2 position;
+    out vec2 v_texCoord;
+    void main() {
+        v_texCoord = position * 0.5 + 0.5;
+        gl_Position = vec4(position, 0.0, 1.0);
+    }`;
+
+    const fsRaymarching = `#version 300 es
+    precision highp float;
+    precision highp sampler3D;
+    
+    in vec2 v_texCoord;
+    out vec4 fragColor;
+    
+    uniform sampler3D u_brainVolume;
+    uniform sampler3D u_bdnfVolume;
+    
+    uniform vec3 u_cameraPos;
+    uniform mat4 u_invModelViewProj;
+    uniform mat4 u_modelMatrixInverse;
+    
+    uniform float u_clipX;
+    uniform float u_clipY;
+    uniform float u_clipZ;
+    uniform float u_window;
+    uniform float u_level;
+    uniform int u_renderMode;
+    uniform float u_time;
+    uniform float u_bdnfIntensity;
+    
+    bool intersectBox(vec3 ro, vec3 rd, out float t0, out float t1) {
+        vec3 boxMin = vec3(0.0);
+        vec3 boxMax = vec3(1.0);
+        vec3 invR = 1.0 / (rd + vec3(1e-6));
+        vec3 tbot = invR * (boxMin - ro);
+        vec3 ttop = invR * (boxMax - ro);
+        vec3 tmin = min(tbot, ttop);
+        vec3 tmax = max(tbot, ttop);
+        float near = max(max(tmin.x, tmin.y), tmin.z);
+        float far = min(min(tmax.x, tmax.y), tmax.z);
+        t0 = max(near, 0.0);
+        t1 = far;
+        return near < far && far > 0.0;
+    }
+    
+    void main() {
+        vec4 ndcNear = vec4(v_texCoord * 2.0 - 1.0, -1.0, 1.0);
+        vec4 ndcFar  = vec4(v_texCoord * 2.0 - 1.0,  1.0, 1.0);
+        
+        vec4 worldNear = u_invModelViewProj * ndcNear;
+        vec4 worldFar  = u_invModelViewProj * ndcFar;
+        
+        vec3 ro = worldNear.xyz / worldNear.w;
+        vec3 rd = normalize(worldFar.xyz / worldFar.w - ro);
+        
+        vec3 localRo = (u_modelMatrixInverse * vec4(ro, 1.0)).xyz;
+        vec3 localRd = normalize((u_modelMatrixInverse * vec4(rd, 0.0)).xyz);
+        
+        float t0, t1;
+        if (!intersectBox(localRo, localRd, t0, t1)) {
+            discard;
+        }
+        
+        vec4 accumulatedColor = vec4(0.0);
+        float stepSize = 0.0035;
+        
+        vec3 currentPos = localRo + localRd * t0;
+        vec3 endPos = localRo + localRd * t1;
+        float dist = distance(currentPos, endPos);
+        int numSteps = int(dist / stepSize);
+        numSteps = min(numSteps, 300);
+        
+        for (int i = 0; i < numSteps; i++) {
+            if (currentPos.x > u_clipX || currentPos.y > u_clipY || currentPos.z > u_clipZ) {
+                currentPos += localRd * stepSize;
+                continue;
+            }
+            
+            float density = texture(u_brainVolume, currentPos).r;
+            float normalizedDensity = (density - (u_level - u_window / 2.0)) / u_window;
+            normalizedDensity = clamp(normalizedDensity, 0.0, 1.0);
+            
+            vec4 colorSample = vec4(0.0);
+            
+            if (normalizedDensity > 0.02) {
+                if (u_renderMode == 0) {
+                    if (normalizedDensity > 0.8) {
+                        colorSample = vec4(0.85, 0.80, 0.95, normalizedDensity * 0.22);
+                    } else if (normalizedDensity > 0.52) {
+                        colorSample = vec4(1.0, 0.0, 0.45, normalizedDensity * 0.75);
+                    } else {
+                        colorSample = vec4(0.55, 0.22, 0.85, normalizedDensity * 0.06);
+                    }
+                } else if (u_renderMode == 1 || u_renderMode == 2) {
+                    float bdnf = texture(u_bdnfVolume, currentPos).r;
+                    if (bdnf > 0.08) {
+                        float pulse = 0.5 + 0.5 * sin(u_time * 6.0 + currentPos.y * 22.0);
+                        vec3 bdnfColor = mix(vec3(0.0, 1.0, 0.65), vec3(0.0, 0.7, 1.0), bdnf);
+                        colorSample = vec4(bdnfColor, bdnf * u_bdnfIntensity * (0.75 + 0.25 * pulse));
+                    } else {
+                        if (normalizedDensity > 0.8) {
+                            colorSample = vec4(0.3, 0.2, 0.45, normalizedDensity * 0.08);
+                        } else {
+                            colorSample = vec4(0.4, 0.15, 0.6, normalizedDensity * 0.03);
+                        }
+                    }
+                }
+                
+                accumulatedColor.rgb += (1.0 - accumulatedColor.a) * colorSample.rgb * colorSample.a;
+                accumulatedColor.a += (1.0 - accumulatedColor.a) * colorSample.a;
+                
+                if (accumulatedColor.a >= 0.96) {
+                    accumulatedColor.a = 1.0;
+                    break;
+                }
+            }
+            currentPos += localRd * stepSize;
+        }
+        fragColor = accumulatedColor;
+    }`;
+
+    const lineVsSource = `#version 300 es
+    in vec3 position;
+    in vec3 color;
+    out vec3 v_color;
+    uniform mat4 u_modelViewProj;
+    void main() {
+        v_color = color;
+        gl_Position = u_modelViewProj * vec4(position, 1.0);
+    }`;
+
+    const lineFsSource = `#version 300 es
+    precision highp float;
+    in vec3 v_color;
+    out vec4 fragColor;
+    uniform float u_time;
+    void main() {
+        float pulse = 0.55 + 0.45 * sin(u_time * 7.0);
+        fragColor = vec4(v_color * pulse, 0.8);
+    }`;
+
+    let lineCount = 0;
+    let lineVAO = null;
+    let lineVBO = null;
+
+    function buildTractographyGeometry(gl, program) {
+        const linesData = [];
+        
+        for (let i = 0; i < 18; i++) {
+            const yOffset = -0.12 + i * 0.014;
+            const p0 = [0.22, 0.35 + yOffset, 0.5];
+            const p1 = [0.4, 0.65 + yOffset, 0.5];
+            const p2 = [0.6, 0.65 + yOffset, 0.5];
+            const p3 = [0.78, 0.35 + yOffset, 0.5];
+            
+            const segments = 24;
+            const color = [0.85, 0.12, 0.95];
+            
+            for (let j = 0; j <= segments; j++) {
+                const t = j / segments;
+                const pt = getBezierPoint(p0, p1, p2, p3, t);
+                linesData.push(...pt, ...color);
+            }
+        }
+        
+        for (let i = 0; i < 22; i++) {
+            const xOffset = -0.16 + i * 0.015;
+            const zOffset = -0.12 + (i % 6) * 0.04;
+            const p0 = [0.5 + xOffset, 0.72, 0.5 + zOffset];
+            const p1 = [0.5 + xOffset * 0.5, 0.42, 0.5 + zOffset * 0.4];
+            const p2 = [0.5, 0.22, 0.5];
+            const p3 = [0.5, 0.04, 0.5];
+            
+            const segments = 24;
+            const color = [0.0, 0.82, 1.0];
+            
+            for (let j = 0; j <= segments; j++) {
+                const t = j / segments;
+                const pt = getBezierPoint(p0, p1, p2, p3, t);
+                linesData.push(...pt, ...color);
+            }
+        }
+        
+        for (let i = 0; i < 15; i++) {
+            const xOffset = -0.22 + i * 0.03;
+            const p0 = [0.5 + xOffset, 0.32, 0.22];
+            const p1 = [0.5 + xOffset, 0.48, 0.42];
+            const p2 = [0.5 + xOffset, 0.48, 0.62];
+            const p3 = [0.5 + xOffset, 0.32, 0.82];
+            
+            const segments = 24;
+            const color = [0.0, 1.0, 0.62];
+            
+            for (let j = 0; j <= segments; j++) {
+                const t = j / segments;
+                const pt = getBezierPoint(p0, p1, p2, p3, t);
+                linesData.push(...pt, ...color);
+            }
+        }
+
+        const floatData = new Float32Array(linesData);
+        lineCount = linesData.length / 6;
+
+        lineVAO = gl.createVertexArray();
+        gl.bindVertexArray(lineVAO);
+
+        lineVBO = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, lineVBO);
+        gl.bufferData(gl.ARRAY_BUFFER, floatData, gl.STATIC_DRAW);
+
+        const posLoc = gl.getAttribLocation(program, "position");
+        gl.enableVertexAttribArray(posLoc);
+        gl.vertexAttribPointer(posLoc, 3, gl.FLOAT, false, 24, 0);
+
+        const colLoc = gl.getAttribLocation(program, "color");
+        gl.enableVertexAttribArray(colLoc);
+        gl.vertexAttribPointer(colLoc, 3, gl.FLOAT, false, 24, 12);
+
+        gl.bindVertexArray(null);
+    }
+    
+    function getBezierPoint(p0, p1, p2, p3, t) {
+        const mt = 1.0 - t;
+        const mt2 = mt * mt;
+        const mt3 = mt2 * mt;
+        const t2 = t * t;
+        const t3 = t2 * t;
+        return [
+            mt3 * p0[0] + 3 * mt2 * t * p1[0] + 3 * mt * t2 * p2[0] + t3 * p3[0],
+            mt3 * p0[1] + 3 * mt2 * t * p1[1] + 3 * mt * t2 * p2[1] + t3 * p3[1],
+            mt3 * p0[2] + 3 * mt2 * t * p1[2] + 3 * mt * t2 * p2[2] + t3 * p3[2]
+        ];
+    }
+    
+    let gl = null;
+    let canvas = null;
+    let volProgram = null;
+    let lineProgram = null;
+    let positionBuffer = null;
+    let vao = null;
+    let brainTexture = null;
+    let bdnfTexture = null;
+    
+    function initVolumeSubstrate() {
+        canvas = document.getElementById("vht-brain-core");
+        if (!canvas) return;
+        
+        gl = canvas.getContext("webgl2", { alpha: false, antialias: true });
+        if (!gl) {
+            console.error("WebGL2 is not active.");
+            return;
+        }
+        
+        generateBrainVoxels();
+        generateBdnfVoxels();
+        
+        volProgram = createProgram(gl, vsRaymarching, fsRaymarching);
+        lineProgram = createProgram(gl, lineVsSource, fsRaymarching.replace(fsRaymarching, lineFsSource));
+        
+        const quadVerts = new Float32Array([
+            -1, -1,
+             1, -1,
+            -1,  1,
+            -1,  1,
+             1, -1,
+             1,  1
+        ]);
+        
+        vao = gl.createVertexArray();
+        gl.bindVertexArray(vao);
+        
+        positionBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, quadVerts, gl.STATIC_DRAW);
+        
+        const posAttr = gl.getAttribLocation(volProgram, "position");
+        gl.enableVertexAttribArray(posAttr);
+        gl.vertexAttribPointer(posAttr, 2, gl.FLOAT, false, 0, 0);
+        
+        gl.bindVertexArray(null);
+        
+        brainTexture = gl.createTexture();
+        gl.bindTexture(gl.TEXTURE_3D, brainTexture);
+        gl.texImage3D(gl.TEXTURE_3D, 0, gl.R8, volWidth, volHeight, volDepth, 0, gl.RED, gl.UNSIGNED_BYTE, volumeData);
+        gl.texParameteri(gl.TEXTURE_3D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_3D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_3D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_3D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_3D, gl.TEXTURE_WRAP_R, gl.CLAMP_TO_EDGE);
+        
+        bdnfTexture = gl.createTexture();
+        gl.bindTexture(gl.TEXTURE_3D, bdnfTexture);
+        gl.texImage3D(gl.TEXTURE_3D, 0, gl.R8, volWidth, volHeight, volDepth, 0, gl.RED, gl.UNSIGNED_BYTE, bdnfData);
+        gl.texParameteri(gl.TEXTURE_3D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_3D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_3D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_3D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_3D, gl.TEXTURE_WRAP_R, gl.CLAMP_TO_EDGE);
+        
+        buildTractographyGeometry(gl, lineProgram);
+        
+        window.addEventListener("mousedown", (e) => {
+            if (e.target.closest('.glass-card, header, footer, button, input, .tab-btn')) return;
+            state.isDragging = true;
+            state.lastMouseX = e.clientX;
+            state.lastMouseY = e.clientY;
+            state.autoRotate = false;
+            renderVanillaHUD();
+        });
+        
+        window.addEventListener("mousemove", (e) => {
+            if (!state.isDragging) return;
+            const dx = e.clientX - state.lastMouseX;
+            const dy = e.clientY - state.lastMouseY;
+            
+            state.rotationY += dx * 0.006;
+            state.rotationX += dy * 0.006;
+            state.rotationX = Math.max(-Math.PI/2, Math.min(Math.PI/2, state.rotationX));
+            
+            state.lastMouseX = e.clientX;
+            state.lastMouseY = e.clientY;
+            renderVanillaHUD();
+        });
+        
+        window.addEventListener("mouseup", () => {
+            state.isDragging = false;
+        });
+        
+        window.addEventListener("click", (e) => {
+            if (e.target.closest('.glass-card, header, footer, button, input, .tab-btn')) return;
+            
+            const rect = canvas.getBoundingClientRect();
+            const ndcX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+            const ndcY = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+            
+            if (solveClickCoordinates(ndcX, ndcY)) {
+                addLogEntry(
+                    `CLINICAL_LOCK: Affine Transformation Lock: Маркиран воксел при [X: ${state.clickCoords.x.toFixed(1)}mm, Y: ${state.clickCoords.y.toFixed(1)}mm, Z: ${state.clickCoords.z.toFixed(1)}mm] с плътност ${state.clickCoords.density} HU.`,
+                    `CLINICAL_LOCK: Affine Transformation Lock: Voxel targeted at [X: ${state.clickCoords.x.toFixed(1)}mm, Y: ${state.clickCoords.y.toFixed(1)}mm, Z: ${state.clickCoords.z.toFixed(1)}mm] with density ${state.clickCoords.density} HU.`
+                );
+                renderVanillaHUD();
+            }
+        });
+        
+        requestAnimationFrame(renderLoop);
+    }
+    
+    function renderLoop(time) {
+        if (!canvas || !gl) return;
+        
+        const dpr = window.devicePixelRatio || 1;
+        const displayWidth = Math.floor(canvas.clientWidth * dpr);
+        const displayHeight = Math.floor(canvas.clientHeight * dpr);
+        
+        if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
+            canvas.width = displayWidth;
+            canvas.height = displayHeight;
+        }
+        
+        gl.viewport(0, 0, canvas.width, canvas.height);
+        gl.clearColor(0.012, 0.004, 0.024, 1.0);
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+        gl.enable(gl.BLEND);
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+        gl.disable(gl.DEPTH_TEST);
+        
+        if (state.autoRotate) {
+            state.rotationY += 0.005;
+        }
+        
+        const timeSec = time * 0.001;
+        
+        const rx = rotateX(state.rotationX);
+        const ry = rotateY(state.rotationY);
+        const modelMatrix = multiplyMat4(ry, rx);
+        state.modelMatrixInverse = invertMat4(modelMatrix) || identity();
+        
+        const view = new Float32Array([
+            1, 0, 0, 0,
+            0, 1, 0, 0,
+            0, 0, 1, 0,
+            -0.5, -0.5, 1.25, 1
+        ]);
+        
+        const aspect = canvas.width / canvas.height;
+        const proj = perspective(Math.PI / 4, aspect, 0.1, 10.0);
+        
+        const mv = multiplyMat4(view, modelMatrix);
+        const mvp = multiplyMat4(proj, mv);
+        state.invModelViewProj = invertMat4(mvp) || identity();
+        
+        state.bdnfIntensity = state.bdnfLevel; 
+        
+        gl.useProgram(volProgram);
+        gl.bindVertexArray(vao);
+        
+        gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_3D, brainTexture);
+        gl.uniform1i(gl.getUniformLocation(volProgram, "u_brainVolume"), 0);
+        
+        gl.activeTexture(gl.TEXTURE1);
+        gl.bindTexture(gl.TEXTURE_3D, bdnfTexture);
+        gl.uniform1i(gl.getUniformLocation(volProgram, "u_bdnfVolume"), 1);
+        
+        gl.uniform3f(gl.getUniformLocation(volProgram, "u_cameraPos"), 0.5, 0.5, -1.25);
+        gl.uniformMatrix4fv(gl.getUniformLocation(volProgram, "u_invModelViewProj"), false, state.invModelViewProj);
+        gl.uniformMatrix4fv(gl.getUniformLocation(volProgram, "u_modelMatrixInverse"), false, state.modelMatrixInverse);
+        
+        gl.uniform1f(gl.getUniformLocation(volProgram, "u_clipX"), state.clipX);
+        gl.uniform1f(gl.getUniformLocation(volProgram, "u_clipY"), state.clipY);
+        gl.uniform1f(gl.getUniformLocation(volProgram, "u_clipZ"), state.clipZ);
+        gl.uniform1f(gl.getUniformLocation(volProgram, "u_window"), state.windowVal);
+        gl.uniform1f(gl.getUniformLocation(volProgram, "u_level"), state.levelVal);
+        gl.uniform1i(gl.getUniformLocation(volProgram, "u_renderMode"), state.renderMode);
+        gl.uniform1f(gl.getUniformLocation(volProgram, "u_time"), timeSec);
+        gl.uniform1f(gl.getUniformLocation(volProgram, "u_bdnfIntensity"), state.bdnfIntensity);
+        
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
+        gl.bindVertexArray(null);
+        
+        if (state.renderMode === 2 || state.renderMode === 1) {
+            gl.useProgram(lineProgram);
+            gl.uniformMatrix4fv(gl.getUniformLocation(lineProgram, "u_modelViewProj"), false, mvp);
+            gl.uniform1f(gl.getUniformLocation(lineProgram, "u_time"), timeSec);
+            
+            gl.bindVertexArray(lineVAO);
+            const pointsPerTract = 25;
+            const numTracts = lineCount / pointsPerTract;
+            for (let t = 0; t < numTracts; t++) {
+                gl.drawArrays(gl.LINE_STRIP, t * pointsPerTract, pointsPerTract);
+            }
+            gl.bindVertexArray(null);
+        }
+        
+        requestAnimationFrame(renderLoop);
+    }
+    
+    function identity() {
+        return new Float32Array([
+            1, 0, 0, 0,
+            0, 1, 0, 0,
+            0, 0, 1, 0,
+            0, 0, 0, 1
+        ]);
+    }
+
+    function renderSurgicalControlsCard() {
+        return `
+            <div class="glass-card surgical-controls-card hud-transition" style="pointer-events: auto;">
+                <h3 style="font-size: 1.1rem; font-weight: 900; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;" class="mono text-purple-300">
+                    <i data-lucide="sliders" class="w-4 h-4 text-purple-400"></i>
+                    ${state.language === 'bg' ? '3D ДИГИТАЛЕН СКАЛПЕЛ' : '3D DIGITAL SCALPEL'}
+                </h3>
+                
+                <div style="margin-bottom: 16px;">
+                    <div style="font-size: 0.7rem; color: var(--text-secondary); margin-bottom: 6px;" class="mono">RENDER MODE</div>
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <button onclick="setRenderMode(0)" class="tab-btn ${state.renderMode === 0 ? 'active' : ''}" style="padding: 6px 12px; font-size: 0.75rem; text-align: left; width: 100%;">
+                            ANATOMICAL VOLUME
+                        </button>
+                        <button onclick="setRenderMode(1)" class="tab-btn ${state.renderMode === 1 ? 'active' : ''}" style="padding: 6px 12px; font-size: 0.75rem; text-align: left; width: 100%;">
+                            BDNF NEUROPLASTICITY
+                        </button>
+                        <button onclick="setRenderMode(2)" class="tab-btn ${state.renderMode === 2 ? 'active' : ''}" style="padding: 6px 12px; font-size: 0.75rem; text-align: left; width: 100%;">
+                            DTI TRACTOGRAPHY (3D LINES)
+                        </button>
+                    </div>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid rgba(181,95,230,0.08); padding-bottom: 8px;">
+                    <span style="font-size: 0.75rem; color: var(--text-secondary);" class="mono">AUTO-SPIN (60 FPS)</span>
+                    <input type="checkbox" ${state.autoRotate ? 'checked' : ''} onchange="toggleAutoRotate(this)" style="cursor: pointer;" />
+                </div>
+
+                <div style="margin-bottom: 12px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.7rem; margin-bottom: 4px;" class="mono">
+                        <span>DENSITY WINDOW (CONTRAST)</span>
+                        <span style="color: var(--neon-purple);">${state.windowVal.toFixed(2)}</span>
+                    </div>
+                    <input type="range" min="0.1" max="1.5" step="0.05" value="${state.windowVal}" oninput="updateVolParam('windowVal', this.value)" style="width: 100%; cursor: pointer;" />
+                </div>
+                <div style="margin-bottom: 16px; border-bottom: 1px solid rgba(181,95,230,0.08); padding-bottom: 8px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.7rem; margin-bottom: 4px;" class="mono">
+                        <span>DENSITY LEVEL (BRIGHTNESS)</span>
+                        <span style="color: var(--neon-purple);">${state.levelVal.toFixed(2)}</span>
+                    </div>
+                    <input type="range" min="0.05" max="0.9" step="0.05" value="${state.levelVal}" oninput="updateVolParam('levelVal', this.value)" style="width: 100%; cursor: pointer;" />
+                </div>
+
+                <div style="margin-bottom: 8px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.7rem; margin-bottom: 4px;" class="mono">
+                        <span>SAGITTAL CLIP (X-AXIS)</span>
+                        <span style="color: var(--neon-blue);">${state.clipX.toFixed(2)}</span>
+                    </div>
+                    <input type="range" min="0.0" max="1.0" step="0.02" value="${state.clipX}" oninput="updateVolParam('clipX', this.value)" style="width: 100%; cursor: pointer;" />
+                </div>
+                <div style="margin-bottom: 8px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.7rem; margin-bottom: 4px;" class="mono">
+                        <span>CORONAL CLIP (Y-AXIS)</span>
+                        <span style="color: var(--neon-pink);">${state.clipY.toFixed(2)}</span>
+                    </div>
+                    <input type="range" min="0.0" max="1.0" step="0.02" value="${state.clipY}" oninput="updateVolParam('clipY', this.value)" style="width: 100%; cursor: pointer;" />
+                </div>
+                <div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.7rem; margin-bottom: 4px;" class="mono">
+                        <span>AXIAL CLIP (Z-AXIS)</span>
+                        <span style="color: var(--neon-amber);">${state.clipZ.toFixed(2)}</span>
+                    </div>
+                    <input type="range" min="0.0" max="1.0" step="0.02" value="${state.clipZ}" oninput="updateVolParam('clipZ', this.value)" style="width: 100%; cursor: pointer;" />
+                </div>
+            </div>
+        `;
+    }
+
+    function renderSurgicalCoordsCard() {
+        if (!state.clickCoords) return '';
+        return `
+            <div class="glass-card surgical-coords-card scale-in" style="pointer-events: auto;">
+                <h3 style="font-size: 1.0rem; font-weight: 900; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; color: var(--neon-emerald);" class="mono">
+                    <i data-lucide="crosshair" class="w-4 h-4 text-emerald-400"></i>
+                    ${state.language === 'bg' ? 'AFFINE LOCK КООРДИНАТИ' : 'AFFINE LOCK COORDINATES'}
+                </h3>
+                <div style="display: flex; flex-direction: column; gap: 6px;" class="mono">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.75rem; border-bottom: 1px solid rgba(0, 255, 170, 0.08); padding-bottom: 4px;">
+                        <span style="color: var(--text-secondary);">X (SAGITTAL):</span>
+                        <span style="font-weight: 700; color: #fff;">${state.clickCoords.x.toFixed(1)} mm</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.75rem; border-bottom: 1px solid rgba(0, 255, 170, 0.08); padding-bottom: 4px;">
+                        <span style="color: var(--text-secondary);">Y (CORONAL):</span>
+                        <span style="font-weight: 700; color: #fff;">${state.clickCoords.y.toFixed(1)} mm</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.75rem; border-bottom: 1px solid rgba(0, 255, 170, 0.08); padding-bottom: 4px;">
+                        <span style="color: var(--text-secondary);">Z (AXIAL):</span>
+                        <span style="font-weight: 700; color: #fff;">${state.clickCoords.z.toFixed(1)} mm</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.75rem; border-bottom: 1px solid rgba(0, 255, 170, 0.08); padding-bottom: 4px;">
+                        <span style="color: var(--text-secondary);">VOXEL DENSITY:</span>
+                        <span style="font-weight: 700; color: var(--neon-emerald);">${state.clickCoords.density} HU</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.75rem;">
+                        <span style="color: var(--text-secondary);">CLINICAL REF:</span>
+                        <span style="font-weight: 700; color: var(--neon-pink);">ISOCENTER</span>
+                    </div>
+                </div>
+                <button onclick="clearClickCoords()" class="tab-btn" style="border-color: rgba(255,59,111,0.3); color: var(--neon-red); padding: 4px 8px; font-size: 0.65rem; margin-top: 10px; width: 100%;">
+                    CLEAR SELECTION
+                </button>
+            </div>
+        `;
+    }
+
+    function renderHudToggleButton() {
+        return `
+            <button onclick="toggleHudVisibility()" class="tab-btn" style="position: fixed; bottom: 40px; right: 40px; z-index: 100; border-color: var(--neon-purple); background: var(--purple-glass); display: flex; align-items: center; gap: 8px; box-shadow: 0 0 20px rgba(181, 95, 230, 0.3); pointer-events: auto;">
+                <i data-lucide="${state.hudVisible ? 'eye-off' : 'eye'}" class="w-4 h-4 text-purple-400"></i>
+                <span>${state.hudVisible ? (state.language === 'bg' ? 'Скрий Телеметрията' : 'Hide Telemetry HUD') : (state.language === 'bg' ? 'Покажи Телеметрията' : 'Show Telemetry HUD')}</span>
+            </button>
+        `;
+    }
 
         function injectMetabolicAnomaly() {
             state.ph = 7.12;
