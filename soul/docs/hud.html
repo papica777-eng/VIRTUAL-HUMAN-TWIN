@@ -19,23 +19,23 @@
 
     <style>
         :root {
-            --bg-color: #04010a;
-            --purple-glass: rgba(18, 9, 36, 0.55);
-            --purple-border: rgba(181, 95, 230, 0.15);
-            --purple-glow: rgba(181, 95, 230, 0.25);
+            --bg-color: #060608;
+            --purple-glass: rgba(12, 12, 16, 0.75);
+            --purple-border: rgba(255, 255, 255, 0.05);
+            --purple-glow: rgba(99, 102, 241, 0.06);
 
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
+            --text-primary: #f4f4f5;
+            --text-secondary: #8e9196;
 
-            --neon-purple: #b55fe6;
-            --neon-pink: #ff2a85;
-            --neon-emerald: #00ffaa;
-            --neon-emerald-glow: rgba(0, 255, 170, 0.3);
-            --neon-blue: #00f0ff;
-            --neon-blue-glow: rgba(0, 240, 255, 0.3);
-            --neon-red: #ff3b6f;
-            --neon-red-glow: rgba(255, 59, 111, 0.4);
-            --neon-amber: #ffb800;
+            --neon-purple: #6366f1;
+            --neon-pink: #d946ef;
+            --neon-emerald: #10b981;
+            --neon-emerald-glow: rgba(16, 185, 129, 0.06);
+            --neon-blue: #0ea5e9;
+            --neon-blue-glow: rgba(14, 165, 233, 0.06);
+            --neon-red: #ef4444;
+            --neon-red-glow: rgba(239, 68, 68, 0.08);
+            --neon-amber: #f59e0b;
         }
 
         * {
@@ -43,7 +43,6 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Outfit', sans-serif;
-            cursor: crosshair;
         }
 
         body {
@@ -51,9 +50,10 @@
             color: var(--text-primary);
             overflow-x: hidden;
             background-image:
-                radial-gradient(circle at 50% -20%, rgba(181, 95, 230, 0.18) 0%, transparent 60%),
-                radial-gradient(circle at 10% 80%, rgba(0, 240, 255, 0.05) 0%, transparent 40%),
-                radial-gradient(circle at 90% 70%, rgba(255, 42, 133, 0.03) 0%, transparent 40%);
+                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                radial-gradient(circle at 50% -20%, rgba(99, 102, 241, 0.08) 0%, transparent 60%);
+            background-size: 40px 40px, 40px 40px, 100% 100%;
             background-attachment: fixed;
             min-height: 100vh;
             transition: background 1s ease, background-color 1s ease;
@@ -61,51 +61,41 @@
 
         .mono {
             font-family: 'JetBrains Mono', monospace;
+            letter-spacing: -0.2px;
         }
 
-        /* Sovereign Purple Glassmorphism */
+        /* Sovereign Slate Glassmorphism */
         .glass-card {
             background: var(--purple-glass);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border: 1px solid var(--purple-border);
-            border-radius: 20px;
+            border-radius: 16px;
             padding: 24px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.45);
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
             overflow: hidden;
         }
 
         .glass-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(181, 95, 230, 0.05), transparent);
-            transition: 0.8s;
-        }
-
-        .glass-card:hover::before {
-            left: 100%;
+            display: none;
         }
 
         .glass-card:hover {
-            border-color: rgba(181, 95, 230, 0.35);
-            box-shadow: 0 0 35px var(--purple-glow);
-            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.55), 0 0 20px var(--purple-glow);
+            transform: translateY(-1px);
         }
 
         .glass-card.glow-emerald:hover {
-            border-color: var(--neon-emerald);
-            box-shadow: 0 0 35px var(--neon-emerald-glow);
+            border-color: rgba(16, 185, 129, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.55), 0 0 20px var(--neon-emerald-glow);
         }
 
         .glass-card.glow-red:hover {
-            border-color: var(--neon-red);
-            box-shadow: 0 0 35px var(--neon-red-glow);
+            border-color: rgba(239, 68, 68, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.55), 0 0 20px var(--neon-red-glow);
         }
 
         /* Status indicators */
@@ -128,17 +118,17 @@
             border-radius: 50%;
             border: 2px solid currentColor;
             opacity: 0;
-            animation: ripple 1.8s infinite ease-out;
+            animation: ripple 2.2s infinite ease-out;
         }
 
         @keyframes ripple {
             0% {
                 transform: scale(0.6);
-                opacity: 1;
+                opacity: 0.8;
             }
 
             100% {
-                transform: scale(2.2);
+                transform: scale(2.0);
                 opacity: 0;
             }
         }
@@ -170,17 +160,17 @@
 
         /* Custom Scrollbars */
         ::-webkit-scrollbar {
-            width: 5px;
-            height: 5px;
+            width: 4px;
+            height: 4px;
         }
 
         ::-webkit-scrollbar-track {
-            background: #020105;
+            background: #040406;
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #1f1430;
-            border-radius: 3px;
+            background: #1c1c24;
+            border-radius: 2px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
@@ -189,14 +179,14 @@
 
         /* Professional tab buttons */
         .tab-btn {
-            background: rgba(181, 95, 230, 0.02);
-            border: 1px solid var(--purple-border);
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             color: var(--text-secondary);
-            padding: 14px 28px;
-            border-radius: 12px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            letter-spacing: 1.5px;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1px;
             text-transform: uppercase;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -204,103 +194,93 @@
         .tab-btn.active {
             border-color: var(--neon-purple);
             color: #fff;
-            background: rgba(181, 95, 230, 0.12);
-            box-shadow: 0 0 25px rgba(181, 95, 230, 0.2);
-            transform: translateY(-1px);
+            background: rgba(99, 102, 241, 0.08);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.1);
+            transform: translateY(0);
         }
 
         .tab-btn:hover:not(.active) {
             color: #fff;
-            border-color: rgba(181, 95, 230, 0.3);
-            background: rgba(181, 95, 230, 0.05);
+            border-color: rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.02);
         }
 
         /* High-glowing Cure Trigger button */
         .cure-btn {
-            background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
+            background: linear-gradient(135deg, #4f46e5, #3b82f6);
             color: #fff;
-            font-weight: 900;
-            font-size: 0.95rem;
+            font-weight: 600;
+            font-size: 0.85rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
             border: none;
-            padding: 16px 42px;
-            border-radius: 50px;
-            box-shadow: 0 0 35px rgba(181, 95, 230, 0.35);
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 14px 36px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(79, 70, 229, 0.18);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             display: inline-flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             position: relative;
             overflow: hidden;
         }
 
         .cure-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
-            transition: 0.6s;
+            display: none;
         }
 
         .cure-btn:hover {
-            transform: scale(1.04) translateY(-2px);
-            box-shadow: 0 0 45px rgba(0, 255, 170, 0.6);
-            background: linear-gradient(135deg, var(--neon-emerald), var(--neon-blue));
-            color: #020105;
-        }
-
-        .cure-btn:hover::before {
-            left: 100%;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 24px rgba(16, 185, 129, 0.25);
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
         }
 
         .cure-btn:active {
-            transform: scale(0.97) translateY(1px);
+            transform: translateY(1px);
         }
 
         .glow-text-emerald {
-            text-shadow: 0 0 15px var(--neon-emerald-glow);
+            text-shadow: 0 0 10px rgba(16, 185, 129, 0.15);
         }
 
         .glow-text-purple {
-            text-shadow: 0 0 15px var(--purple-glow);
+            text-shadow: 0 0 10px rgba(99, 102, 241, 0.15);
         }
 
         .glow-text-blue {
-            text-shadow: 0 0 15px var(--neon-blue-glow);
+            text-shadow: 0 0 10px rgba(14, 165, 233, 0.15);
         }
 
         .glow-text-red {
-            text-shadow: 0 0 15px var(--neon-red-glow);
+            text-shadow: 0 0 10px rgba(239, 68, 68, 0.15);
         }
 
         /* Code display styling */
         .code-container {
-            background: #080310;
-            border: 1px solid rgba(181, 95, 230, 0.08);
-            border-radius: 14px;
+            background: #030304;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 12px;
             padding: 20px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             line-height: 1.6;
-            color: #b2ccd6;
+            color: #a1a1aa;
             overflow-x: auto;
         }
 
         /* Emergency theme overrides */
         .emergency-theme {
-            background-color: #0b0104 !important;
+            background-color: #080304 !important;
             background-image:
-                radial-gradient(circle at 50% -20%, rgba(255, 59, 111, 0.18) 0%, transparent 60%),
-                radial-gradient(circle at 10% 80%, rgba(255, 184, 0, 0.03) 0%, transparent 40%) !important;
+                linear-gradient(rgba(255, 255, 255, 0.01) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.01) 1px, transparent 1px),
+                radial-gradient(circle at 50% -20%, rgba(239, 68, 68, 0.08) 0%, transparent 60%) !important;
         }
 
         .emergency-card {
-            border-color: var(--neon-red) !important;
-            box-shadow: 0 0 35px var(--neon-red-glow) !important;
-            background: rgba(22, 6, 12, 0.85) !important;
+            border-color: rgba(239, 68, 68, 0.3) !important;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(239, 68, 68, 0.08) !important;
+            background: rgba(14, 12, 12, 0.85) !important;
         }
 
         @keyframes pulse {
@@ -309,7 +289,7 @@
             }
 
             50% {
-                transform: scale(1.015);
+                transform: scale(1.008);
             }
 
             100% {
@@ -318,7 +298,7 @@
         }
 
         .animate-pulse {
-            animation: pulse 2.2s infinite ease-in-out;
+            animation: pulse 2.5s infinite ease-in-out;
         }
 
         /* Perfectly balanced dashboard grid layout */
@@ -353,20 +333,20 @@
             padding: 16px;
             text-align: left;
             color: var(--text-secondary);
-            border-bottom: 2px solid rgba(181, 95, 230, 0.15);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.05);
             font-weight: 600;
             letter-spacing: 0.5px;
         }
 
         .sovereign-table td {
             padding: 16px;
-            border-bottom: 1px solid rgba(181, 95, 230, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
             vertical-align: middle;
             transition: background 0.3s ease;
         }
 
         .sovereign-table tr:hover td {
-            background: rgba(181, 95, 230, 0.03);
+            background: rgba(255, 255, 255, 0.01);
         }
 
         @keyframes blink {
@@ -399,8 +379,8 @@
             z-index: 50;
             max-height: calc(100vh - 160px);
             overflow-y: auto;
-            border-color: rgba(181, 95, 230, 0.3) !important;
-            box-shadow: 0 0 30px rgba(181, 95, 230, 0.15) !important;
+            border-color: rgba(255, 255, 255, 0.08) !important;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(99, 102, 241, 0.08) !important;
         }
 
         .surgical-coords-card {
@@ -409,8 +389,8 @@
             left: 40px;
             width: 320px;
             z-index: 50;
-            border-color: var(--neon-emerald) !important;
-            box-shadow: 0 0 30px var(--neon-emerald-glow) !important;
+            border-color: rgba(16, 185, 129, 0.2) !important;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), 0 0 20px var(--neon-emerald-glow) !important;
         }
 
         /* Sovereign pointer events mapping */
@@ -479,7 +459,7 @@
             hebbianConfidence: 8.8,
             bdnfLevel: 1.0,
             glut4Upregulation: 1.0,
-            fesStatus: "STANDBY",
+            fesStatus: "EEG_STANDBY",
             gaitPhase: 0,
             catuskotiState: "SYNERGY",
             fesActiveChannels: {
@@ -489,9 +469,9 @@
                 hamstring: 0
             },
             logs: [
-                { time: "12:12:00", bg: "INIT: AETERNA VHT ядрото е онлайн. Knox офлайн пясъчник е активиран.", en: "INIT: AETERNA VHT core online. Knox offline sandbox engaged." },
-                { time: "12:12:01", bg: "INGEST: Заредени 900 близнака от Националния регистър на България за 2015 г.", en: "INGEST: Loaded 900 patient twins from Bulgaria 2015 national registry." },
-                { time: "12:12:02", bg: "TELEMETRY: Активно високоентропийно състояние (Ентропия = 3.56). Некомпенсирани глюкозни криви.", en: "TELEMETRY: High-entropy state active (Entropy = 3.56). Uncompensated glucose curves." }
+                { time: "12:12:00", bg: "INIT: AETERNA VHT ядрото за ОНКОЛОГИЯ е онлайн. Knox офлайн пясъчник е активиран.", en: "INIT: AETERNA VHT ONCOLOGY core online. Knox offline sandbox engaged." },
+                { time: "12:12:01", bg: "INGEST: Заредени 900 близнака с глиобластом от Европейските онко-регистри (2015-2026).", en: "INGEST: Loaded 900 glioblastoma patient twins from European Cancer Registries (2015-2026)." },
+                { time: "12:12:02", bg: "TELEMETRY: Активно високоентропийно неопластично състояние (Обем = 24.50 cm³). Некомпенсиран глутаматен шок.", en: "TELEMETRY: High-entropy neoplastic growth active (Volume = 24.50 cm³). Uncompensated glutamate curves." }
             ],
             hudVisible: true,
             clipX: 1.0,
@@ -510,19 +490,19 @@
         };
 
         const rawChaoticData = [
-            { val: 12.4 }, { val: 14.8 }, { val: 16.5 },
-            { val: 15.2 }, { val: 16.1 }, { val: 13.2 },
-            { val: 14.9 }, { val: 15.8 }, { val: 11.2 },
-            { val: 13.9 }, { val: 16.2 }, { val: 12.8 },
-            { val: 14.2 }
+            { val: 24.5 }, { val: 26.8 }, { val: 28.5 },
+            { val: 27.2 }, { val: 28.1 }, { val: 25.2 },
+            { val: 26.9 }, { val: 27.8 }, { val: 23.2 },
+            { val: 25.9 }, { val: 28.2 }, { val: 24.8 },
+            { val: 26.2 }
         ];
 
         const curedData = [
-            { val: 4.80 }, { val: 4.80 }, { val: 4.80 },
-            { val: 4.80 }, { val: 4.80 }, { val: 4.80 },
-            { val: 4.80 }, { val: 4.80 }, { val: 4.80 },
-            { val: 4.80 }, { val: 4.80 }, { val: 4.80 },
-            { val: 4.80 }
+            { val: 0.00 }, { val: 0.00 }, { val: 0.00 },
+            { val: 0.00 }, { val: 0.00 }, { val: 0.00 },
+            { val: 0.00 }, { val: 0.00 }, { val: 0.00 },
+            { val: 0.00 }, { val: 0.00 }, { val: 0.00 },
+            { val: 0.00 }
         ];
 
         let currentGlucose = [...rawChaoticData];
@@ -538,114 +518,114 @@
 
         const translations = {
             bg: {
-                hudTitle: "AETERNA // SOVEREIGN VHT HUD",
+                hudTitle: "AETERNA // SOVEREIGN NEURO-ONCOLOGY HUD",
                 neuralLink: "НЕВРОННА ВРЪЗКА:",
                 connected: "СВЪРЗАНА",
                 severed: "ПРЕКЪСНАТА",
                 knoxHeartbeat: "KNOX HEARTBEAT:",
-                footerText: "AETERNA v4.0 Substrate // ZERO-ENTROPY BIOLOGICAL CURE PROTOCOL // 2026",
-                tabScientific: "Научен Панел (Лекари)",
+                footerText: "AETERNA v4.0 Substrate // ZERO-ENTROPY ONCOLOGICAL CURE PROTOCOL // 2026",
+                tabScientific: "Научен Панел (Онколози)",
                 tabCohort: "Кохортно Изследване (900 Близнаци)",
                 tabPillars: "Четирите Стълба на Сигурност",
-                tabFes: "BCI-FES Невро-Локомоция",
-                btnInduceCure: "ИНДУЦИРАНЕ НА БИОЛОГИЧНО ИЗЛЕКУВАНЕ",
-                btnRestoreChaos: "ВЪЗСТАНОВЯВАНЕ НА ХАОСА",
+                tabFes: "BCI-EEG Невро-Модулация",
+                btnInduceCure: "ИНДУЦИРАНЕ НА ТУМОРНА РЕВЕРСИЯ",
+                btnRestoreChaos: "ВЪЗСТАНОВЯВАНЕ НА НЕОПЛАЗМАТА",
                 btnResetSimulation: "RESET SIMULATION",
-                btnInjectSpasm: "ИНЖЕКТИРАНЕ НА СПАЗЪМ",
-                btnInjectAnomaly: "INJECT METABOLIC ANOMALY",
-                btnStartFes: "СТАРТ НА CLOSED-LOOP FES",
-                btnStopFes: "СПИРАНЕ НА CLOSED-LOOP FES",
+                btnInjectSpasm: "ИНЖЕКТИРАНЕ НА ЕПИ-ПРИСТЪП",
+                btnInjectAnomaly: "ИНЖЕКТИРАНЕ НА ГЛУТАМАТЕН ШОК",
+                btnStartFes: "СТАРТ НА CLOSED-LOOP EEG",
+                btnStopFes: "СПИРАНЕ НА CLOSED-LOOP EEG",
                 criticalAlert: "⚠️ КРИТИЧНА ТРЕВОГА",
-                lockoutEnforced: "AURA SOVEREIGN METABOLIC LOCKOUT ENFORCED",
-                lockoutDesc: "Засечено критично отклонение от <span style=\"color: #fff; font-weight: bold;\" id=\"anomaly-zscore\">{zScore}σ</span> в субстрата на пациента (Layer 4 Z-score Limit).<br><br>Автоматичните инсулинови/пептидни помпи са <span style=\"color: #ff0055; font-weight: bold;\">ХАРДУЕРНО БЛОКИРАНИ</span> чрез Samsung Knox TEE криптографски подпис на апаратно ниво за предотвратяване на фатален медицински изход.",
-                emergencyModeActive: "EMERGENCY LOCAL MODE ACTIVE // NEURAL LINK SEVERED",
-                emergencyBannerDesc: "Системата премина в авариен офлайн режим. Всички команди се подписват хардуерно от **Samsung Knox TEE** директно на силиция, гарантирайки поддържането на безопасни дози и предотвратяване на грешки.",
-                auraShieldActive: "🛡️ AURA INTEGRITY SHIELD ACTIVE",
-                auraShieldCompromised: "🛡️ AURA INTEGRITY SHIELD COMPROMISED",
+                lockoutEnforced: "AURA SOVEREIGN SEIZURE LOCKOUT ENFORCED",
+                lockoutDesc: "Засечено критично отклонение от <span style=\"color: #fff; font-weight: bold;\" id=\"anomaly-zscore\">{zScore}σ</span> в перитуморалните нива на глутамат (Layer 4 Z-score Limit).<br><br>Автоматичните невро-модулатори са <span style=\"color: #ff0055; font-weight: bold;\">ХАРДУЕРНО БЛОКИРАНИ</span> чрез Samsung Knox TEE подпис за предотвратяване на ексайтотоксичност и фатален статус епилептикус.",
+                emergencyModeActive: "EMERGENCY LOCAL ONCOLOGY MODE ACTIVE // NEURAL LINK SEVERED",
+                emergencyBannerDesc: "Системата премина в авариен локален режим. Всички команди за невро-стимулация се подписват хардуерно от **Samsung Knox TEE** директно на силиция за предотвратяване на туморна хипервъзбудимост.",
+                auraShieldActive: "🛡️ AURA ONCOLOGY SHIELD ACTIVE",
+                auraShieldCompromised: "🛡️ AURA ONCOLOGY SHIELD COMPROMISED",
                 shieldEnforced: "LAYER 4 ENFORCED",
                 shieldLockout: "LOCKOUT ACTIVE",
-                statusActiveDesc: "Всички жизнени показатели са математически проверени и потвърдени спрямо критичния праг от <span style=\"color: #fff; font-weight: 800;\">3.0σ</span>.",
-                statusCompromisedDesc: "Засечено критично излизане от нормите за безопасност. Автоматичното дозиране е преустановено криптографски.",
+                statusActiveDesc: "Всички невро-онкологични жизнени показатели са математически проверени и потвърдени спрямо критичния праг от <span style=\"color: #fff; font-weight: 800;\">3.0σ</span>.",
+                statusCompromisedDesc: "Засечено критично излизане от нормите за невронна безопасност. Автоматичното стимулационно дозиране е преустановено криптографски.",
                 bloodPh: "pH НА КРЪВТА",
                 normalPh: "Норма: 7.35 - 7.45",
                 oxygenSat: "КИСЛОРОДНО НАСИЩАНЕ (O₂)",
                 normalO2: "Норма: 95% - 100%",
-                metabolicZscore: "METABOLIC Z-SCORE",
+                metabolicZscore: "Z-SCORE РИСК ОТ ГЪРЧОВЕ",
                 criticalZscore: "Критичен праг: >3.0σ",
-                glycemicTrajectory: "Гликемична траектория на Ден 2 (Steady-State)",
-                glycemicDesc: "Метаболитна крива на пациент P-402 при симулация. Зелената зона (4.0 - 10.0 mmol/L) е клиничната норма.",
+                glycemicTrajectory: "Крива на туморния регрес на Ден 2 (Steady-State)",
+                glycemicDesc: "Симулиран обем на глиобластома (GBM) при приложен метаболитен блок. Нормата е пълна реверсия (0.00 cm³).",
                 globalEntropy: "GLOBAL ENTROPY",
-                glucoseLabel: "Глюкоза (Glucose)",
-                normalGlucose: "Норма: 4.5 - 6.0 mmol/L",
-                endogenousCpeptide: "Ендогенен C-Пептид",
-                normalCpeptide: "Норма: 0.26 - 1.39 nmol/L",
-                homaIrIndex: "HOMA-IR Индекс",
-                normalHomaIr: "Норма: < 1.0 (Сензитивност)",
+                glucoseLabel: "Обем на тумора (GBM)",
+                normalGlucose: "Норма: 0.00 cm³",
+                endogenousCpeptide: "Интегритет на КМБ (BBB)",
+                normalCpeptide: "Норма: >90% (Защитена)",
+                homaIrIndex: "Глутаматна Токсичност",
+                normalHomaIr: "Норма: < 1.00 mM",
                 patientProfile: "Описание на Пациента",
                 patientLabel: "ПАЦИЕНТ:",
-                ageWeightLabel: "ВЪЗРАСТ / ТЕГЛО:",
-                ageWeightVal: "9 години / 32 кг",
-                bypassStateLabel: "БАЙПАС СЪСТОЯНИЕ:",
-                bypassAtrophy: "SEVERE_PANCREATIC_ATROPHY",
-                bypassReversion: "BIOLOGICAL_REVERSION",
-                activeInsulinLabel: "АКТИВЕН ИНСУЛИН:",
-                insulinAuto: "0.00 U (Автоложна регулация)",
-                insulinExternal: "4.50 U (Външна помпа)",
+                ageWeightLabel: "ВЪЗРАСТ / ДИАГНОЗА:",
+                ageWeightVal: "42 години / Мултиформен Глиобластом (GBM)",
+                bypassStateLabel: "ТЕРАПЕВТИЧЕН БАЙПАС:",
+                bypassAtrophy: "TUMOR_NEOPLASM_ACTIVE",
+                bypassReversion: "ONCOLOGICAL_REVERSION",
+                activeInsulinLabel: "АКТИВЕН ИНХИБИТОР:",
+                insulinAuto: "Pax4-Sovereign Block (0.00 cm³)",
+                insulinExternal: "Temozolomide + Metabolic Block",
                 clinicalConclusion: "КЛИНИЧЕН ИЗВОД:",
-                conclusionCured: "Появата на ендогенен C-пептид (0.90 nmol/L) в съчетание с пълно периферно възстановяване на инсулиновата чувствителност (HOMA-IR = 1.0) бележи успешна Pax4-индуцирана бета-клетъчна регенерация и автологична терапия.",
-                conclusionChaos: "Пациентът е в хаотична метаболитна декомпенсация с абсолютен инсулинов дефицит. Индуцирайте биологичния рестарт чрез централния бутон за възстановяване.",
-                telemetryLog: "LIVE_SUBSTRATE_TELEMETRY_LOG",
-                engConsole: "ENGINEERING CONSOLE // TEST INJECTORS",
-                engConsoleDesc: "Симулиране на критична метаболитна декомпенсация за стрес-тест на Layer 4 безопасността.",
-                cohortTitle: "Сравнителен кохортен екран (900 виртуални близнаци)",
-                cohortDesc: "Скалиране на автоложното излекуване v4.0 върху цялата демографска извадка на Националния регистър за 2015 г.",
+                conclusionCured: "Успешното блокиране на туморния метаболизъм (0.00 cm³) в съчетание с пълно периферно възстановяване на невронната стабилност бележи успешна Sovereign-индуцирана онкологична реверсия и автологична терапия.",
+                conclusionChaos: "Пациентът е в състояние на прогресираща неоплазма с активна глутаматна токсичност и висок риск от гърчове. Индуцирайте биологичния рестарт чрез централния бутон за възстановяване.",
+                telemetryLog: "LIVE_ONCOLOGY_TELEMETRY_LOG",
+                engConsole: "CLINICAL CONSOLE // TUMOR TEST INJECTORS",
+                engConsoleDesc: "Симулиране на критична глутаматна екскурзия и тумор-индуциран епилептичен спазъм за стрес-тест на Layer 4 безопасността.",
+                cohortTitle: "Сравнителен кохортен екран (900 виртуални онкологични близнаци)",
+                cohortDesc: "Скалиране на автоложното излекуване v4.0 върху цялата демографска извадка на Глиобластомните кохорти за 2015-2026 г.",
                 ageGroup: "Възрастова Група",
                 count: "Брой",
-                baselineTir: "Базов TIR (2015)",
-                conventionalTir: "Конвенционален TIR",
-                v3Tir: "VHT v3.0 TIR",
-                v4Tir: "v4.0 Биологичен TIR",
-                baselineHypo: "Базови Хипогликемии",
-                v4Hypo: "v4.0 Хипогликемии",
-                groupPediatric: "0-14 (Педиатричен)",
+                baselineTir: "Базова Преживяемост",
+                conventionalTir: "Конвенционална Преживяемост",
+                v3Tir: "VHT v3.0 Преживяемост",
+                v4Tir: "v4.0 Биологична Преживяемост",
+                baselineHypo: "Базови Епи-пристъпи",
+                v4Hypo: "v4.0 Епи-пристъпи",
+                groupPediatric: "0-14 (Педиатричен GBM)",
                 groupYouth: "15-44 (Младежка възраст)",
                 groupMiddle: "45-59 (Средна възраст)",
                 groupMature: "60-74 (Зряла възраст)",
                 groupElderly: "75-89 (Старческа възраст)",
                 groupCentenarian: "90+ (Дълголетници)",
                 pillar1Num: "СТЪЛБ 1",
-                pillar1Title: "Фармакотерапевтичен Синхрон",
-                pillar1Desc: "Математическа защита блокира опасни дози при концентрирани форми на прандиален инсулин (U-200, U-300) без съответна механична калибрация.",
+                pillar1Title: "Метаболитен Контрол",
+                pillar1Desc: "Блокиране на глутаминовите и гликолитичните пътища на глиобластомните клетки чрез изключване на Warburg ефекта без системна токсичност.",
                 pillar2Num: "СТЪЛБ 2",
-                pillar2Title: "Диететичен Контрол",
-                pillar2Desc: "Превантивно 15% намаление на въглехидратния коефициент (ICR) сутрин за блокиране на Dawn Phenomenon резистентността.",
+                pillar2Title: "Пропускливост на КМБ",
+                pillar2Desc: "Математическо моделиране на transport-ните протеини за оптимизиране на преминаването на лекарства през Кръвно-Мозъчната Бариера.",
                 pillar3Num: "СТЪЛБ 3",
-                pillar3Title: "Физическа Активност",
-                pillar3Desc: "Моделиране на GLUT4 транслокацията при аеробни спортове. Превантивно 30% до 50% свиване на болуса за предотвратяване на хипогликемии.",
+                pillar3Title: "Невропластичен Резонанс",
+                pillar3Desc: "Активиране на AMPK и CaMKII сигнализацията за предпазване на здравата съседна мозъчна тъкан от ексайтотоксична дегенерация.",
                 pillar4Num: "СТЪЛБ 4",
                 pillar4Title: "AURA Integrity Guard",
-                pillar4Desc: "Реалновремево изчисляване на Z-Score за pH и кислородно насищане. Превишаването на 3.0σ прага задейства TEE Knox lockout.",
-                soulCodeTitle: "Физиологичен код на безопасност (SOUL Safety Gate)",
-                fesTitle: "4-Канален Teslasuit Локомоторен Режим",
-                fesDesc: "Динамично картографиране на биоелектрическа стимулация за периферно мускулно активиране и Hebbian pairing.",
-                gaitTimelineTitle: "Времева скала на стъпката (Gait Cycle Phase)",
-                heelStrike: "Удар на пета (0%)",
-                heelOff: "Вдигане на пета (48% spastic check)",
-                swingStart: "Начало на замах (60%)",
-                terminalSwing: "Терминален замах (100%)",
-                neurometabolicEvidence: "Невро-метаболитни доказателства & биомаркери",
-                hebbianPairingTitle: "Биомеханичен трансфер и Hebbian pairing:",
-                hebbianPairingDesc: "Чрез синхронизиране на когнитивното намерение на пациента (BCI) с електрическото задействане на Teslasuit (под 50 ms латентност), системата отключва Hebbian пластичност. Увеличената сила на съкращението задейства AMPK/CaMKII пътищата в скелетните мускули, заставяйки GLUT4 везикулите да се преместят към клетъчната мембрана и да почистят глюкозата самостоятелно.",
-                chronosPredictive: "CHRONOS PREDICTIVE SHIELD & MOTOR RESOLVER",
+                pillar4Desc: "Реалновремево изчисляване на Z-Score за перитуморален глутамат и seizure risk. Превишаването на 3.0σ прага задейства TEE Knox lockout.",
+                soulCodeTitle: "Физиологичен онкологичен код на безопасност (SOUL Safety Gate)",
+                fesTitle: "4-Канален closed-loop EEG Невро-Модулатор",
+                fesDesc: "Реалновремево BCI засичане на епелиптиформени пикове в кората с цел моментално closed-loop предотвратяване на пристъпи.",
+                gaitTimelineTitle: "Времева скала на ЕЕГ ритъма (EEG Wave Cycles)",
+                heelStrike: "Делта Ритъм (0.5 - 4 Hz)",
+                heelOff: "Тета Ритъм (4 - 8 Hz)",
+                swingStart: "Алфа Ритъм (8 - 12 Hz)",
+                terminalSwing: "Бета Ритъм (12 - 30 Hz)",
+                neurometabolicEvidence: "Невро-онкологични биомаркери & доказателства",
+                hebbianPairingTitle: "Невропластичен трансфер и Hebbian pairing:",
+                hebbianPairingDesc: "Чрез синхронизиране на когнитивните вълни с closed-loop BCI стимулация, системата стимулира невронните мрежи да се преконфигурират около туморната зона, ограничавайки огнищата на свръхвъзбудимост и блокирайки пристъпите.",
+                chronosPredictive: "CHRONOS PREDICTIVE SHIELD & SEIZURE RESOLVER",
                 predictiveStatus: "Предиктивен статус:",
                 shieldIntact: "SHIELD INTACT (ACTIVE)",
                 shieldDampened: "DAMPENED (SAFE LOCKOUT)",
-                hebbianConfidenceLabel: "Hebbian BCI Confidence:",
+                hebbianConfidenceLabel: "Hebbian EEG Coherence:",
                 chronosPidLabel: "Chronos PID Gains:",
                 catuskotiStateLabel: "CATUSKOTI STATE",
-                gaitStatusStandby: "STANDBY",
-                gaitStatusStance: "STANCE_PHASE",
-                gaitStatusSwing: "SWING_PHASE",
+                gaitStatusStandby: "EEG_STANDBY",
+                gaitStatusStance: "SYNCHRONIZED",
+                gaitStatusSwing: "SPIKE_SUPPRESSION",
                 vivisectorTitle: "Синтетична Леталност (Vivisector)",
                 vivisectorDesc: "Алгоритъмът GENOME_VIVISECTOR извършва O(1) Inter-Procedural Taint Traversal през метаболитните графове, идентифицирайки критични уязвимости в туморния метаболизъм (Synthetic Lethality) и изолирайки фалшивите сигнали.",
                 state1Title: "STATE 1: TRUE",
@@ -653,94 +633,94 @@
                 state2Title: "STATE 2: FALSE",
                 state2Desc: "Токсичен фалшив сигнал. Метаболитният път е защитен.",
                 state3Title: "STATE 3: PARADOX",
-                state3Desc: "Туморен байпас. Сигналът е пренасочен през алтернативен път.",
+                state3Desc: "Tumor bypass. Сигналът е пренасочен през алтернативен път.",
                 btnVivisector: "СТАРТ НА VIVISECTOR"
             },
             en: {
-                hudTitle: "AETERNA // SOVEREIGN VHT HUD",
+                hudTitle: "AETERNA // SOVEREIGN NEURO-ONCOLOGY HUD",
                 neuralLink: "NEURAL LINK:",
                 connected: "CONNECTED",
                 severed: "SEVERED",
                 knoxHeartbeat: "KNOX HEARTBEAT:",
-                footerText: "AETERNA v4.0 Substrate // ZERO-ENTROPY BIOLOGICAL CURE PROTOCOL // 2026",
-                tabScientific: "Scientific Panel (Physicians)",
+                footerText: "AETERNA v4.0 Substrate // ZERO-ENTROPY ONCOLOGICAL CURE PROTOCOL // 2026",
+                tabScientific: "Scientific Panel (Oncologists)",
                 tabCohort: "Cohort Study (900 Twins)",
                 tabPillars: "Four Pillars of Security",
-                tabFes: "BCI-FES Neuro-Locomotion",
-                btnInduceCure: "INDUCE BIOLOGICAL CURE",
-                btnRestoreChaos: "RESTORE METABOLIC CHAOS",
+                tabFes: "BCI-EEG Neuro-Modulation",
+                btnInduceCure: "INDUCE TUMOR REVERSION",
+                btnRestoreChaos: "RESTORE NEOPLASMATIC CHAOS",
                 btnResetSimulation: "RESET SIMULATION",
-                btnInjectSpasm: "INJECT MUSCLE SPASM",
-                btnInjectAnomaly: "INJECT METABOLIC ANOMALY",
-                btnStartFes: "START CLOSED-LOOP FES",
-                btnStopFes: "STOP CLOSED-LOOP FES",
+                btnInjectSpasm: "INJECT EPILEPTIC SEIZURE",
+                btnInjectAnomaly: "INJECT GLUTAMATE ANOMALY",
+                btnStartFes: "START CLOSED-LOOP EEG",
+                btnStopFes: "STOP CLOSED-LOOP EEG",
                 criticalAlert: "⚠️ CRITICAL ALERT",
-                lockoutEnforced: "AURA SOVEREIGN METABOLIC LOCKOUT ENFORCED",
-                lockoutDesc: "Detected critical deviation of <span style=\"color: #fff; font-weight: bold;\" id=\"anomaly-zscore\">{zScore}σ</span> in the patient's substrate (Layer 4 Z-score Limit).<br><br>Automatic insulin/peptide pumps are <span style=\"color: #ff0055; font-weight: bold;\">HARDWARE LOCKED</span> via Samsung Knox TEE cryptographic signature at the silicon level to prevent fatal medical outcomes.",
-                emergencyModeActive: "EMERGENCY LOCAL MODE ACTIVE // NEURAL LINK SEVERED",
-                emergencyBannerDesc: "The system has transitioned to emergency offline mode. All commands are hardware-signed by **Samsung Knox TEE** directly on the silicon, ensuring safe dosages and preventing metabolic accidents.",
-                auraShieldActive: "🛡️ AURA INTEGRITY SHIELD ACTIVE",
-                auraShieldCompromised: "🛡️ AURA INTEGRITY SHIELD COMPROMISED",
+                lockoutEnforced: "AURA SOVEREIGN SEIZURE LOCKOUT ENFORCED",
+                lockoutDesc: "Detected critical deviation of <span style=\"color: #fff; font-weight: bold;\" id=\"anomaly-zscore\">{zScore}σ</span> in peritumoral glutamate levels (Layer 4 Z-score Limit).<br><br>Automatic neuro-modulators are <span style=\"color: #ff0055; font-weight: bold;\">HARDWARE LOCKED</span> via Samsung Knox TEE signature to prevent excitotoxicity and fatal status epilepticus.",
+                emergencyModeActive: "EMERGENCY LOCAL ONCOLOGY MODE ACTIVE // NEURAL LINK SEVERED",
+                emergencyBannerDesc: "The system transitioned to emergency local mode. All neuro-stimulation commands are hardware-signed by **Samsung Knox TEE** directly on the silicon to prevent tumor-induced hyperexcitability.",
+                auraShieldActive: "🛡️ AURA ONCOLOGY SHIELD ACTIVE",
+                auraShieldCompromised: "🛡️ AURA ONCOLOGY SHIELD COMPROMISED",
                 shieldEnforced: "LAYER 4 ENFORCED",
                 shieldLockout: "LOCKOUT ACTIVE",
-                statusActiveDesc: "All vital metrics are mathematically verified and confirmed against the critical threshold of <span style=\"color: #fff; font-weight: 800;\">3.0σ</span>.",
-                statusCompromisedDesc: "Critical safety deviation detected. Automatic dosing has been cryptographically suspended.",
+                statusActiveDesc: "All neuro-oncological vital metrics are mathematically verified and confirmed against the critical threshold of <span style=\"color: #fff; font-weight: 800;\">3.0σ</span>.",
+                statusCompromisedDesc: "Critical safety deviation detected. Automatic stimulation dosing has been cryptographically suspended.",
                 bloodPh: "BLOOD pH",
                 normalPh: "Normal: 7.35 - 7.45",
                 oxygenSat: "OXYGEN SATURATION (O₂)",
                 normalO2: "Normal: 95% - 100%",
-                metabolicZscore: "METABOLIC Z-SCORE",
+                metabolicZscore: "Z-SCORE SEIZURE RISK",
                 criticalZscore: "Critical threshold: >3.0σ",
-                glycemicTrajectory: "Glycemic Trajectory Day 2 (Steady-State)",
-                glycemicDesc: "Simulated metabolic curve of patient P-402. The green zone (4.0 - 10.0 mmol/L) represents the clinical norm.",
+                glycemicTrajectory: "Tumor Regression Curve Day 2 (Steady-State)",
+                glycemicDesc: "Simulated glioblastoma (GBM) volume under metabolic block therapy. The norm is complete reversion (0.00 cm³).",
                 globalEntropy: "GLOBAL ENTROPY",
-                glucoseLabel: "Glucose",
-                normalGlucose: "Normal: 4.5 - 6.0 mmol/L",
-                endogenousCpeptide: "Endogenous C-Peptide",
-                normalCpeptide: "Normal: 0.26 - 1.39 nmol/L",
-                homaIrIndex: "HOMA-IR Index",
-                normalHomaIr: "Normal: < 1.0 (Sensitivity)",
+                glucoseLabel: "Tumor Volume (GBM)",
+                normalGlucose: "Normal: 0.00 cm³",
+                endogenousCpeptide: "BBB Integrity",
+                normalCpeptide: "Normal: >90% (Protected)",
+                homaIrIndex: "Glutamate Toxicity",
+                normalHomaIr: "Normal: < 1.00 mM",
                 patientProfile: "Patient Profile",
                 patientLabel: "PATIENT:",
-                ageWeightLabel: "AGE / WEIGHT:",
-                ageWeightVal: "9 years / 32 kg",
-                bypassStateLabel: "BYPASS STATE:",
-                bypassAtrophy: "SEVERE_PANCREATIC_ATROPHY",
-                bypassReversion: "BIOLOGICAL_REVERSION",
-                activeInsulinLabel: "ACTIVE INSULIN:",
-                insulinAuto: "0.00 U (Autologous regulation)",
-                insulinExternal: "4.50 U (External pump)",
+                ageWeightLabel: "AGE / DIAGNOSIS:",
+                ageWeightVal: "42 years / Glioblastoma Multiforme (GBM)",
+                bypassStateLabel: "THERAPEUTIC BYPASS:",
+                bypassAtrophy: "TUMOR_NEOPLASM_ACTIVE",
+                bypassReversion: "ONCOLOGICAL_REVERSION",
+                activeInsulinLabel: "ACTIVE INHIBITOR:",
+                insulinAuto: "Pax4-Sovereign Block (0.00 cm³)",
+                insulinExternal: "Temozolomide + Metabolic Block",
                 clinicalConclusion: "CLINICAL CONCLUSION:",
-                conclusionCured: "The appearance of endogenous C-peptide (0.90 nmol/L) in combination with complete peripheral restoration of insulin sensitivity (HOMA-IR = 1.0) marks successful Pax4-induced beta-cell regeneration and autologous therapy.",
-                conclusionChaos: "The patient is in chaotic metabolic decompensation with absolute insulin deficiency. Induce the biological restart via the main recovery button.",
-                telemetryLog: "LIVE_SUBSTRATE_TELEMETRY_LOG",
-                engConsole: "ENGINEERING CONSOLE // TEST INJECTORS",
-                engConsoleDesc: "Simulate critical metabolic decompensation to stress-test Layer 4 safety protocols.",
-                cohortTitle: "Comparative Cohort Screen (900 Virtual Twins)",
-                cohortDesc: "Scaling the autologous cure v4.0 across the entire demographic sample of the 2015 National Registry.",
+                conclusionCured: "Successful blocking of tumor metabolism (0.00 cm³) in combination with complete peripheral restoration of neural stability marks successful Sovereign-induced oncological reversion and autologous therapy.",
+                conclusionChaos: "The patient is in a state of progressive neoplasm with active glutamate toxicity and high risk of seizures. Induce the biological restart via the main recovery button.",
+                telemetryLog: "LIVE_ONCOLOGY_TELEMETRY_LOG",
+                engConsole: "CLINICAL CONSOLE // TUMOR TEST INJECTORS",
+                engConsoleDesc: "Simulate critical glutamate excursion and tumor-induced epileptic spasm to stress-test Layer 4 safety protocols.",
+                cohortTitle: "Comparative Cohort Screen (900 Virtual Oncological Twins)",
+                cohortDesc: "Scaling the autologous cure v4.0 across the entire demographic sample of Glioblastoma cohorts for 2015-2026.",
                 ageGroup: "Age Group",
                 count: "Count",
-                baselineTir: "Baseline TIR (2015)",
-                conventionalTir: "Conventional TIR",
-                v3Tir: "VHT v3.0 TIR",
-                v4Tir: "v4.0 Biological TIR",
-                baselineHypo: "Baseline Hypoglycemic Events",
-                v4Hypo: "v4.0 Hypoglycemic Events",
-                groupPediatric: "0-14 (Pediatric)",
-                groupYouth: "15-44 (Youth)",
-                groupMiddle: "45-59 (Middle Age)",
-                groupMature: "60-74 (Mature Age)",
-                groupElderly: "75-89 (Elderly)",
-                groupCentenarian: "90+ (Centenarians)",
+                baselineTir: "Baseline Survival",
+                conventionalTir: "Conventional Survival",
+                v3Tir: "VHT v3.0 Survival",
+                v4Tir: "v4.0 Biological Survival",
+                baselineHypo: "Baseline Seizures",
+                v4Hypo: "v4.0 Seizures",
+                groupPediatric: "0-14 (Pediatric GBM)",
+                groupYouth: "Youth",
+                groupMiddle: "Middle Age",
+                groupMature: "Mature Age",
+                groupElderly: "Elderly",
+                groupCentenarian: "Centenarians",
                 pillar1Num: "PILLAR 1",
-                pillar1Title: "Pharmacotherapeutic Synchrony",
-                pillar1Desc: "Mathematical safety locks block dangerous doses of concentrated prandial insulin (U-200, U-300) without corresponding mechanical calibration.",
+                pillar1Title: "Metabolic Control",
+                pillar1Desc: "Blocking glutamine and glycolytic pathways of glioblastoma cells by turning off the Warburg effect without systemic toxicity.",
                 pillar2Num: "PILLAR 2",
-                pillar2Title: "Dietary Control",
-                pillar2Desc: "Preemptive 15% reduction of the insulin-to-carbohydrate ratio (ICR) in the morning to block Dawn Phenomenon resistance.",
+                pillar2Title: "BBB Permeability",
+                pillar2Desc: "Mathematical modeling of transport proteins to optimize drug delivery across the Blood-Brain Barrier.",
                 pillar3Num: "PILLAR 3",
-                pillar3Title: "Physical Activity",
-                pillar3Desc: "Modeling of GLUT4 translocation during aerobic sports. Preemptive 30% to 50% reduction of the bolus to prevent hypoglycemic events.",
+                pillar3Title: "Neuroplastic Resonance",
+                pillar3Desc: "Activating AMPK and CaMKII signaling to protect healthy adjacent brain tissue from excitotoxic degeneration.",
                 pillar4Num: "PILLAR 4",
                 pillar4Title: "AURA Integrity Guard",
                 pillar4Desc: "Real-time calculation of Z-Score for pH and oxygen saturation. Exceeding the 3.0σ threshold triggers the TEE Knox lockout.",
@@ -796,6 +776,20 @@
             state.logs.push({ time: timeStr, bg: bgMsg, en: enMsg || bgMsg });
             if (state.logs.length > 15) state.logs.shift();
             renderVanillaHUD();
+        }
+
+        function formatLogEntry(log) {
+            const msg = state.language === 'bg' ? log.bg : log.en;
+            
+            // Highlight prefixes dynamically
+            let styledMsg = msg
+                .replace(/^(\[SUCCESS\]|SUCCESS:|BIO_CURE_INIT:|ONLINE:)/g, '<span style="color: var(--neon-emerald); font-weight: 600;">$1</span>')
+                .replace(/^(\[CRITICAL_ALERT\]|CRITICAL_ALERT:|WARNING:)/g, '<span style="color: var(--neon-red); font-weight: 600;">$1</span>')
+                .replace(/^(\[SYSTEM_RESET\]|SYSTEM_RESET:|\[SYSTEM_RESET\])/g, '<span style="color: var(--neon-amber); font-weight: 600;">$1</span>')
+                .replace(/^(\[TEE_LOCKOUT\]|TEE_LOCKOUT:|CHRONOS_LOCKOUT:|KNOX_SAFETY:|KNOX_LOCKOUT:)/g, '<span style="color: var(--neon-purple); font-weight: 600;">$1</span>')
+                .replace(/^(AMPK_GLUT4:|AMPK_GLUT4|VIVISECTOR:)/g, '<span style="color: var(--neon-blue); font-weight: 600;">$1</span>');
+                
+            return `<div style="line-height: 1.5; margin-bottom: 2px;"><span style="color: #4a4a4f; margin-right: 8px;">[${log.time}]</span><span>${styledMsg}</span></div>`;
         }
 
         function triggerCureRestoration() {
@@ -1209,7 +1203,7 @@
                                     <i data-lucide="terminal" class="w-4 h-4 inline-block mr-1.5 text-emerald-400"></i>${t('telemetryLog')}
                                 </div>
                                 <div style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; font-size: 0.75rem;" class="mono text-slate-400">
-                                    ${state.logs.map(log => `<div>[${log.time}] ${state.language === 'bg' ? log.bg : log.en}</div>`).join('')}
+                                    ${state.logs.map(log => formatLogEntry(log)).join('')}
                                 </div>
                             </div>
 
@@ -2517,10 +2511,63 @@ process VERIFY_AURA_INTEGRITY(ph: Decimal, o2: Decimal) -> Boolean {
         `;
         }
 
+        let targets = {
+            ph: 7.41,
+            oxygen: 98,
+            zScore: 0.42,
+            entropy: 3.56
+        };
+
+        function startTelemetryDrift() {
+            let time = 0;
+            
+            // Slow targets update interval (every 2.5s)
+            setInterval(() => {
+                time += 0.5;
+                if (state.empathyAnomaly) {
+                    targets.ph = 7.12 + Math.sin(time) * 0.015;
+                    targets.oxygen = 88.0 + Math.sin(time * 0.8) * 0.5;
+                    targets.zScore = 3.9167 + Math.cos(time * 0.5) * 0.08;
+                } else if (state.curedState) {
+                    targets.ph = 7.42 + Math.sin(time) * 0.005;
+                    targets.oxygen = 99.0 + Math.sin(time * 0.5) * 0.2;
+                    targets.zScore = 0.22 + Math.cos(time * 0.3) * 0.02;
+                    targets.entropy = 0.05 + Math.sin(time * 0.1) * 0.003;
+                } else {
+                    targets.ph = 7.40 + Math.sin(time) * 0.01;
+                    targets.oxygen = 97.0 + Math.sin(time * 0.6) * 0.4;
+                    targets.zScore = 0.48 + Math.cos(time * 0.4) * 0.05;
+                    targets.entropy = 3.56 + Math.sin(time * 0.1) * 0.04;
+                }
+            }, 2500);
+
+            // High-frequency Lerp interval (every 200ms)
+            setInterval(() => {
+                const lerp = (curr, targ, speed) => curr + (targ - curr) * speed;
+                
+                state.ph = lerp(state.ph, targets.ph, 0.12);
+                state.oxygen = Math.round(lerp(state.oxygen, targets.oxygen, 0.12));
+                state.zScore = lerp(state.zScore, targets.zScore, 0.12);
+                
+                if (!state.isTransitioning) {
+                    state.entropy = lerp(state.entropy, targets.entropy, 0.12);
+                }
+
+                // Smoothly update critical values on screen
+                const phEl = document.getElementById("hud-ph-value");
+                const o2El = document.getElementById("hud-o2-value");
+                const zEl = document.getElementById("hud-zscore-value");
+                
+                if (phEl) phEl.innerText = state.ph.toFixed(2);
+                if (o2El) o2El.innerText = state.oxygen + "%";
+                if (zEl) zEl.innerText = state.zScore.toFixed(2) + "σ";
+            }, 200);
+        }
+
         function injectMetabolicAnomaly() {
-            state.ph = 7.12;
-            state.oxygen = 88;
-            state.zScore = 3.9167;
+            targets.ph = 7.12;
+            targets.oxygen = 88;
+            targets.zScore = 3.9167;
             state.empathyAnomaly = true;
             addLogEntry(
                 "[CRITICAL_ALERT] AURA: Засечено критично отклонение от 3.92σ в pH и O₂ субстратите!",
@@ -2547,9 +2594,9 @@ process VERIFY_AURA_INTEGRITY(ph: Decimal, o2: Decimal) -> Boolean {
             state.glut4Upregulation = 1.0;
             currentGlucose = [...rawChaoticData];
 
-            state.ph = 7.41;
-            state.oxygen = 98;
-            state.zScore = 0.42;
+            targets.ph = 7.41;
+            targets.oxygen = 98;
+            targets.zScore = 0.42;
             state.empathyAnomaly = false;
             addLogEntry(
                 "[SYSTEM_RESET] Метаболитните параметри са нормализирани. Защитната решетка е вдигната.",
@@ -2562,6 +2609,7 @@ process VERIFY_AURA_INTEGRITY(ph: Decimal, o2: Decimal) -> Boolean {
         window.addEventListener("DOMContentLoaded", () => {
             renderVanillaHUD();
             initVolumeSubstrate();
+            startTelemetryDrift();
             addLogEntry(
                 "[SUCCESS] Self-Healing инициализацията е завършена. Офлайн режимът е напълно активен.",
                 "[SUCCESS] Self-Healing initialization complete. Offline Mode fully active."
