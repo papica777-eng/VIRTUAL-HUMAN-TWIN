@@ -634,7 +634,25 @@
                 state2Desc: "Токсичен фалшив сигнал. Метаболитният път е защитен.",
                 state3Title: "STATE 3: PARADOX",
                 state3Desc: "Tumor bypass. Сигналът е пренасочен през алтернативен път.",
-                btnVivisector: "СТАРТ НА VIVISECTOR"
+                btnVivisector: "СТАРТ НА VIVISECTOR",
+                scalpelTitle: "3D ДИГИТАЛЕН СКАЛПЕЛ",
+                renderModeLabel: "РЕЖИМ НА РЕНДЕРИРАНЕ",
+                anatomicalVolume: "АНАТОМИЧЕН ОБЕМ",
+                bdnfNeuroplasticity: "BDNF НЕВРОПЛАСТИЧНОСТ",
+                dtiTractography: "DTI ТРАКТОГРАФИЯ (3D ЛИНИИ)",
+                autoSpin: "АВТО-РОТАЦИЯ (60 FPS)",
+                densityWindow: "ПЛЪТНОСТЕН ПРОЗОРЕЦ (КОНТРАСТ)",
+                densityLevel: "НИВО НА ПЛЪТНОСТ (ЯРКОСТ)",
+                sagittalClip: "САГИТАЛЕН СРЕЗ (X-ОС)",
+                coronalClip: "КОРОНАЛЕН СРЕЗ (Y-ОС)",
+                axialClip: "АКСИАЛЕН СРЕЗ (Z-ОС)",
+                clearSelection: "ИЗЧИСТИ ИЗБОРА",
+                voxelDensity: "ПЛЪТНОСТ НА ВОКСЕЛА:",
+                clinicalRef: "КЛИНИЧНА РЕФЕРЕНЦИЯ:",
+                isocenter: "ИЗОЦЕНТЪР",
+                affineLockCoords: "AFFINE LOCK КООРДИНАТИ",
+                hideTelemetry: "Скрий Телеметрията",
+                showTelemetry: "Покажи Телеметрията"
             },
             en: {
                 hudTitle: "AETERNA // SOVEREIGN NEURO-ONCOLOGY HUD",
@@ -753,7 +771,25 @@
                 state2Desc: "Toxic false signal. The metabolic pathway is protected.",
                 state3Title: "STATE 3: PARADOX",
                 state3Desc: "Tumor bypass. The signal is rerouted through an alternative pathway.",
-                btnVivisector: "START VIVISECTOR"
+                btnVivisector: "START VIVISECTOR",
+                scalpelTitle: "3D DIGITAL SCALPEL",
+                renderModeLabel: "RENDER MODE",
+                anatomicalVolume: "ANATOMICAL VOLUME",
+                bdnfNeuroplasticity: "BDNF NEUROPLASTICITY",
+                dtiTractography: "DTI TRACTOGRAPHY (3D LINES)",
+                autoSpin: "AUTO-SPIN (60 FPS)",
+                densityWindow: "DENSITY WINDOW (CONTRAST)",
+                densityLevel: "DENSITY LEVEL (BRIGHTNESS)",
+                sagittalClip: "SAGITTAL CLIP (X-AXIS)",
+                coronalClip: "CORONAL CLIP (Y-AXIS)",
+                axialClip: "AXIAL CLIP (Z-AXIS)",
+                clearSelection: "CLEAR SELECTION",
+                voxelDensity: "VOXEL DENSITY:",
+                clinicalRef: "CLINICAL REF:",
+                isocenter: "ISOCENTER",
+                affineLockCoords: "AFFINE LOCK COORDINATES",
+                hideTelemetry: "Hide Telemetry HUD",
+                showTelemetry: "Show Telemetry HUD"
             }
         };
 
@@ -1342,10 +1378,10 @@ process VERIFY_AURA_INTEGRITY(ph: Decimal, o2: Decimal) -> Boolean {
                     <div style="display: grid; grid-template-columns: 1fr; gap: 28px;">
                         <div class="glass-card" style="padding: 32px; border-top: 4px solid var(--neon-purple);">
                             <h2 style="font-size: 1.8rem; font-weight: 900; margin-bottom: 16px; color: #fff; display: flex; align-items: center; gap: 12px;">
-                                <i data-lucide="dna" class="w-8 h-8 text-indigo-400"></i>\${t('vivisectorTitle')}
+                                <i data-lucide="dna" class="w-8 h-8 text-indigo-400"></i>${t('vivisectorTitle')}
                             </h2>
                             <p style="color: var(--text-secondary); margin-bottom: 24px; line-height: 1.6; font-size: 1rem;">
-                                \${t('vivisectorDesc')}
+                                ${t('vivisectorDesc')}
                             </p>
                             
                             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 30px;">
@@ -1353,33 +1389,33 @@ process VERIFY_AURA_INTEGRITY(ph: Decimal, o2: Decimal) -> Boolean {
                                 <div class="glass-card glow-emerald" style="padding: 24px; background: rgba(0,255,170,0.05); border-color: rgba(0,255,170,0.3); border-top: 3px solid var(--neon-emerald);">
                                     <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
                                         <i data-lucide="check-circle-2" class="w-6 h-6 text-emerald-400"></i>
-                                        <h3 style="color: var(--neon-emerald); font-weight: 900; font-size: 1.3rem; margin: 0;">\${t('state1Title')}</h3>
+                                        <h3 style="color: var(--neon-emerald); font-weight: 900; font-size: 1.3rem; margin: 0;">${t('state1Title')}</h3>
                                     </div>
-                                    <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5; margin: 0;">\${t('state1Desc')}</p>
+                                    <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5; margin: 0;">${t('state1Desc')}</p>
                                 </div>
                                 
                                 <!-- STATE 2: FALSE -->
                                 <div class="glass-card glow-red" style="padding: 24px; background: rgba(255,0,85,0.05); border-color: rgba(255,0,85,0.3); border-top: 3px solid var(--neon-red);">
                                     <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
                                         <i data-lucide="x-circle" class="w-6 h-6 text-red-400"></i>
-                                        <h3 style="color: var(--neon-red); font-weight: 900; font-size: 1.3rem; margin: 0;">\${t('state2Title')}</h3>
+                                        <h3 style="color: var(--neon-red); font-weight: 900; font-size: 1.3rem; margin: 0;">${t('state2Title')}</h3>
                                     </div>
-                                    <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5; margin: 0;">\${t('state2Desc')}</p>
+                                    <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5; margin: 0;">${t('state2Desc')}</p>
                                 </div>
                                 
                                 <!-- STATE 3: PARADOX -->
                                 <div class="glass-card glow-purple" style="padding: 24px; background: rgba(181,95,230,0.05); border-color: rgba(181,95,230,0.3); border-top: 3px solid var(--neon-purple);">
                                     <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
                                         <i data-lucide="refresh-cw" class="w-6 h-6 text-purple-400"></i>
-                                        <h3 style="color: var(--neon-purple); font-weight: 900; font-size: 1.3rem; margin: 0;">\${t('state3Title')}</h3>
+                                        <h3 style="color: var(--neon-purple); font-weight: 900; font-size: 1.3rem; margin: 0;">${t('state3Title')}</h3>
                                     </div>
-                                    <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5; margin: 0;">\${t('state3Desc')}</p>
+                                    <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5; margin: 0;">${t('state3Desc')}</p>
                                 </div>
                             </div>
 
                             <div style="text-align: center;">
                                 <button class="cure-btn" style="background: linear-gradient(135deg, #4f46e5, #312e81); box-shadow: 0 0 25px rgba(79, 70, 229, 0.4); margin-top: 10px;" onclick="addLogEntry('VIVISECTOR: Инициализиране на Synthetic Lethality Taint Traversal...', 'VIVISECTOR: Initializing Synthetic Lethality Taint Traversal...')">
-                                    <i data-lucide="play" class="w-5 h-5 text-indigo-200"></i>\${t('btnVivisector')}
+                                    <i data-lucide="play" class="w-5 h-5 text-indigo-200"></i>${t('btnVivisector')}
                                 </button>
                             </div>
                         </div>
@@ -2402,39 +2438,39 @@ process VERIFY_AURA_INTEGRITY(ph: Decimal, o2: Decimal) -> Boolean {
             <div class="glass-card surgical-controls-card hud-transition" style="pointer-events: auto;">
                 <h3 style="font-size: 1.1rem; font-weight: 900; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;" class="mono text-purple-300">
                     <i data-lucide="sliders" class="w-4 h-4 text-purple-400"></i>
-                    ${state.language === 'bg' ? '3D ДИГИТАЛЕН СКАЛПЕЛ' : '3D DIGITAL SCALPEL'}
+                    ${t('scalpelTitle')}
                 </h3>
                 
                 <div style="margin-bottom: 16px;">
-                    <div style="font-size: 0.7rem; color: var(--text-secondary); margin-bottom: 6px;" class="mono">RENDER MODE</div>
+                    <div style="font-size: 0.7rem; color: var(--text-secondary); margin-bottom: 6px;" class="mono">${t('renderModeLabel')}</div>
                     <div style="display: flex; flex-direction: column; gap: 6px;">
                         <button onclick="setRenderMode(0)" class="tab-btn ${state.renderMode === 0 ? 'active' : ''}" style="padding: 6px 12px; font-size: 0.75rem; text-align: left; width: 100%;">
-                            ANATOMICAL VOLUME
+                            ${t('anatomicalVolume')}
                         </button>
                         <button onclick="setRenderMode(1)" class="tab-btn ${state.renderMode === 1 ? 'active' : ''}" style="padding: 6px 12px; font-size: 0.75rem; text-align: left; width: 100%;">
-                            BDNF NEUROPLASTICITY
+                            ${t('bdnfNeuroplasticity')}
                         </button>
                         <button onclick="setRenderMode(2)" class="tab-btn ${state.renderMode === 2 ? 'active' : ''}" style="padding: 6px 12px; font-size: 0.75rem; text-align: left; width: 100%;">
-                            DTI TRACTOGRAPHY (3D LINES)
+                            ${t('dtiTractography')}
                         </button>
                     </div>
                 </div>
                 
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid rgba(181,95,230,0.08); padding-bottom: 8px;">
-                    <span style="font-size: 0.75rem; color: var(--text-secondary);" class="mono">AUTO-SPIN (60 FPS)</span>
+                    <span style="font-size: 0.75rem; color: var(--text-secondary);" class="mono">${t('autoSpin')}</span>
                     <input type="checkbox" ${state.autoRotate ? 'checked' : ''} onchange="toggleAutoRotate(this)" style="cursor: pointer;" />
                 </div>
 
                 <div style="margin-bottom: 12px;">
                     <div style="display: flex; justify-content: space-between; font-size: 0.7rem; margin-bottom: 4px;" class="mono">
-                        <span>DENSITY WINDOW (CONTRAST)</span>
+                        <span>${t('densityWindow')}</span>
                         <span style="color: var(--neon-purple);">${state.windowVal.toFixed(2)}</span>
                     </div>
                     <input type="range" min="0.1" max="1.5" step="0.05" value="${state.windowVal}" oninput="updateVolParam('windowVal', this.value)" style="width: 100%; cursor: pointer;" />
                 </div>
                 <div style="margin-bottom: 16px; border-bottom: 1px solid rgba(181,95,230,0.08); padding-bottom: 8px;">
                     <div style="display: flex; justify-content: space-between; font-size: 0.7rem; margin-bottom: 4px;" class="mono">
-                        <span>DENSITY LEVEL (BRIGHTNESS)</span>
+                        <span>${t('densityLevel')}</span>
                         <span style="color: var(--neon-purple);">${state.levelVal.toFixed(2)}</span>
                     </div>
                     <input type="range" min="0.05" max="0.9" step="0.05" value="${state.levelVal}" oninput="updateVolParam('levelVal', this.value)" style="width: 100%; cursor: pointer;" />
@@ -2442,21 +2478,21 @@ process VERIFY_AURA_INTEGRITY(ph: Decimal, o2: Decimal) -> Boolean {
 
                 <div style="margin-bottom: 8px;">
                     <div style="display: flex; justify-content: space-between; font-size: 0.7rem; margin-bottom: 4px;" class="mono">
-                        <span>SAGITTAL CLIP (X-AXIS)</span>
+                        <span>${t('sagittalClip')}</span>
                         <span style="color: var(--neon-blue);">${state.clipX.toFixed(2)}</span>
                     </div>
                     <input type="range" min="0.0" max="1.0" step="0.02" value="${state.clipX}" oninput="updateVolParam('clipX', this.value)" style="width: 100%; cursor: pointer;" />
                 </div>
                 <div style="margin-bottom: 8px;">
                     <div style="display: flex; justify-content: space-between; font-size: 0.7rem; margin-bottom: 4px;" class="mono">
-                        <span>CORONAL CLIP (Y-AXIS)</span>
+                        <span>${t('coronalClip')}</span>
                         <span style="color: var(--neon-pink);">${state.clipY.toFixed(2)}</span>
                     </div>
                     <input type="range" min="0.0" max="1.0" step="0.02" value="${state.clipY}" oninput="updateVolParam('clipY', this.value)" style="width: 100%; cursor: pointer;" />
                 </div>
                 <div>
                     <div style="display: flex; justify-content: space-between; font-size: 0.7rem; margin-bottom: 4px;" class="mono">
-                        <span>AXIAL CLIP (Z-AXIS)</span>
+                        <span>${t('axialClip')}</span>
                         <span style="color: var(--neon-amber);">${state.clipZ.toFixed(2)}</span>
                     </div>
                     <input type="range" min="0.0" max="1.0" step="0.02" value="${state.clipZ}" oninput="updateVolParam('clipZ', this.value)" style="width: 100%; cursor: pointer;" />
@@ -2471,7 +2507,7 @@ process VERIFY_AURA_INTEGRITY(ph: Decimal, o2: Decimal) -> Boolean {
             <div class="glass-card surgical-coords-card scale-in" style="pointer-events: auto;">
                 <h3 style="font-size: 1.0rem; font-weight: 900; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; color: var(--neon-emerald);" class="mono">
                     <i data-lucide="crosshair" class="w-4 h-4 text-emerald-400"></i>
-                    ${state.language === 'bg' ? 'AFFINE LOCK КООРДИНАТИ' : 'AFFINE LOCK COORDINATES'}
+                    ${t('affineLockCoords')}
                 </h3>
                 <div style="display: flex; flex-direction: column; gap: 6px;" class="mono">
                     <div style="display: flex; justify-content: space-between; font-size: 0.75rem; border-bottom: 1px solid rgba(0, 255, 170, 0.08); padding-bottom: 4px;">
@@ -2487,16 +2523,16 @@ process VERIFY_AURA_INTEGRITY(ph: Decimal, o2: Decimal) -> Boolean {
                         <span style="font-weight: 700; color: #fff;">${state.clickCoords.z.toFixed(1)} mm</span>
                     </div>
                     <div style="display: flex; justify-content: space-between; font-size: 0.75rem; border-bottom: 1px solid rgba(0, 255, 170, 0.08); padding-bottom: 4px;">
-                        <span style="color: var(--text-secondary);">VOXEL DENSITY:</span>
+                        <span style="color: var(--text-secondary);">${t('voxelDensity')}</span>
                         <span style="font-weight: 700; color: var(--neon-emerald);">${state.clickCoords.density} HU</span>
                     </div>
                     <div style="display: flex; justify-content: space-between; font-size: 0.75rem;">
-                        <span style="color: var(--text-secondary);">CLINICAL REF:</span>
-                        <span style="font-weight: 700; color: var(--neon-pink);">ISOCENTER</span>
+                        <span style="color: var(--text-secondary);">${t('clinicalRef')}</span>
+                        <span style="font-weight: 700; color: var(--neon-pink);">${t('isocenter')}</span>
                     </div>
                 </div>
                 <button onclick="clearClickCoords()" class="tab-btn" style="border-color: rgba(255,59,111,0.3); color: var(--neon-red); padding: 4px 8px; font-size: 0.65rem; margin-top: 10px; width: 100%;">
-                    CLEAR SELECTION
+                    ${t('clearSelection')}
                 </button>
             </div>
         `;
@@ -2506,7 +2542,7 @@ process VERIFY_AURA_INTEGRITY(ph: Decimal, o2: Decimal) -> Boolean {
             return `
             <button onclick="toggleHudVisibility()" class="tab-btn" style="position: fixed; bottom: 40px; right: 40px; z-index: 100; border-color: var(--neon-purple); background: var(--purple-glass); display: flex; align-items: center; gap: 8px; box-shadow: 0 0 20px rgba(181, 95, 230, 0.3); pointer-events: auto;">
                 <i data-lucide="${state.hudVisible ? 'eye-off' : 'eye'}" class="w-4 h-4 text-purple-400"></i>
-                <span>${state.hudVisible ? (state.language === 'bg' ? 'Скрий Телеметрията' : 'Hide Telemetry HUD') : (state.language === 'bg' ? 'Покажи Телеметрията' : 'Show Telemetry HUD')}</span>
+                <span>${state.hudVisible ? t('hideTelemetry') : t('showTelemetry')}</span>
             </button>
         `;
         }
