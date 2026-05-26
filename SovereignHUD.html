@@ -647,7 +647,7 @@
                 gaitStatusStance: "STANCE_PHASE",
                 gaitStatusSwing: "SWING_PHASE",
                 vivisectorTitle: "Синтетична Леталност (Vivisector)",
-                vivisectorDesc: "Алгоритъмът GENOME_VIVISECTOR извършва O(1) Inter-Procedural Taint Traversal през метаболитните графове, идентифицирайки критични уязвимости в туморния метаболизъм (Synthetic Lethality) и изолирайки фалшивите сигнали. Математически валидиран върху кохорта от 5,000 публични клинични доклада на онкоболни (C-index: 0.9713).",
+                vivisectorDesc: "Алгоритъмът GENOME_VIVISECTOR извършва O(1) Inter-Procedural Taint Traversal през метаболитните графове, идентифицирайки критични уязвимости в туморния метаболизъм (Synthetic Lethality) и изолирайки фалшивите сигнали.",
                 state1Title: "STATE 1: TRUE",
                 state1Desc: "Истински клиничен експлоит (Synthetic Lethality) открит.",
                 state2Title: "STATE 2: FALSE",
@@ -766,7 +766,7 @@
                 gaitStatusStance: "STANCE_PHASE",
                 gaitStatusSwing: "SWING_PHASE",
                 vivisectorTitle: "Synthetic Lethality (Vivisector)",
-                vivisectorDesc: "The GENOME_VIVISECTOR algorithm performs an O(1) Inter-Procedural Taint Traversal through metabolic graphs, identifying critical vulnerabilities in tumor metabolism (Synthetic Lethality) and isolating false signals. Rigorously validated against a cohort of 5,000 public clinical oncology reports (C-index: 0.9713).",
+                vivisectorDesc: "The GENOME_VIVISECTOR algorithm performs an O(1) Inter-Procedural Taint Traversal through metabolic graphs, identifying critical vulnerabilities in tumor metabolism (Synthetic Lethality) and isolating false signals.",
                 state1Title: "STATE 1: TRUE",
                 state1Desc: "True clinical exploit (Synthetic Lethality) detected.",
                 state2Title: "STATE 2: FALSE",
@@ -2434,14 +2434,14 @@ process VERIFY_AURA_INTEGRITY(ph: Decimal, o2: Decimal) -> Boolean {
                 <div style="margin-bottom: 12px;">
                     <div style="display: flex; justify-content: space-between; font-size: 0.7rem; margin-bottom: 4px;" class="mono">
                         <span>DENSITY WINDOW (CONTRAST)</span>
-                    <span id="val-windowVal" style="color: var(--neon-purple);">${state.windowVal.toFixed(2)}</span>
+                        <span style="color: var(--neon-purple);">${state.windowVal.toFixed(2)}</span>
                     </div>
                     <input type="range" min="0.1" max="1.5" step="0.05" value="${state.windowVal}" oninput="updateVolParam('windowVal', this.value)" style="width: 100%; cursor: pointer;" />
                 </div>
                 <div style="margin-bottom: 16px; border-bottom: 1px solid rgba(181,95,230,0.08); padding-bottom: 8px;">
                     <div style="display: flex; justify-content: space-between; font-size: 0.7rem; margin-bottom: 4px;" class="mono">
                         <span>DENSITY LEVEL (BRIGHTNESS)</span>
-                    <span id="val-levelVal" style="color: var(--neon-purple);">${state.levelVal.toFixed(2)}</span>
+                        <span style="color: var(--neon-purple);">${state.levelVal.toFixed(2)}</span>
                     </div>
                     <input type="range" min="0.05" max="0.9" step="0.05" value="${state.levelVal}" oninput="updateVolParam('levelVal', this.value)" style="width: 100%; cursor: pointer;" />
                 </div>
@@ -2449,21 +2449,21 @@ process VERIFY_AURA_INTEGRITY(ph: Decimal, o2: Decimal) -> Boolean {
                 <div style="margin-bottom: 8px;">
                     <div style="display: flex; justify-content: space-between; font-size: 0.7rem; margin-bottom: 4px;" class="mono">
                         <span>SAGITTAL CLIP (X-AXIS)</span>
-                    <span id="val-clipX" style="color: var(--neon-blue);">${state.clipX.toFixed(2)}</span>
+                        <span style="color: var(--neon-blue);">${state.clipX.toFixed(2)}</span>
                     </div>
                     <input type="range" min="0.0" max="1.0" step="0.02" value="${state.clipX}" oninput="updateVolParam('clipX', this.value)" style="width: 100%; cursor: pointer;" />
                 </div>
                 <div style="margin-bottom: 8px;">
                     <div style="display: flex; justify-content: space-between; font-size: 0.7rem; margin-bottom: 4px;" class="mono">
                         <span>CORONAL CLIP (Y-AXIS)</span>
-                    <span id="val-clipY" style="color: var(--neon-pink);">${state.clipY.toFixed(2)}</span>
+                        <span style="color: var(--neon-pink);">${state.clipY.toFixed(2)}</span>
                     </div>
                     <input type="range" min="0.0" max="1.0" step="0.02" value="${state.clipY}" oninput="updateVolParam('clipY', this.value)" style="width: 100%; cursor: pointer;" />
                 </div>
                 <div>
                     <div style="display: flex; justify-content: space-between; font-size: 0.7rem; margin-bottom: 4px;" class="mono">
                         <span>AXIAL CLIP (Z-AXIS)</span>
-                    <span id="val-clipZ" style="color: var(--neon-amber);">${state.clipZ.toFixed(2)}</span>
+                        <span style="color: var(--neon-amber);">${state.clipZ.toFixed(2)}</span>
                     </div>
                     <input type="range" min="0.0" max="1.0" step="0.02" value="${state.clipZ}" oninput="updateVolParam('clipZ', this.value)" style="width: 100%; cursor: pointer;" />
                 </div>
