@@ -411,8 +411,56 @@
         header>div,
         footer>div,
         .surgical-controls-card,
-        .surgical-coords-card {
-            pointer-events: auto;
+        .surgical-coords-card,
+        .guide-avatar-btn,
+        .guide-dialog-box {
+            pointer-events: auto !important;
+        }
+
+        /* Interactive digital assistant styles */
+        .guide-avatar-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 10000;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: rgba(168, 85, 247, 0.2);
+            border: 2px solid #a855f7;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease-in-out;
+        }
+        .guide-avatar-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.8);
+        }
+        .guide-dialog-box {
+            position: fixed;
+            bottom: 95px;
+            right: 25px;
+            z-index: 10000;
+            width: 320px;
+            background: rgba(10, 10, 15, 0.9);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            font-size: 0.85rem;
+            color: #fff;
+            transition: all 0.3s ease-in-out;
+        }
+        .guide-highlight-active {
+            border: 2px solid #a855f7 !important;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.5) !important;
+            transform: scale(1.01);
+            transition: all 0.3s ease-in-out;
         }
     </style>
 </head>
@@ -504,7 +552,9 @@
             crbDmnNoise: 1.20,
             crbTaskPower: 4.50,
             crbHz: 4.0,
-            crbBoosting: false
+            crbBoosting: false,
+            guideStep: 0,
+            guideActive: false
         };
 
         const rawChaoticData = [
@@ -721,7 +771,12 @@
                 crbControllable: "Контролируема Мощност:",
                 crbEntropy: "Ландауерова Ентропия:",
                 crbBoostBtn: "АКТИВИРАНЕ НА ФОКУСЕН ТЛАСЪК (BOOST)",
-                crbActiveResonance: "Резонансна Честота на BCI:"
+                crbActiveResonance: "Резонансна Честота на BCI:",
+                guideWelcome: "Здравейте, Доктор! Аз съм вашият когнитивен навигатор в AETERNA. Желаете ли въвеждащ тур?",
+                guideStep1: "Тук симулирате глимфатичния клирънс при Алцхаймер. Задръжте AQP4 ≥ 0.60 и Delta Wave ≥ 75 µV за хомеостаза.",
+                guideStep2: "Това е Когнитивният Ускорител. Той изчислява будната ефективност по модела на Ландауер. Натиснете BOOST за Flow състояние.",
+                guideNext: "НАПРЕД",
+                guideClose: "ЗАТВОРИ"
             },
             en: {
                 hudTitle: "AETERNA // SOVEREIGN NEURO-ONCOLOGY HUD",
@@ -909,7 +964,12 @@
                 crbControllable: "Controllable Power Capacity:",
                 crbEntropy: "Landauer Entropy Factor:",
                 crbBoostBtn: "ENGAGE COGNITIVE FOCUS BOOST",
-                crbActiveResonance: "BCI Resonant Modulation:"
+                crbActiveResonance: "BCI Resonant Modulation:",
+                guideWelcome: "Hello, Doctor! I am your AETERNA cognitive navigator. Would you like a system onboarding tour?",
+                guideStep1: "Here you simulate glymphatic clearance in Alzheimer's. Maintain AQP4 ≥ 0.60 & Delta Wave ≥ 75 µV for homeostasis.",
+                guideStep2: "This is the Cognitive Booster. It solves waking efficiency via Landauer limits. Press BOOST to lock Flow state.",
+                guideNext: "NEXT",
+                guideClose: "CLOSE"
             }
         };
 
@@ -1467,6 +1527,46 @@
                     renderVanillaHUD();
                 }
             }, interval);
+        }
+
+        // --- INTERACTIVE DIGITAL ASSISTANT LAYER ---
+        function triggerGuideTour() {
+            state.activeTab = 'neuro';
+            state.guideActive = true;
+            state.guideStep = 1;
+            renderVanillaHUD();
+            highlightElement('#card-glymphatic'); // Акцентира Glymphatic картата
+        }
+
+        function nextGuideStep() {
+            state.guideStep++;
+            renderVanillaHUD();
+            if (state.guideStep === 2) {
+                highlightElement('#card-crb'); // Акцентира CRB картата
+            } else {
+                closeGuideTour();
+            }
+        }
+
+        function closeGuideTour() {
+            state.guideActive = false;
+            state.guideStep = 0;
+            const prevHighlight = document.querySelector('.guide-highlight-active');
+            if (prevHighlight) prevHighlight.classList.remove('guide-highlight-active');
+            renderVanillaHUD();
+        }
+
+        function highlightElement(selector) {
+            setTimeout(() => {
+                const prevHighlight = document.querySelector('.guide-highlight-active');
+                if (prevHighlight) prevHighlight.classList.remove('guide-highlight-active');
+                
+                const target = document.querySelector(selector);
+                if (target) {
+                    target.classList.add('guide-highlight-active');
+                    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 50);
         }
 
         function runPatientSimulation() {
@@ -2290,7 +2390,7 @@ process VERIFY_AURA_INTEGRITY(ph: Decimal, o2: Decimal) -> Boolean {
                         <!-- Left Panel: Stacked Cards -->
                         <div class="column-flex">
                             <!-- Card 1: Glymphatic Drainage Balance -->
-                            <div class="glass-card glow-purple ${state.emergencyMode ? 'emergency-card' : ''}" style="display: flex; flex-direction: column; gap: 20px;">
+                            <div id="card-glymphatic" class="glass-card glow-purple ${state.emergencyMode ? 'emergency-card' : ''}" style="display: flex; flex-direction: column; gap: 20px;">
                                 <div style="border-bottom: 1px solid rgba(181,95,230,0.15); padding-bottom: 12px;">
                                     <h2 style="font-size: 1.5rem; font-weight: 900; display: flex; align-items: center; gap: 10px;">
                                         <i data-lucide="brain" class="w-5 h-5 text-rose-400"></i> ${t('neuroTitle')}
@@ -2360,7 +2460,7 @@ process VERIFY_AURA_INTEGRITY(ph: Decimal, o2: Decimal) -> Boolean {
                             </div>
 
                             <!-- Card 2: Cognitive Reserve Booster (CRB) -->
-                            <div class="glass-card glow-purple" style="display: flex; flex-direction: column; gap: 20px;">
+                            <div id="card-crb" class="glass-card glow-purple" style="display: flex; flex-direction: column; gap: 20px;">
                                 <div style="border-bottom: 1px solid rgba(181,95,230,0.15); padding-bottom: 12px;">
                                     <h2 style="font-size: 1.5rem; font-weight: 900; display: flex; align-items: center; gap: 10px;">
                                         <i data-lucide="zap" class="w-5 h-5 text-purple-400 animate-pulse"></i> ${t('crbTitle')}
@@ -2725,6 +2825,26 @@ process VERIFY_AURA_INTEGRITY(ph: Decimal, o2: Decimal) -> Boolean {
                 </footer>
                 
                 ${renderHudToggleButton()}
+                
+                <!-- Digital Assistant Avatar and Dialog Overlay -->
+                <div class="guide-avatar-btn" onclick="state.guideActive ? closeGuideTour() : triggerGuideTour()">
+                    <i data-lucide="bot" style="color: #c084fc; width: 26px; height: 26px;" class="animate-pulse"></i>
+                </div>
+
+                ${state.guideActive ? `
+                <div class="guide-dialog-box animate-fade-in">
+                    <div style="display:flex; align-items:center; gap:8px; font-weight:900; color:#c084fc; margin-bottom:8px;">
+                        <i data-lucide="sparkles" class="w-4 h-4"></i> AETERNA AI INTERFACE GUIDE
+                    </div>
+                    <p style="color:var(--text-secondary); line-height:1.4; margin-bottom:12px;">
+                        ${state.guideStep === 1 ? t('guideStep1') : t('guideStep2')}
+                    </p>
+                    <div style="display:flex; justify-content:flex-end; gap:8px;">
+                        <button onclick="closeGuideTour()" class="btn" style="padding:4px 10px; font-size:0.75rem; background:rgba(255,255,255,0.05); color:#fff; border-radius:4px; border:none; cursor:pointer; font-weight: 700;">${t('guideClose')}</button>
+                        <button onclick="nextGuideStep()" class="btn" style="padding:4px 12px; font-size:0.75rem; background:#a855f7; color:#fff; border-radius:4px; border:none; cursor:pointer; font-weight:700;">${t('guideNext')}</button>
+                    </div>
+                </div>
+                ` : ''}
             `;
             if (window.lucide) {
                 setTimeout(() => lucide.createIcons(), 0);
