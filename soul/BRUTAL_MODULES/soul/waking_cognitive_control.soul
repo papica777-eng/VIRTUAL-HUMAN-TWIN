@@ -1,0 +1,38 @@
+# SOVEREIGN COGNITIVE CONTROL KERNEL
+# CORE: WAKING_COGNITIVE_RESONANCE // STACK_ONLY
+
+constant SCALE: uint64 = 1000000;
+constant MIN_CONTROL_THRESHOLD: uint64 = 75000000; // 75.00% минимален контролиран капацитет
+
+struct CognitiveState {
+    uint64 controllable_percentage;
+    uint64 bci_modulation_frequency;
+    bool hyper_flow_active;
+}
+
+fn evaluate_waking_substrate(uint64 mojo_raw_percentage, uint64 current_hz) -> CognitiveState {
+    let mut state = CognitiveState {
+        controllable_percentage: mojo_raw_percentage,
+        bci_modulation_frequency: current_hz * SCALE,
+        hyper_flow_active: false
+    };
+
+    # Критична проверка на системната ентропия
+    if (state.controllable_percentage < MIN_CONTROL_THRESHOLD) {
+        # Срив в будното управление -> Изчисляваме нужния честотен тласък до 8 Hz
+        # Енергията се разпилява, задействаме компенсация
+        let target_hz_scaled = 8 * SCALE;
+        state.bci_modulation_frequency = target_hz_scaled - state.bci_modulation_frequency;
+        state.hyper_flow_active = false;
+        
+        log_event("[⚠️ COGNITIVE DRIFT] Control vector dropped. Required resonant frequency alignment calculated.");
+    } else {
+        # Мозъкът е в състояние на детерминиран Хипер-Фокус (Hyper-Flow)
+        state.bci_modulation_frequency = 0;
+        state.hyper_flow_active = true;
+        
+        log_event("[💥 HYPER_FLOW] Brain architecture aligned. Default Mode Network suppressed successfully.");
+    }
+
+    return state;
+}

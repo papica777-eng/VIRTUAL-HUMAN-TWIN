@@ -499,7 +499,12 @@
             cohortSimulated: false,
             cohortCIndex: 97.13,
             epigeneticBreakerTripped: false,
-            mtdnaMutationLoad: 1.20
+            mtdnaMutationLoad: 1.20,
+            crbAlphaCoherence: 0.75,
+            crbDmnNoise: 1.20,
+            crbTaskPower: 4.50,
+            crbHz: 4.0,
+            crbBoosting: false
         };
 
         const rawChaoticData = [
@@ -704,7 +709,19 @@
                 scenariosTitle: "Клинични Сценарии (Mojo Тест)",
                 scenario1Btn: "Сценарий 1: Дълбок NREM сън",
                 scenario2Btn: "Сценарий 2: AQP4 Деполяризация",
-                scenario3Btn: "Сценарий 3: Повърхностен NREM сън"
+                scenario3Btn: "Сценарий 3: Повърхностен NREM сън",
+                crbTitle: "Когнитивен Резонансен Ускорител (CRB)",
+                crbDesc: "Анализ и управление на когнитивната мощност в будно състояние чрез контролирана фазова кохерентност.",
+                crbAlphaLabel: "Alpha Cross-Coherence (0.1 - 1.0)",
+                crbAlphaDesc: "Степен на фазова синхронизация между ЕЕГ сензорите в Алфа спектъра (7-10 Hz).",
+                crbDmnLabel: "DMN Intrusive Noise (dB)",
+                crbDmnDesc: "Фонов шум на Default Mode Network (разсейване и его шум).",
+                crbTaskLabel: "Waking Task Power (µV²)",
+                crbTaskDesc: "Мощност на Task-Positive Network при активно решаване на задачи.",
+                crbControllable: "Контролируема Мощност:",
+                crbEntropy: "Ландауерова Ентропия:",
+                crbBoostBtn: "АКТИВИРАНЕ НА ФОКУСЕН ТЛАСЪК (BOOST)",
+                crbActiveResonance: "Резонансна Честота на BCI:"
             },
             en: {
                 hudTitle: "AETERNA // SOVEREIGN NEURO-ONCOLOGY HUD",
@@ -880,7 +897,19 @@
                 scenariosTitle: "Clinical Scenarios (Mojo Test)",
                 scenario1Btn: "Scenario 1: Deep NREM Sleep",
                 scenario2Btn: "Scenario 2: AQP4 Depolarization",
-                scenario3Btn: "Scenario 3: Light NREM Sleep"
+                scenario3Btn: "Scenario 3: Light NREM Sleep",
+                crbTitle: "Cognitive Resonance Booster (CRB)",
+                crbDesc: "Real-time waking cognitive capacity & focus efficiency solver based on controlled EEG phase coherence.",
+                crbAlphaLabel: "Alpha Cross-Coherence (0.1 - 1.0)",
+                crbAlphaDesc: "EEG sensor phase synchronization level in the alpha spectrum (7-10 Hz).",
+                crbDmnLabel: "DMN Intrusive Noise (dB)",
+                crbDmnDesc: "Default Mode Network background activity level (ego noise/distraction).",
+                crbTaskLabel: "Waking Task Power (µV²)",
+                crbTaskDesc: "Task-Positive Network signal power during active task execution.",
+                crbControllable: "Controllable Power Capacity:",
+                crbEntropy: "Landauer Entropy Factor:",
+                crbBoostBtn: "ENGAGE COGNITIVE FOCUS BOOST",
+                crbActiveResonance: "BCI Resonant Modulation:"
             }
         };
 
@@ -1336,6 +1365,108 @@
             );
             evaluateNeuroLogs(true);
             renderVanillaHUD();
+        }
+
+        // --- COGNITIVE RESERVE BOOSTER ENGINE ---
+        function evaluateWakingResonance(taskPower, dmnNoise, coherence) {
+            const float_task = taskPower;
+            const float_dmn = dmnNoise;
+            const float_coherence = coherence;
+            const active_entropy = float_dmn / (float_coherence + 0.001);
+            const total_energy_bound = float_task + float_dmn;
+            let control_ratio = 0.0;
+            if (total_energy_bound > 0) {
+                control_ratio = (float_task * float_coherence) / (total_energy_bound + active_entropy);
+            }
+            const controllablePercentage = control_ratio * 100.0;
+            const minThreshold = 75.0; // 75.00%
+            let bciModulationFrequency = state.crbHz;
+            let hyperFlowActive = false;
+            
+            if (controllablePercentage < minThreshold) {
+                bciModulationFrequency = 8.0 - bciModulationFrequency;
+                if (bciModulationFrequency < 0) bciModulationFrequency = 0;
+                hyperFlowActive = false;
+            } else {
+                bciModulationFrequency = 0.0;
+                hyperFlowActive = true;
+            }
+            
+            return {
+                controllablePercentage: controllablePercentage,
+                bciModulationFrequency: bciModulationFrequency,
+                hyperFlowActive: hyperFlowActive,
+                activeEntropy: active_entropy
+            };
+        }
+
+        let lastCrbState = null;
+        function evaluateCrbLogs(force = false) {
+            const res = evaluateWakingResonance(state.crbTaskPower, state.crbDmnNoise, state.crbAlphaCoherence);
+            if (lastCrbState === null) {
+                lastCrbState = res.hyperFlowActive;
+            }
+            if (res.hyperFlowActive !== lastCrbState || force) {
+                lastCrbState = res.hyperFlowActive;
+                if (res.hyperFlowActive) {
+                    addLogEntry(
+                        `SUCCESS: [💥 HYPER_FLOW] Brain architecture aligned. Default Mode Network suppressed successfully. Controllable capacity: ${res.controllablePercentage.toFixed(2)}%.`,
+                        `SUCCESS: [💥 HYPER_FLOW] Brain architecture aligned. Default Mode Network suppressed successfully. Controllable capacity: ${res.controllablePercentage.toFixed(2)}%.`
+                    );
+                } else {
+                    addLogEntry(
+                        `WARNING: [⚠️ COGNITIVE DRIFT] Control vector dropped below 75%. Required resonant frequency alignment calculated: ${res.bciModulationFrequency.toFixed(2)} Hz.`,
+                        `WARNING: [⚠️ COGNITIVE DRIFT] Control vector dropped below 75%. Required resonant frequency alignment calculated: ${res.bciModulationFrequency.toFixed(2)} Hz.`
+                    );
+                }
+            }
+        }
+
+        function triggerCrbBoost() {
+            if (state.crbBoosting) return;
+            state.crbBoosting = true;
+            addLogEntry(
+                `[⚡ BCI-LINK] Initiating waking cognitive resonance boost... Optimizing EEG phase coherence towards 8 Hz.`,
+                `[⚡ BCI-LINK] Initiating waking cognitive resonance boost... Optimizing EEG phase coherence towards 8 Hz.`
+            );
+            
+            const duration = 1500; // 1.5 seconds
+            const steps = 30;
+            const interval = duration / steps;
+            let currentStep = 0;
+            
+            const startAlpha = state.crbAlphaCoherence;
+            const startDmn = state.crbDmnNoise;
+            const startTask = state.crbTaskPower;
+            const startHz = state.crbHz;
+            
+            const targetAlpha = 0.95;
+            const targetDmn = 0.40;
+            const targetTask = 8.50;
+            const targetHz = 0.0;
+            
+            const timer = setInterval(() => {
+                currentStep++;
+                const tVal = currentStep / steps;
+                
+                state.crbAlphaCoherence = startAlpha + (targetAlpha - startAlpha) * tVal;
+                state.crbDmnNoise = startDmn + (targetDmn - startDmn) * tVal;
+                state.crbTaskPower = startTask + (targetTask - startTask) * tVal;
+                state.crbHz = startHz + (targetHz - startHz) * tVal;
+                
+                evaluateCrbLogs(currentStep === steps);
+                renderVanillaHUD();
+                
+                if (currentStep >= steps) {
+                    clearInterval(timer);
+                    state.crbBoosting = false;
+                    addLogEntry(
+                        `SUCCESS: [⚡ BCI-LINK] Focus optimization complete. Sovereign TPN lock established at 100% stability.`,
+                        `SUCCESS: [⚡ BCI-LINK] Focus optimization complete. Sovereign TPN lock established at 100% stability.`
+                    );
+                    renderVanillaHUD();
+                }
+            }, interval);
         }
 
         function runPatientSimulation() {
@@ -2135,6 +2266,7 @@ process VERIFY_AURA_INTEGRITY(ph: Decimal, o2: Decimal) -> Boolean {
                 `;
             } else if (state.activeTab === "neuro") {
                 const clearance = evaluateGlymphaticClearance(state.aqp4Polarization, state.deltaWaveAmplitude, state.amyloidSynthesisRate);
+                const crbResult = evaluateWakingResonance(state.crbTaskPower, state.crbDmnNoise, state.crbAlphaCoherence);
                 
                 let statusBadge = "";
                 let verdictText = "";
@@ -2155,72 +2287,180 @@ process VERIFY_AURA_INTEGRITY(ph: Decimal, o2: Decimal) -> Boolean {
 
                 tabContent = `
                     <div class="dashboard-grid">
-                        <!-- Left Panel: Sliders & Mechanics -->
-                        <div class="glass-card glow-purple ${state.emergencyMode ? 'emergency-card' : ''}" style="display: flex; flex-direction: column; gap: 20px;">
-                            <div style="border-bottom: 1px solid rgba(181,95,230,0.15); padding-bottom: 12px;">
-                                <h2 style="font-size: 1.5rem; font-weight: 900; display: flex; align-items: center; gap: 10px;">
-                                    <i data-lucide="brain" class="w-5 h-5 text-rose-400"></i> ${t('neuroTitle')}
-                                </h2>
-                                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px; line-height: 1.4;">
-                                    ${t('neuroDesc')}
-                                </p>
+                        <!-- Left Panel: Stacked Cards -->
+                        <div class="column-flex">
+                            <!-- Card 1: Glymphatic Drainage Balance -->
+                            <div class="glass-card glow-purple ${state.emergencyMode ? 'emergency-card' : ''}" style="display: flex; flex-direction: column; gap: 20px;">
+                                <div style="border-bottom: 1px solid rgba(181,95,230,0.15); padding-bottom: 12px;">
+                                    <h2 style="font-size: 1.5rem; font-weight: 900; display: flex; align-items: center; gap: 10px;">
+                                        <i data-lucide="brain" class="w-5 h-5 text-rose-400"></i> ${t('neuroTitle')}
+                                    </h2>
+                                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px; line-height: 1.4;">
+                                        ${t('neuroDesc')}
+                                    </p>
+                                </div>
+
+                                <!-- Math display block -->
+                                <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.02); border-radius: 12px; padding: 16px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; line-height: 1.6; color: #a5b4fc;">
+                                    <div style="font-weight: 700; color: #fff; margin-bottom: 6px; font-size: 0.9rem;">
+                                        [EQUATION OF EXISTENCE]:
+                                    </div>
+                                    <div style="font-size: 1.15rem; text-align: center; margin: 12px 0; color: #fff; font-weight: 700;">
+                                        d[Aβ]/dt = K_synthesis - Phi_glymphatic
+                                    </div>
+                                    <div style="color: var(--text-secondary); font-size: 0.8rem;">
+                                        ${state.language === 'bg' ? '* K_synthesis = Скорост на амилоиден синтез.<br>* Phi = f(AQP4, DeltaWave) - нелинейна сигмоидна функция на изчистване.' : '* K_synthesis = Pathological amyloid synthesis rate.<br>* Phi = f(AQP4, DeltaWave) - non-linear hydraulic resistance curve.'}
+                                    </div>
+                                </div>
+
+                                <!-- Sliders -->
+                                <div style="display: flex; flex-direction: column; gap: 18px;">
+                                    <!-- AQP4 slider -->
+                                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <span style="font-weight: 700; font-size: 0.85rem; color: #fff;">${t('aqp4Label')}</span>
+                                            <span class="mono" style="font-size: 1.1rem; font-weight: 800; color: ${state.aqp4Polarization >= 0.60 ? 'var(--neon-emerald)' : 'var(--neon-red)'};">${state.aqp4Polarization.toFixed(2)}</span>
+                                        </div>
+                                        <input type="range" min="0.00" max="1.00" step="0.01" value="${state.aqp4Polarization}" 
+                                            oninput="state.aqp4Polarization = parseFloat(this.value); evaluateNeuroLogs(); renderVanillaHUD();" 
+                                            style="width: 100%; cursor: pointer;" />
+                                        <div style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.3;">
+                                            ${t('aqp4PolarizationDesc')}
+                                        </div>
+                                    </div>
+
+                                    <!-- Delta Wave slider -->
+                                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <span style="font-weight: 700; font-size: 0.85rem; color: #fff;">${t('deltaWaveLabel')}</span>
+                                            <span class="mono" style="font-size: 1.1rem; font-weight: 800; color: ${state.deltaWaveAmplitude >= 75.0 ? 'var(--neon-emerald)' : 'var(--neon-red)'};">${state.deltaWaveAmplitude.toFixed(1)} µV</span>
+                                        </div>
+                                        <input type="range" min="0.0" max="150.0" step="1.0" value="${state.deltaWaveAmplitude}" 
+                                            oninput="state.deltaWaveAmplitude = parseFloat(this.value); evaluateNeuroLogs(); renderVanillaHUD();" 
+                                            style="width: 100%; cursor: pointer;" />
+                                        <div style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.3;">
+                                            ${t('deltaWaveDesc')}
+                                        </div>
+                                    </div>
+
+                                    <!-- Synthesis Rate slider -->
+                                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <span style="font-weight: 700; font-size: 0.85rem; color: #fff;">${t('synthesisRateLabel')}</span>
+                                            <span class="mono" style="font-size: 1.1rem; font-weight: 800; color: var(--neon-blue);">${state.amyloidSynthesisRate.toFixed(2)} pg/mL/sec</span>
+                                        </div>
+                                        <input type="range" min="0.50" max="3.00" step="0.10" value="${state.amyloidSynthesisRate}" 
+                                            oninput="state.amyloidSynthesisRate = parseFloat(this.value); evaluateNeuroLogs(); renderVanillaHUD();" 
+                                            style="width: 100%; cursor: pointer;" />
+                                        <div style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.3;">
+                                            ${t('synthesisRateDesc')}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
-                            <!-- Math display block -->
-                            <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.02); border-radius: 12px; padding: 16px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; line-height: 1.6; color: #a5b4fc;">
-                                <div style="font-weight: 700; color: #fff; margin-bottom: 6px; font-size: 0.9rem;">
-                                    [EQUATION OF EXISTENCE]:
+                            <!-- Card 2: Cognitive Reserve Booster (CRB) -->
+                            <div class="glass-card glow-purple" style="display: flex; flex-direction: column; gap: 20px;">
+                                <div style="border-bottom: 1px solid rgba(181,95,230,0.15); padding-bottom: 12px;">
+                                    <h2 style="font-size: 1.5rem; font-weight: 900; display: flex; align-items: center; gap: 10px;">
+                                        <i data-lucide="zap" class="w-5 h-5 text-purple-400 animate-pulse"></i> ${t('crbTitle')}
+                                    </h2>
+                                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px; line-height: 1.4;">
+                                        ${t('crbDesc')}
+                                    </p>
                                 </div>
-                                <div style="font-size: 1.15rem; text-align: center; margin: 12px 0; color: #fff; font-weight: 700;">
-                                    d[Aβ]/dt = K_synthesis - Phi_glymphatic
-                                </div>
-                                <div style="color: var(--text-secondary); font-size: 0.8rem;">
-                                    ${state.language === 'bg' ? '* K_synthesis = Скорост на амилоиден синтез.<br>* Phi = f(AQP4, DeltaWave) - нелинейна сигмоидна функция на изчистване.' : '* K_synthesis = Pathological amyloid synthesis rate.<br>* Phi = f(AQP4, DeltaWave) - non-linear hydraulic resistance curve.'}
-                                </div>
-                            </div>
 
-                            <!-- Sliders -->
-                            <div style="display: flex; flex-direction: column; gap: 18px;">
-                                <!-- AQP4 slider -->
-                                <div style="display: flex; flex-direction: column; gap: 6px;">
-                                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                                        <span style="font-weight: 700; font-size: 0.85rem; color: #fff;">${t('aqp4Label')}</span>
-                                        <span class="mono" style="font-size: 1.1rem; font-weight: 800; color: ${state.aqp4Polarization >= 0.60 ? 'var(--neon-emerald)' : 'var(--neon-red)'};">${state.aqp4Polarization.toFixed(2)}</span>
+                                <!-- Math display block -->
+                                <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.02); border-radius: 12px; padding: 16px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; line-height: 1.6; color: #a5b4fc;">
+                                    <div style="font-weight: 700; color: #fff; margin-bottom: 6px; font-size: 0.9rem;">
+                                        [COGNITIVE RESONANCE MODEL]:
                                     </div>
-                                    <input type="range" min="0.00" max="1.00" step="0.01" value="${state.aqp4Polarization}" 
-                                        oninput="state.aqp4Polarization = parseFloat(this.value); evaluateNeuroLogs(); renderVanillaHUD();" 
-                                        style="width: 100%; cursor: pointer;" />
-                                    <div style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.3;">
-                                        ${t('aqp4PolarizationDesc')}
+                                    <div style="font-size: 1.15rem; text-align: center; margin: 12px 0; color: #fff; font-weight: 700;">
+                                        Control % = (Task * Coherence) / (Total + Entropy)
+                                    </div>
+                                    <div style="color: var(--text-secondary); font-size: 0.8rem;">
+                                        * Entropy = Noise_DMN / (Coherence + 0.001) [Landauer Constraint]
                                     </div>
                                 </div>
 
-                                <!-- Delta Wave slider -->
-                                <div style="display: flex; flex-direction: column; gap: 6px;">
-                                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                                        <span style="font-weight: 700; font-size: 0.85rem; color: #fff;">${t('deltaWaveLabel')}</span>
-                                        <span class="mono" style="font-size: 1.1rem; font-weight: 800; color: ${state.deltaWaveAmplitude >= 75.0 ? 'var(--neon-emerald)' : 'var(--neon-red)'};">${state.deltaWaveAmplitude.toFixed(1)} µV</span>
+                                <!-- Sliders -->
+                                <div style="display: flex; flex-direction: column; gap: 18px;">
+                                    <!-- Alpha Coherence slider -->
+                                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <span style="font-weight: 700; font-size: 0.85rem; color: #fff;">${t('crbAlphaLabel')}</span>
+                                            <span class="mono" style="font-size: 1.1rem; font-weight: 800; color: ${state.crbAlphaCoherence >= 0.75 ? 'var(--neon-emerald)' : 'var(--neon-red)'};">${state.crbAlphaCoherence.toFixed(2)}</span>
+                                        </div>
+                                        <input type="range" min="0.10" max="1.00" step="0.01" value="${state.crbAlphaCoherence}" 
+                                            oninput="state.crbAlphaCoherence = parseFloat(this.value); evaluateCrbLogs(); renderVanillaHUD();" 
+                                            style="width: 100%; cursor: pointer;" />
+                                        <div style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.3;">
+                                            ${t('crbAlphaDesc')}
+                                        </div>
                                     </div>
-                                    <input type="range" min="0.0" max="150.0" step="1.0" value="${state.deltaWaveAmplitude}" 
-                                        oninput="state.deltaWaveAmplitude = parseFloat(this.value); evaluateNeuroLogs(); renderVanillaHUD();" 
-                                        style="width: 100%; cursor: pointer;" />
-                                    <div style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.3;">
-                                        ${t('deltaWaveDesc')}
+
+                                    <!-- DMN Spatial Noise slider -->
+                                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <span style="font-weight: 700; font-size: 0.85rem; color: #fff;">${t('crbDmnLabel')}</span>
+                                            <span class="mono" style="font-size: 1.1rem; font-weight: 800; color: ${state.crbDmnNoise <= 1.50 ? 'var(--neon-emerald)' : 'var(--neon-red)'};">${state.crbDmnNoise.toFixed(2)} dB</span>
+                                        </div>
+                                        <input type="range" min="0.10" max="5.00" step="0.05" value="${state.crbDmnNoise}" 
+                                            oninput="state.crbDmnNoise = parseFloat(this.value); evaluateCrbLogs(); renderVanillaHUD();" 
+                                            style="width: 100%; cursor: pointer;" />
+                                        <div style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.3;">
+                                            ${t('crbDmnDesc')}
+                                        </div>
+                                    </div>
+
+                                    <!-- Task Positive Network Power slider -->
+                                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <span style="font-weight: 700; font-size: 0.85rem; color: #fff;">${t('crbTaskLabel')}</span>
+                                            <span class="mono" style="font-size: 1.1rem; font-weight: 800; color: var(--neon-blue);">${state.crbTaskPower.toFixed(2)} µV²</span>
+                                        </div>
+                                        <input type="range" min="0.50" max="10.00" step="0.10" value="${state.crbTaskPower}" 
+                                            oninput="state.crbTaskPower = parseFloat(this.value); evaluateCrbLogs(); renderVanillaHUD();" 
+                                            style="width: 100%; cursor: pointer;" />
+                                        <div style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.3;">
+                                            ${t('crbTaskDesc')}
+                                        </div>
                                     </div>
                                 </div>
 
-                                <!-- Synthesis Rate slider -->
-                                <div style="display: flex; flex-direction: column; gap: 6px;">
-                                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                                        <span style="font-weight: 700; font-size: 0.85rem; color: #fff;">${t('synthesisRateLabel')}</span>
-                                        <span class="mono" style="font-size: 1.1rem; font-weight: 800; color: var(--neon-blue);">${state.amyloidSynthesisRate.toFixed(2)} pg/mL/sec</span>
+                                <!-- Real-time calculation output inside CRB card -->
+                                <div style="margin-top: 10px; padding: 16px; background: rgba(0,0,0,0.4); border-radius: 12px; border: 1px solid rgba(181,95,230,0.25); display: flex; flex-direction: column; gap: 10px;">
+                                    <div style="font-size: 0.85rem; font-weight: 700; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 6px;">
+                                        REAL-TIME RESONANCE AUDIT (SOUL CORE)
                                     </div>
-                                    <input type="range" min="0.50" max="3.00" step="0.10" value="${state.amyloidSynthesisRate}" 
-                                        oninput="state.amyloidSynthesisRate = parseFloat(this.value); evaluateNeuroLogs(); renderVanillaHUD();" 
-                                        style="width: 100%; cursor: pointer;" />
-                                    <div style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.3;">
-                                        ${t('synthesisRateDesc')}
+                                    <div style="display: flex; flex-direction: column; gap: 6px; font-family: monospace; font-size: 0.8rem;">
+                                        <div style="display: flex; justify-content: space-between;">
+                                            <span style="color: var(--text-secondary);">${t('crbControllable')}</span>
+                                            <span style="font-weight: 800; color: ${crbResult.hyperFlowActive ? 'var(--neon-emerald)' : 'var(--neon-amber)'}; font-size: 0.95rem;">
+                                                ${crbResult.controllablePercentage.toFixed(2)}%
+                                            </span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between;">
+                                            <span style="color: var(--text-secondary);">${t('crbEntropy')}</span>
+                                            <span style="font-weight: 700; color: #f43f5e;">
+                                                ${crbResult.activeEntropy.toFixed(4)} nat/s
+                                            </span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between;">
+                                            <span style="color: var(--text-secondary);">${t('crbActiveResonance')}</span>
+                                            <span style="font-weight: 750; color: #a855f7;">
+                                                ${crbResult.bciModulationFrequency.toFixed(2)} Hz
+                                            </span>
+                                        </div>
                                     </div>
+
+                                    <div style="margin-top: 6px; padding: 8px 12px; border-radius: 6px; text-align: center; font-size: 0.85rem; font-weight: 900; background: ${crbResult.hyperFlowActive ? 'rgba(16, 185, 129, 0.1)' : 'rgba(245, 158, 11, 0.1)'}; border: 1px solid ${crbResult.hyperFlowActive ? 'var(--neon-emerald)' : 'var(--neon-amber)'}; color: ${crbResult.hyperFlowActive ? 'var(--neon-emerald)' : 'var(--neon-amber)'}; text-shadow: 0 0 8px ${crbResult.hyperFlowActive ? 'rgba(16,185,129,0.3)' : 'rgba(245,158,11,0.3)'};">
+                                        ${crbResult.hyperFlowActive ? '💥 HYPER_FLOW_ENGAGED' : '⚠️ COGNITIVE_DRIFT_DETECTED'}
+                                    </div>
+
+                                    <button onclick="triggerCrbBoost()" class="cure-btn" style="width: 100%; justify-content: center; font-size: 0.8rem; font-weight: 900; padding: 12px; border-radius: 8px; background: rgba(181, 95, 230, 0.15); border: 1px solid rgba(181, 95, 230, 0.3); color: var(--neon-purple); cursor: pointer; transition: all 0.3s; margin-top: 8px; text-shadow: 0 0 10px rgba(181,95,230,0.3);" onmouseover="this.style.background='rgba(181, 95, 230, 0.25)'" onmouseout="this.style.background='rgba(181, 95, 230, 0.15)'">
+                                        <i data-lucide="zap" class="w-4 h-4 mr-2"></i> ${t('crbBoostBtn')}
+                                    </button>
                                 </div>
                             </div>
                         </div>
