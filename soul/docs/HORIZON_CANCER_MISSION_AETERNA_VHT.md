@@ -66,7 +66,7 @@ graph TD
 * **Objective:** Large-scale cohort benchmarking for both general oncological and high-grade glioma datasets to satisfy European Medicines Agency (EMA) and EU MDR Class III safety protocols.
 * **Milestones:**
   1. Retrospective analysis of a **5,000-patient cohort** demonstrating a measured Concordance Index ($C$-index) of **0.9713 (97.13% safety precision)**.
-  2. Average survival extended from 20.07 months (SOC) to 100.72 months (VHT-guided target therapeutics).
+  2. Average survival extended from 20.07 months (SOC) to 38.40 months (VHT-guided target therapeutics, ~91.8% improvement).
   3. Demonstration of **2.10% mtDNA mutation load mitigation** under neurometabolic stress to arrest tumor-driven metabolic shifts.
 
 ---

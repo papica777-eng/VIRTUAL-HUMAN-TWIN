@@ -35,6 +35,7 @@
 **/*.csv
 **/*.xlsx
 **/node_modules/
+**/target/
 **/.shadow.*
 **/tmp/
 **/.gemini/
@@ -53,3 +54,11 @@ BRUTAL_MODULES/
 OmniCore/
 *.rs
 *.zig
+
+# Whitelist public contracts & actions workflows
+!.github/workflows/mainnet-deploy.yml
+!contracts/**
+!contracts/**/*.rs
+
+# Blacklist compiler target directories inside contracts
+contracts/**/target/

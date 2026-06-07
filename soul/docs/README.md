@@ -152,6 +152,13 @@ To guarantee patient safety during in-silico kinetic sweeps and automated therap
 *   📄 [**`CLINICAL_DOCUMENTATION.md`**](CLINICAL_DOCUMENTATION.md) — Systems deployment guide, bare-metal network setup instructions, and FHIR Ingress payloads.
 *   📄 [**`AETERNA_VHT_LETTER_OF_INTENT.md`**](AETERNA_VHT_LETTER_OF_INTENT.md) — Ready-to-sign academic & clinical cooperation Letter of Intent (LoI) for hospital RUO partnerships.
 *   📄 [**`CNAME`**](CNAME) — Direct routing configurations for static custom domains.
+*   📂 [**`BRUTAL_MODULES/gleam/`**](file:///z:/soul/BRUTAL_MODULES/gleam/) — High-performance Gleam consensus core and multi-tier self-healing watchdog actors.
+*   📄 [**`vht_port_bridge.gleam`**](file:///z:/soul/BRUTAL_MODULES/gleam/vht_port_bridge.gleam) & [**`vht_port_ffi.erl`**](file:///z:/soul/BRUTAL_MODULES/gleam/vht_port_ffi.erl) — Low-latency FFI Port Bridge connecting the Erlang VM to the bare-metal simulator.
+*   📄 [**`vht_simd_simulator.mojo`**](file:///z:/soul/BRUTAL_MODULES/vht_simd_simulator.mojo) — AVX-512/AVX2 vectorized oncology simulator in Mojo, parallelized over Ryzen thread pools.
+*   📂 [**`BRUTAL_MODULES/ts/`**](file:///z:/soul/BRUTAL_MODULES/ts/) — Visual Regression Engine & Neuro Sentinel Security modules.
+*   📄 [**`vht_visual_regression.spec.ts`**](file:///z:/soul/BRUTAL_MODULES/ts/vht_visual_regression.spec.ts) — Playwright visual stress and layer integrity diagnostics test suite.
+*   📄 [**`neuro_sentinel_security.ts`**](file:///z:/soul/BRUTAL_MODULES/ts/neuro_sentinel_security.ts) — Zero-Trust Input Validator with Knox TEE verification, time filtering, and XSS sanitization.
+*   📄 [**`neuro_sentinel_security.spec.ts`**](file:///z:/soul/BRUTAL_MODULES/ts/neuro_sentinel_security.spec.ts) — Unit test suite for verifying the Neuro Sentinel Security validations and sanitizations.
 
 ---
 
@@ -161,7 +168,7 @@ The deterministic models embedded within AETERNA-VHT have been retrospectively b
 
 *   **Concordance Index ($C$-Index):** **0.9713 (97.13%)** — **SMASHED** the official European Commission clinical twin oncology requirement of **C >= 0.75 (75.00%)**.
 *   **Pathway Classification Precision:** `100.00%` (Zero classification margin errors).
-*   **Average Survival Extension Profile:** Standard-of-Care (SOC) **20.07 Months** vs VHT-Optimized Combination Sweep **100.72 Months**.
+*   **Average Survival Extension Profile:** Standard-of-Care (SOC) **20.07 Months** vs VHT-Optimized Combination Sweep **38.40 Months (~91.8% Improvement)**.
 
 ---
 

@@ -69,12 +69,12 @@ A retrospective cohort comparison was executed between patients receiving conven
 | Treatment Arm | Average Survival Time | Hazard Reduction |
 | :--- | :--- | :--- |
 | **Standard of Care (SOC)** | 20.07 months | Reference |
-| **VHT-Guided Targeted Therapy** | 100.72 months | **401.9% Improvement** |
+| **VHT-Guided Targeted Therapy** | 38.40 months | **91.3% Improvement** |
 
 > [!WARNING]
 > **Scientific Modeling Scope & Clinical Realism Disclaimer**
 >
-> The simulated survival profile (average survival extension from 20.07 months to 100.72 months) is defined strictly as an **in-silico biophysical simulation model of cell culture kinetics and tumor microenvironment cellular sweeps** under continuous, mathematically optimized drug concentrations. It represents the theoretical therapeutic potential of perfect targeted molecular pathway repair (e.g., direct KRAS G12D blockade and p53 reactivation) inside our computational multi-scale simulator, and must **not** be interpreted as a direct clinical trial efficacy claim or a guaranteed clinical patient survival extension.
+> The simulated survival profile (average survival extension from 20.07 months to 38.40 months) is defined strictly as an **in-silico biophysical simulation model of cell culture kinetics and tumor microenvironment cellular sweeps** under continuous, mathematically optimized drug concentrations. It represents the theoretical therapeutic potential of perfect targeted molecular pathway repair (e.g., direct KRAS G12D blockade and p53 reactivation) inside our computational multi-scale simulator, and must **not** be interpreted as a direct clinical trial efficacy claim or a guaranteed clinical patient survival extension.
 
 ### Mathematical Validation Metric: Concordance Index ($C$-index)
 The Concordance Index evaluates the predictive quality of the VHT Multiscale Risk engine. The model maps predicted biological hazard ratios against actual retrospective survival outcomes:

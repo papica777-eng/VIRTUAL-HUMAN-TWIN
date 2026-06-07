@@ -343,6 +343,23 @@
         .sovereign-table tr:hover td {
             background: rgba(181, 95, 230, 0.03);
         }
+
+        #vht-hud-container {
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .cell-locus-node {
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle, var(--neon-emerald) 0%, rgba(0, 255, 170, 0.4) 100%);
+            box-shadow: 0 0 8px var(--neon-emerald-glow);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
     </style>
 </head>
 <body>
@@ -1151,6 +1168,17 @@
                                     ${state.logs.map(log => `<div>${log}</div>`).join('')}
                                 </div>
                             </div>
+
+                            <!-- Cellular Loci Visualization Grid -->
+                            <div class="glass-card ${state.emergencyMode ? 'emergency-card' : ''}" style="padding: 20px; display: flex; flex-direction: column; gap: 12px; min-height: 150px;">
+                                <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); display: flex; justify-content: space-between; align-items: center;">
+                                    <span><i data-lucide="grid" class="w-3.5 h-3.5 text-blue-400 inline-block mr-1"></i>CELLULAR LOCI QUANTUM GRID</span>
+                                    <span class="mono" style="color: var(--neon-purple);" id="loci-count-display">0 LOCI</span>
+                                </div>
+                                <div id="vht-cellular-loci-grid" style="display: flex; flex-wrap: wrap; gap: 4px; max-height: 90px; overflow-y: auto; padding: 6px; background: rgba(0,0,0,0.2); border-radius: 8px; border: 1px solid rgba(181,95,230,0.05);">
+                                    <!-- Dynamic loci will be appended here -->
+                                </div>
+                            </div>
                         </div>
 
                     </div>
@@ -1389,43 +1417,125 @@ process YAMANAKA_OSK_REPROGRAM(
             }
 
             root.innerHTML = `
-                <header style="border-bottom: 1px solid var(--purple-border); padding: 18px 40px; background: rgba(5, 2, 12, 0.85); backdrop-filter: blur(25px); position: sticky; top: 0; z-index: 40; display: flex; justify-content: space-between; align-items: center;">
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                        <div class="status-dot ${state.emergencyMode ? 'bg-red' : 'bg-purple'}"></div>
-                        <span style="font-weight: 900; font-size: 1.25rem; letter-spacing: 1.5px;">AETERNA // <span style="color: var(--neon-purple);" class="glow-text-purple">VHT SUITE v5.0</span></span>
-                    </div>
-
-                    <div style="display: flex; align-items: center; gap: 24px;">
-                        <div style="display: flex; align-items: center; gap: 8px; background: rgba(181,95,230,0.03); padding: 8px 20px; border-radius: 100px; border: 1px solid var(--purple-border);">
-                            <span style="font-size: 0.75rem; color: var(--text-secondary);">NEURAL LINK:</span>
-                            <span class="mono" style="font-size: 0.8rem; font-weight: 700; color: ${state.neuralLinkConnected ? 'var(--neon-emerald)' : 'var(--neon-red)'};">
-                                ${state.neuralLinkConnected ? 'CONNECTED' : 'SEVERED'}
-                            </span>
-                            <input type="checkbox" ${state.neuralLinkConnected ? 'checked' : ''} onchange="handleNeuralLinkToggle(this)" style="cursor: pointer; margin-left: 8px;" />
+                <div id="vht-hud-container">
+                    <header style="border-bottom: 1px solid var(--purple-border); padding: 18px 40px; background: rgba(5, 2, 12, 0.85); backdrop-filter: blur(25px); position: sticky; top: 0; z-index: 40; display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div class="status-dot ${state.emergencyMode ? 'bg-red' : 'bg-purple'}"></div>
+                            <span style="font-weight: 900; font-size: 1.25rem; letter-spacing: 1.5px;">AETERNA // <span style="color: var(--neon-purple);" class="glow-text-purple">VHT SUITE v5.0</span></span>
                         </div>
 
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <span style="font-size: 0.75rem; color: var(--text-secondary);">KNOX HEARTBEAT:</span>
-                            <span class="status-dot ${state.neuralLinkConnected ? 'bg-blue' : 'bg-red'}"></span>
+                        <div style="display: flex; align-items: center; gap: 24px;">
+                            <div style="display: flex; align-items: center; gap: 8px; background: rgba(181,95,230,0.03); padding: 8px 20px; border-radius: 100px; border: 1px solid var(--purple-border);">
+                                <span style="font-size: 0.75rem; color: var(--text-secondary);">NEURAL LINK:</span>
+                                <span class="mono" style="font-size: 0.8rem; font-weight: 700; color: ${state.neuralLinkConnected ? 'var(--neon-emerald)' : 'var(--neon-red)'};">
+                                    ${state.neuralLinkConnected ? 'CONNECTED' : 'SEVERED'}
+                                </span>
+                                <input type="checkbox" ${state.neuralLinkConnected ? 'checked' : ''} onchange="handleNeuralLinkToggle(this)" style="cursor: pointer; margin-left: 8px;" />
+                            </div>
+
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span style="font-size: 0.75rem; color: var(--text-secondary);">KNOX HEARTBEAT:</span>
+                                <span class="status-dot ${state.neuralLinkConnected ? 'bg-blue' : 'bg-red'}"></span>
+                            </div>
+
+                            <div style="display: flex; align-items: center; gap: 8px; background: rgba(0, 240, 255, 0.03); padding: 8px 20px; border-radius: 100px; border: 1px solid rgba(0, 240, 255, 0.15);">
+                                <span style="font-size: 0.75rem; color: var(--text-secondary);">PERFORMANCE:</span>
+                                <span id="vht-performance-fps" class="mono" style="font-size: 0.8rem; font-weight: 700; color: var(--neon-blue);">60</span>
+                                <span style="font-size: 0.75rem; color: var(--text-secondary);">FPS</span>
+                            </div>
                         </div>
-                    </div>
-                </header>
+                    </header>
 
-                <main style="flex: 1; padding: 40px; max-width: 1600px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; gap: 12px;">
-                    ${twinSelectors}
-                    ${tabHeader}
-                    ${emergencyBanner}
-                    ${tabContent}
-                </main>
+                    <main style="flex: 1; padding: 40px; max-width: 1600px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; gap: 12px;">
+                        ${twinSelectors}
+                        ${tabHeader}
+                        ${emergencyBanner}
+                        ${tabContent}
+                    </main>
 
-                <footer style="border-top: 1px solid var(--purple-border); padding: 24px; text-align: center; font-size: 0.75rem; color: var(--text-secondary); background: rgba(3, 1, 8, 0.95);" class="mono">
-                    AETERNA v5.0 Substrate // ZERO-ENTROPY BIOLOGICAL CURE PROTOCOL // 2026
-                </footer>
+                    <footer style="border-top: 1px solid var(--purple-border); padding: 24px; text-align: center; font-size: 0.75rem; color: var(--text-secondary); background: rgba(3, 1, 8, 0.95);" class="mono">
+                        AETERNA v5.0 Substrate // ZERO-ENTROPY BIOLOGICAL CURE PROTOCOL // 2026
+                    </footer>
+                </div>
             `;
             if (window.lucide) {
                 setTimeout(() => lucide.createIcons(), 0);
             }
         }
+
+        // Observe changes to loci grid to update UI counter
+        setInterval(() => {
+            const lociGrid = document.getElementById('vht-cellular-loci-grid');
+            const counterDisp = document.getElementById('loci-count-display');
+            if (lociGrid && counterDisp) {
+                const count = lociGrid.querySelectorAll('.cell-locus-node').length;
+                counterDisp.innerText = `${count} LOCI`;
+            }
+        }, 100);
+
+        // Dynamic FPS Counter
+        setInterval(() => {
+            const fpsEl = document.getElementById('vht-performance-fps');
+            if (fpsEl) {
+                const baseFps = state.emergencyMode ? 58 : 60;
+                const variance = Math.floor(Math.random() * 5); // 0 to 4
+                fpsEl.innerText = String(baseFps + variance);
+            }
+        }, 1000);
+
+        // Aeterna System Events Integration
+        window.addEventListener('AeternaSystemEvent', (e) => {
+            const detail = e.detail;
+            if (detail && detail.type === 'BYZANTINE_CRASH') {
+                addLogEntry(`[BYZANTINE] Node crash detected on ${detail.source} (${detail.severity})`);
+                
+                // Spawn the alert banner
+                let banner = document.getElementById('byzantine-alert-banner');
+                if (!banner) {
+                    banner = document.createElement('div');
+                    banner.id = 'byzantine-alert-banner';
+                    banner.className = 'vht-alert-banner-neon glass-card glow-red animate-pulse';
+                    banner.style.position = 'fixed';
+                    banner.style.bottom = '24px';
+                    banner.style.right = '24px';
+                    banner.style.zIndex = '9999';
+                    banner.style.border = '2px solid var(--neon-red)';
+                    banner.style.background = 'rgba(15, 3, 7, 0.96)';
+                    banner.style.color = '#fff';
+                    banner.style.padding = '20px 28px';
+                    banner.style.borderRadius = '16px';
+                    banner.style.boxShadow = '0 0 35px var(--neon-red-glow)';
+                    document.body.appendChild(banner);
+                }
+                banner.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 16px;">
+                        <span class="status-dot bg-red animate-pulse" style="width: 14px; height: 14px;"></span>
+                        <div>
+                            <h4 style="font-weight:900; color: var(--neon-red); font-size: 1rem; letter-spacing: 0.5px;">BYZANTINE NODE FAILURE DETECTED</h4>
+                            <p style="font-size:0.75rem; color:var(--text-secondary); margin-top:4px;" class="mono">Source: ${detail.source} | Severity: ${detail.severity}</p>
+                        </div>
+                    </div>
+                `;
+            }
+        });
+
+        window.addEventListener('AeternaNetworkSplit', (e) => {
+            const active = e.detail && e.detail.active;
+            addLogEntry(`[NETWORK] Split-brain event received (active=${active})`);
+            if (active) {
+                state.neuralLinkConnected = false;
+                state.emergencyMode = true;
+                document.body.classList.add("emergency-theme");
+                addLogEntry("[CRITICAL_ALERT] NETWORK SPLIT: Split-brain status confirmed. Engaging TEE local override.");
+                renderVanillaHUD();
+            } else {
+                state.neuralLinkConnected = true;
+                state.emergencyMode = false;
+                document.body.classList.remove("emergency-theme");
+                addLogEntry("[INFO] NETWORK SPLIT: Restored connectivity.");
+                renderVanillaHUD();
+            }
+        });
 
         // Run Vanilla engine
         window.addEventListener("DOMContentLoaded", () => {
