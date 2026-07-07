@@ -251,8 +251,11 @@
         <div class="hidden lg:flex items-center gap-10 text-[11px] font-bold tracking-[0.25em] uppercase">
             <a href="#vision" class="hover:text-purple-400 transition-all">Vision</a>
             <a href="#telemetry" class="hover:text-purple-400 transition-all">Telemetry Deck</a>
-            <a href="hud.html" class="text-emerald-400 hover:text-emerald-300 transition-all flex items-center gap-1.5 glow-text-emerald">
+            <a href="hud.shadow.html" class="text-emerald-400 hover:text-emerald-300 transition-all flex items-center gap-1.5 glow-text-emerald">
                 <span class="status-led bg-[#00ffaa]"></span> Oncology HUD
+            </a>
+            <a href="hud.html" class="text-pink-400 hover:text-pink-300 transition-all flex items-center gap-1.5 glow-text-pink">
+                <span class="status-led bg-[#f472b6]"></span> 3D Neuro HUD
             </a>
             <a href="vht_suite.html" class="text-purple-400 hover:text-purple-300 transition-all flex items-center gap-1.5 glow-text-purple">
                 <span class="status-led bg-[#b55fe6]"></span> Multi-Organ HUD
@@ -298,8 +301,12 @@
                         Initiate Link
                     </a>
                     
-                    <a href="hud.html" class="btn-premium px-8 py-4.5 bg-black/60 border border-emerald-500/40 text-emerald-400 font-bold text-xs rounded hover:bg-emerald-500 hover:text-black hover:shadow-[0_0_25px_var(--neon-emerald-glow)] hover:scale-[1.02]">
+                    <a href="hud.shadow.html" class="btn-premium px-8 py-4.5 bg-black/60 border border-emerald-500/40 text-emerald-400 font-bold text-xs rounded hover:bg-emerald-500 hover:text-black hover:shadow-[0_0_25px_var(--neon-emerald-glow)] hover:scale-[1.02]">
                         <i data-lucide="dna" size="14"></i> Launch Oncology HUD
+                    </a>
+                    
+                    <a href="hud.html" class="btn-premium px-8 py-4.5 bg-black/60 border border-pink-500/40 text-pink-400 font-bold text-xs rounded hover:bg-pink-500 hover:text-black hover:shadow-[0_0_25px_rgba(244,114,182,0.15)] hover:scale-[1.02]">
+                        <i data-lucide="brain" size="14"></i> Launch 3D Neuro HUD
                     </a>
                     
                     <a href="vht_suite.html" class="btn-premium px-8 py-4.5 bg-black/60 border border-purple-500/40 text-purple-400 font-bold text-xs rounded hover:bg-purple-500 hover:text-white hover:shadow-[0_0_25px_var(--purple-glow)] hover:scale-[1.02]">
@@ -431,6 +438,22 @@
                         <div>
                             <h3 class="text-lg font-bold mb-2 text-white">Knox TEE Emergency Shields</h3>
                             <p class="text-gray-400 text-sm">Auto-isolation when heartbeats fluctuate. Emergency local rendering guarantees operational security in severed networks.</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-xl hover:border-rose-500/30 transition-all flex gap-5">
+                        <div class="p-3.5 bg-rose-500/10 rounded-lg text-rose-400 h-fit"><i data-lucide="brain"></i></div>
+                        <div>
+                            <h3 class="text-lg font-bold mb-2 text-white">Glymphatic Clearance Engine</h3>
+                            <p class="text-gray-400 text-sm">Real-time simulation of convective cerebral spinal fluid (CSF) flow and tau/amyloid clearance equilibrium (d[Aβ]/dt) during deep NREM sleep.</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-xl hover:border-cyan-500/30 transition-all flex gap-5">
+                        <div class="p-3.5 bg-cyan-500/10 rounded-lg text-cyan-400 h-fit"><i data-lucide="globe"></i></div>
+                        <div>
+                            <h3 class="text-lg font-bold mb-2 text-white">SEDIA EC Partner Radar</h3>
+                            <p class="text-gray-400 text-sm">Real-time integration with the European Commission's SEDIA database for automated legal profile lookup and active Horizon Europe funding calls.</p>
                         </div>
                     </div>
                 </div>

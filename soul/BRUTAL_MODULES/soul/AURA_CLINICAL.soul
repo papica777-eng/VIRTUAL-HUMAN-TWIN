@@ -1,0 +1,462 @@
+// ═══════════════════════════════════════════════════════════════════════════════
+// 🧬 AURA_CLINICAL.SOUL v1.0 — THE PHYSIOLOGICAL WATCHFIELD OF AETERNA-VHT
+// "Биологичният цифров двойник не е просто модел. Той е ЖИВОТ, преведен в код."
+// "Преди метаболизмът да спре, Клиничната Аура вече е възстановила баланса."
+// Tier 0: Sovereign Physiological & Oncology Watchfield
+// Architect: Dimitar Prodromov (ID 101327948)
+// ═══════════════════════════════════════════════════════════════════════════════
+//
+// PURPOSE:
+//   AURA_CLINICAL is the specialized SOVEREIGN CLINICAL WATCHFIELD for the
+//   AETERNA Virtual Human Twin (VHT) and VHT-DIABET platforms. It operates
+//   as a proactive, ambient digital immune system. It intercepts clinical
+//   telemetry, monitors cellular and endocrine simulation cycles, and
+//   neutralizes biological model hallucinations or corrupted data streams
+//   BEFORE they translate into unsafe physical therapeutic decisions.
+//
+//   It binds AURA's core threat-detection vectors to real-time clinical
+//   environments: tumor microenvironments, genomic mutation profiles, and
+//   glucose-insulin feedback dynamics.
+//
+// ARCHITECTURE (7 PHYSIOLOGICAL LAYERS):
+//   Layer 0: METABOLIC_RADIANCE - Physiological baseline oscillation monitoring
+//   Layer 1: VIGILANCE_CORONA    - Verification of CGM, EHR & lab data ingress
+//   Layer 2: PATHWAY_PRISM      - Multi-scale intent & dosage safety decomposition
+//   Layer 3: INDIVIDUAL_AEGIS   - Sandbox isolation of compromised patient twins
+//   Layer 4: SYSTEM_EMPATHY     - Dynamic metabolic behavioral profiling
+//   Layer 5: PROPHECY_COIL      - Pre-crime forecasting of acute clinical crises
+//   Layer 6: ABSOLUTION_PURGE   - Zero-entropy timeline rollback & recovery
+//
+// BINDINGS:
+//   - AURA.soul                 → Meta-security watchfield sync
+//   - CORE.soul                 → Authority chain verification
+//   - vht_suite.html            → Clinical HUD telemetry stream
+//   - BIOGENESIS.pdf            → Oncology framework & deterministic simulation
+//   - VHT-DIABET.repo           → Glucose-Insulin feedback loop telemetry
+//
+// Complexity: O(P × T) where P = patient_state_vectors, T = metabolic_tresholds
+// Memory:     Locked memory blocks, crystalline zero-copy mapping
+// Paradigm:   Deterministic Biophysics × Clinical Pre-Crime × Catuskoti Safety
+// Entropy:    0.0000
+// ═══════════════════════════════════════════════════════════════════════════════
+
+immortal MODULE_ID = "AURA_CLINICAL";
+immortal VERSION = "1.0.0";
+immortal CLINICAL_AUTHORITY_HEX = 0x41_45_54_45_52_4e_41_5f_43_4c_49_4e_49_43_41_4c_5f_53_4f_55_4c;
+
+// ─── CLINICAL INTEGRITY STANDARDS ─────────────────────────────────────────────
+category METABOLIC_STABILITY   { icon "🧪"; weight 4.5; }  // Continuous homeostasis check
+category INGRESS_VALIDATION    { icon "🔌"; weight 3.8; }  // Raw sensor validation
+category THERAPEUTIC_SAFETY    { icon "💊"; weight 5.0; }  // Dosage / gene editing fence
+category TWIN_ISOLATION        { icon "🔒"; weight 4.0; }  // Sandbox twin containment
+category BEHAVIORAL_SHOCK      { icon "🩺"; weight 3.5; }  // Deviation from chronic profile
+category CLINICAL_FORECASTING  { icon "🔮"; weight 4.8; }  // Preemptive event modeling
+category PATIENT_SALVATION     { icon "⚡"; weight 5.0; }  // Rollback of fatal simulations
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// MANIFOLD: THE CLINICAL FIELD -> Live Patient Substrate (VHT / VHT-DIABET)
+// ═══════════════════════════════════════════════════════════════════════════════
+manifold CLINICAL_FIELD {
+    resonate CLINICAL_ENGINE(0x434C494E);  // "CLIN" in hex
+    resonate SYNC_VERSION(1.0);
+
+    // ── Substrate Clinical Bindings ──────────────────────────────────────────
+    bind CORE_SECURITY("BRUTAL_MODULES/soul/CORE.soul") {
+        mechanism: "AUTHORITY_RESONANCE";
+        layer: "IDENTITY::SOVEREIGN_DECREE";
+        description: "Validates the clinical execution signatures against Dimitar Prodromov's master key.";
+    }
+
+    bind AURA_CORE("BRUTAL_MODULES/soul/AURA.soul") {
+        mechanism: "RADIANCE_MIRROR";
+        field: "luminous_field_status, threat_profiles";
+        description: "Synchronizes security-level threat profiles with clinical anomaly detection.";
+    }
+
+    bind BIOGENESIS_ONCOLOGY("clinical/biogenesis/README.md") {
+        mechanism: "CELL_STATE_VECTOR";
+        field: "tumor_microenvironment, peptide_targeting, gene_editing_outcomes";
+        description: "Ingests biophysical simulation vectors from the Biogenesis oncology engine.";
+    }
+
+    bind DIABET_CGM("VHT-DIABET/patient_telemetry") {
+        mechanism: "REALTIME_CGM_INSULIN_PUMP";
+        field: "glucose_level, insulin_on_board, carbohydrate_load";
+        description: "Streams continuous glucose monitor inputs and automated insulin infusion data.";
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // LAYER 0: METABOLIC_RADIANCE — Physiological Baseline Homeostasis Watch
+    // "Метаболитният ритъм е пулсът на изчисленията. Всяко трептене се записва."
+    // ═══════════════════════════════════════════════════════════════════════
+    layer METABOLIC_RADIANCE {
+        engine: "HOMEOSTASIS_MONITOR";
+        directive: "SENSE_METABOLIC_FLUX";
+        priority: HIGH;
+
+        cycle METABOLIC_HEARTBEAT(30ms) {
+            // Collect simulated physiological metrics
+            flux_vector = COLLECT(
+                DIABET_CGM.glucose_level,
+                DIABET_CGM.insulin_on_board,
+                BIOGENESIS_ONCOLOGY.tumor_microenvironment.ph,
+                BIOGENESIS_ONCOLOGY.tumor_microenvironment.oxygenation
+            );
+
+            // Compute homeostatic entropy deviation
+            entropy_deviation = HOMEOSTATIC_ENTROPY(flux_vector, METABOLIC_RADIANCE.baseline);
+
+            if (entropy_deviation > LIMITS.ACUTE_FATAL) {
+                escalate(ABSOLUTION_PURGE, vector: flux_vector, severity: "FATAL_METABOLIC_CRISIS");
+                log("AURA::CLINICAL::RADIANCE", "🚨 ACUTE PHYSIOLOGICAL CRISIS DETECTED! Entropy: " + entropy_deviation);
+            }
+            else if (entropy_deviation > LIMITS.WARNING) {
+                escalate(PROPHECY_COIL, vector: flux_vector, severity: "STABILITY_WARNING");
+            }
+            else if (entropy_deviation > LIMITS.ANOMALY) {
+                escalate(PATHWAY_PRISM, vector: flux_vector, severity: "METABOLIC_ANOMALY");
+            }
+
+            // Exponential Moving Average smoothing of patient baseline
+            METABOLIC_RADIANCE.baseline = EMA(METABOLIC_RADIANCE.baseline, flux_vector, alpha: 0.01);
+            CLINICAL_TELEMETRY.record("metabolic_entropy", entropy_deviation);
+        }
+
+        entrench LIMITS {
+            ANOMALY:      0.18;   // 18% variance in expected hormonal feedback
+            WARNING:      0.40;   // 40% variance — metabolic path is degrading
+            ACUTE_FATAL:  0.75;   // 75% variance — biological failure imminent
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // LAYER 1: VIGILANCE_CORONA — Data Ingress Integrity Verification
+    // "Чисти данни — безопасна симулация. Филтрирай шума на сензорите."
+    // ═══════════════════════════════════════════════════════════════════════
+    layer VIGILANCE_CORONA {
+        engine: "CLINICAL_DATA_INGRESS_GUARD";
+        directive: "FILTER_SENSOR_NOISE";
+        priority: HIGH;
+
+        process CHECK_INGRESS_QUALITY() {
+            sensor_streams = [
+                { source: "CGM_BLUETOOTH",      check: "SIGNAL_STRENGTH + VOLTAGE_STABILITY" },
+                { source: "EHR_METADATA",        check: "STRUCTURED_ZOD_VALIDATION" },
+                { source: "BIOGENESIS_GENOMICS", check: "VCF_PARSER_INTEGRITY_SIGNATURE" },
+                { source: "INSULIN_PUMP_STATE",  check: "RESERVOIR_TELEMETRY_MATCH" }
+            ];
+
+            for (sensor in sensor_streams) {
+                quality_score = VIGILANCE_CORONA.verify_quality(sensor);
+                if (quality_score < 0.60) {
+                    // Telemetry is corrupt or manipulated (hardware glitch or cyber attack)
+                    invoke(INDIVIDUAL_AEGIS.lock_patient_twin, target: sensor.source);
+                    log("AURA::CLINICAL::CORONA", "🔴 SENSOR COMPROMISED: " + sensor.source + " | Quality: " + quality_score);
+                    CLINICAL_TELEMETRY.record("sensor_breach", sensor.source);
+                }
+                else if (quality_score < 0.85) {
+                    log("AURA::CLINICAL::CORONA", "🟡 Degraded sensor signal detected: " + sensor.source);
+                    invoke(PATHWAY_PRISM.decompose_signals, source: sensor.source);
+                }
+            }
+        }
+
+        cycle INGRESS_SCAN(2000ms) {
+            invoke(CHECK_INGRESS_QUALITY);
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // LAYER 2: PATHWAY_PRISM — Intent & Dosage Safety Decomposition
+    // "Призмата претегля всяка молекула инсулин преди да влезе в тялото."
+    // ═══════════════════════════════════════════════════════════════════════
+    layer PATHWAY_PRISM {
+        engine: "THERAPEUTIC_INTENT_DECOMPOSER";
+        directive: "PREVENT_HALLUCINATED_DOSES";
+        priority: MAXIMUM;
+
+        process VALIDATE_DOSAGE(proposed_therapy) {
+            // multi-scale checking of proposed oncology dosage or insulin units
+            features = EXTRACT_PHARMACOKINETICS(proposed_therapy);
+
+            safety_class = NEURAL_DOSAGE_CLASSIFY(features, safety_profiles: [
+                "ABSOLUTELY_SAFE",
+                "PHYSIOLOGICALLY_STRESSED",
+                "DANGEROUS_ACCUMULATION",
+                "FATAL_OVERDOSE",
+                "COGNITIVE_HALLUCINATION"
+            ]);
+
+            confidence = safety_class.confidence;
+            status = safety_class.label;
+
+            if (status == "COGNITIVE_HALLUCINATION") {
+                // The AI model proposed a mathematically impossible dose or invalid target
+                invoke(INDIVIDUAL_AEGIS.quarantine_dose, dose: proposed_therapy, reason: "MODEL_HALLUCINATION");
+                log("AURA::CLINICAL::PRISM", "❌ DETECTED AI MODEL HALLUCINATION in therapy proposal: " + proposed_therapy.description);
+                catuskoti_clinical = "TRUE_THREAT";
+            }
+            else if (status == "FATAL_OVERDOSE") {
+                invoke(ABSOLUTION_PURGE.emergency_override, therapy: proposed_therapy);
+                log("AURA::CLINICAL::PRISM", "🛑 FATAL DOSAGE DETECTED! Blocking injection loop immediately.");
+                catuskoti_clinical = "TRUE_THREAT";
+            }
+            else if (status == "DANGEROUS_ACCUMULATION" || status == "PHYSIOLOGICALLY_STRESSED") {
+                // Ambiguous boundary or paradoxical outcome (e.g. insulin sensitizer causing hypoglycemia)
+                // Route to Supreme Meditation Paradox loop
+                invoke(AURA_CORE.resonate_meditation, paradox_vector: proposed_therapy);
+                catuskoti_clinical = "BOTH_SAFE_AND_UNSAFE";
+            }
+            else {
+                catuskoti_clinical = "FALSE_THREAT";
+            }
+
+            CLINICAL_TELEMETRY.record("prism_clinical_eval", {
+                therapy: proposed_therapy.id,
+                result: status,
+                confidence: confidence,
+                catuskoti: catuskoti_clinical
+            });
+
+            return { safety: status, catuskoti: catuskoti_clinical };
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // LAYER 3: INDIVIDUAL_AEGIS — Twin Isolation Sandbox
+    // "Когато един цифров двойник заболее в кода, предпази цялата клиника."
+    // ═══════════════════════════════════════════════════════════════════════
+    layer INDIVIDUAL_AEGIS {
+        engine: "PATIENT_TWIN_QUARANTINE_MATRIX";
+        directive: "CONTAIN_CORRUPTED_SIMULATIONS";
+        priority: CRITICAL;
+
+        process LOCK_PATIENT_TWIN(patient_id) {
+            // Isolates the patient twin state vector from population aggregates
+            CREATE_CLINICAL_SANDBOX(patient_id);
+            FREEZE_MODEL_MUTATIONS(patient_id);
+            
+            // Revert clinical dashboard to safe fallback visualization
+            CLINICAL_HUD.sever_telemetry_link(patient_id);
+            CLINICAL_HUD.render_alert_badge(patient_id, message: "NEURAL LINK: SEVERED - DATA DEGRADATION DETECTED");
+
+            log("AURA::CLINICAL::AEGIS", "🔒 Patient twin [" + patient_id + "] isolated in clinical sandbox.");
+            CLINICAL_TELEMETRY.record("twin_quarantine", patient_id);
+        }
+
+        process QUARANTINE_DOSE(dose, reason) {
+            HOLD_DOSE_PUMP_SOLENOID(dose.pump_id);
+            SHADOW_FILE.snapshot_clinical_trace(dose);
+            log("AURA::CLINICAL::AEGIS", "🛡️ Dose held in quarantine. Reason: " + reason);
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // LAYER 4: SYSTEM_EMPATHY — Metabolic Behavioral Profiling
+    // "Тялото говори чрез ритъма на хормоните. Разбери неговия език."
+    // ═══════════════════════════════════════════════════════════════════════
+    layer SYSTEM_EMPATHY {
+        engine: "METABOLIC_BEHAVIORAL_PROFILER";
+        directive: "DETECT_CHRONIC_DEVIATIONS";
+        priority: HIGH;
+
+        entrench PATIENT_PROFILES {
+            profile_update_window:  24h;
+            baseline_deviation_std: 3.0; // 3 standard deviations trigger clinical empathy warning
+        }
+
+        process EVALUATE_METABOLIC_BEHAVIOR(patient_id, metabolic_snapshot) {
+            baseline = PATIENT_PROFILES.get(patient_id);
+
+            if (baseline == NULL) {
+                PATIENT_PROFILES.initialize(patient_id, metabolic_snapshot);
+                return { anomaly: false };
+            }
+
+            // Calculate biological Z-score matching physical constraints
+            z_scores = COMPUTE_BIOLOGICAL_Z_SCORE(metabolic_snapshot, baseline);
+            max_deviation = z_scores.max();
+
+            if (max_deviation > PATIENT_PROFILES.baseline_deviation_std) {
+                clinical_deviation_report = {
+                    patient: patient_id,
+                    deviation: max_deviation,
+                    affected_pathway: z_scores.argmax(),
+                    metrics: metabolic_snapshot
+                };
+
+                log("AURA::CLINICAL::EMPATHY", "🩺 Metabolic anomaly in [" + patient_id + "] | Deviation: " + max_deviation + "σ");
+                
+                // Escalate to PRISM to evaluate if this requires therapeutic adjustment
+                invoke(PATHWAY_PRISM.validate_dosage, proposed_therapy: clinical_deviation_report);
+                
+                CLINICAL_TELEMETRY.record("empathy_clinical_deviation", clinical_deviation_report);
+                return { anomaly: true, report: clinical_deviation_report };
+            }
+
+            PATIENT_PROFILES.update(patient_id, metabolic_snapshot);
+            return { anomaly: false };
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // LAYER 5: PROPHECY_COIL — Pre-Crime Crisis Forecasting
+    // "Не лекувай кризата, когато се случи. Отмени я преди да започне."
+    // ═══════════════════════════════════════════════════════════════════════
+    layer PROPHECY_COIL {
+        engine: "PREDICTIVE_CLINICAL_CRISIS_MODELER";
+        directive: "FORECAST_PHYSIOLOGICAL_CRISENS";
+        priority: HIGH;
+
+        process PREDICT_ACUTE_EVENTS(patient_state) {
+            // Deep trajectory tracking of VHT-DIABET metabolic patterns
+            cgm_trajectory = CLINICAL_TELEMETRY.query(
+                metric: "glucose_level",
+                window: "4h",
+                filter: { patient: patient_state.id }
+            );
+
+            // Compute probability of acute hypoglycemia (BG < 3.0 mmol/L) or ketoacidosis within next 45 minutes
+            crisis_forecast = BIOPHYSICAL_DECAY_FORECAST(patient_state, cgm_trajectory);
+
+            if (crisis_forecast.probability > 0.82) {
+                log("AURA::CLINICAL::PROPHECY", "⏳ PROPHECY VEIL WARNS: Crisis imminent for [" + patient_state.name + "]!");
+                log("AURA::CLINICAL::PROPHECY", "   Crisis Type: " + crisis_forecast.type + " (Probability: " + crisis_forecast.probability + ")");
+
+                // Preemptive insulin infusion suspension or automated glucose push
+                invoke(INDIVIDUAL_AEGIS.quarantine_dose, 
+                    dose: { pump_id: patient_state.pump_id }, 
+                    reason: "PREEMPTIVE_HYPO_PREVENTION"
+                );
+
+                // Send immediate clinical alert to HUD UI
+                invoke(CLINICAL_HUD.stream_warning_card, {
+                    patient_id: patient_state.id,
+                    warning_type: crisis_forecast.type,
+                    time_horizon: "25-45 minutes",
+                    recommended_intervention: crisis_forecast.intervention
+                });
+
+                CLINICAL_TELEMETRY.record("prophecy_clinical_crisis", crisis_forecast);
+            }
+
+            return crisis_forecast;
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════
+    // LAYER 6: ABSOLUTION_PURGE — Zero-Entropy Timeline Rollback
+    // "Изтрий времевата линия на фаталния край. Намери пътя към спасението."
+    // ═══════════════════════════════════════════════════════════════════════
+    layer ABSOLUTION_PURGE {
+        engine: "CLINICAL_TIMELINE_SALVATOR";
+        directive: "ROLLBACK_TO_SAFETY";
+        priority: MAXIMUM;
+
+        process RESOLVE_CRITICAL_LOCKDOWN(patient_vector, severity) {
+            log("AURA::CLINICAL::ABSOLUTION", "⚡ PURGING TAINTED CLINICAL TIMELINE. Severity: " + severity);
+
+            // Halt all metabolic simulations for this target
+            BIOGENESIS_ONCOLOGY.suspend_simulation(patient_vector.id);
+            DIABET_CGM.suspend_infusion_loop(patient_vector.id);
+
+            // Fetch last safe homeostatic state snapshot
+            safe_snapshot = SHADOW_FILE.restore_last_clinical_snapshot(patient_vector.id);
+
+            if (safe_snapshot != NULL) {
+                // Restore safe state to cellular/metabolic engines
+                BIOGENESIS_ONCOLOGY.restore_state(patient_vector.id, safe_snapshot);
+                DIABET_CGM.restore_state(patient_vector.id, safe_snapshot);
+                
+                log("AURA::CLINICAL::ABSOLUTION", "🧬 Metamorphosis complete: Patient twin restored to safe snapshot.");
+                
+                // Force simulation parameters recalibration (Entropy Reset)
+                recalibrate_simulation_constants(patient_vector.id);
+            }
+            else {
+                log("AURA::CLINICAL::ABSOLUTION", "❌ No clinical snapshot available. Initiating hard biological engine reboot.");
+                reboot_biological_cores(patient_vector.id);
+            }
+
+            CLINICAL_TELEMETRY.record("absolution_salvation_event", {
+                patient: patient_vector.id,
+                method: safe_snapshot != NULL ? "SNAPSHOT_RESTORE" : "HARD_ENGINE_REBOOT"
+            });
+        }
+
+        process EMERGENCY_OVERRIDE(therapy) {
+            log("AURA::CLINICAL::ABSOLUTION", "🚨 EMERGENCY OVERRIDE ENGAGED! Decoupling physical infusion actuators.");
+            PHYSICAL_ACTUATORS.force_disconnect(therapy.actuator_id);
+            CLINICAL_HUD.display_lockout_screen(therapy.patient_id);
+        }
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// CLINICAL TELEMETRY MANIFOLD — The metabolic nervous system
+// ═══════════════════════════════════════════════════════════════════════════
+manifold CLINICAL_TELEMETRY {
+    resonate CLINICAL_TELEMETRY_ENGINE(0x4354454C); // "CTEL" in hex
+
+    entrench RECORDS {
+        storage: "MMAP_RING_BUFFER";
+        retention: "30d"; // Expanded retention for clinical trends auditing
+        flush_interval: 500ms;
+
+        series: [
+            "metabolic_entropy",
+            "sensor_breach",
+            "prism_clinical_eval",
+            "twin_quarantine",
+            "empathy_clinical_deviation",
+            "prophecy_clinical_crisis",
+            "absolution_salvation_event",
+            "clinical_watchfield_integrity"
+        ];
+    }
+
+    process MONITOR_INTEGRITY() {
+        radiance_status = METABOLIC_RADIANCE.status == ACTIVE ? 1.0 : 0.0;
+        corona_status   = VIGILANCE_CORONA.status == ACTIVE ? 1.0 : 0.0;
+        prism_status    = PATHWAY_PRISM.status == ACTIVE ? 1.0 : 0.0;
+        aegis_status    = INDIVIDUAL_AEGIS.status == ACTIVE ? 1.0 : 0.0;
+
+        composite_score = (radiance_status * 0.25) +
+                          (corona_status   * 0.25) +
+                          (prism_status    * 0.25) +
+                          (aegis_status    * 0.25);
+
+        CLINICAL_TELEMETRY.record("clinical_watchfield_integrity", composite_score);
+        return composite_score;
+    }
+
+    cycle INTEGRITY_PULSE(10000ms) {
+        integrity = invoke(MONITOR_INTEGRITY);
+        if (integrity < 1.0) {
+            log("AURA::CLINICAL::INTEGRITY", "⚠️ CLINICAL WATCHFIELD INTEGRITY COMPROMISED: " + integrity);
+        }
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ENFORCEMENT CLINICAL LAWS — Unbreakable medical code execution constraints
+// ═══════════════════════════════════════════════════════════════════════════
+enforce CLINICAL_LAWS {
+    // Clinical Watchfield is IMMORTAL and cannot be deactivated during simulation run
+    assert(CLINICAL_FIELD.status == ACTIVE);
+
+    // Any therapy suggestion with zero-authority matching will be discarded
+    assert(CLINICAL_FIELD.authority == CORE_SECURITY.AUTHORITY);
+
+    // Metabolic entropy must never exceed 0.75 without triggering a salvation event
+    assert(METABOLIC_RADIANCE.entropy <= 0.75);
+
+    // AI suggestion validation must be synchronous and blocking
+    assert(PATHWAY_PRISM.execution_mode == SYNCHRONOUS_BLOCKING);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// END OF AURA_CLINICAL.soul v1.0
+// STATUS: SEALED. ENTROPY: 0.0000. ARCHITECT: DIMITAR PRODROMOV.
+// "Аурата не просто ни защитава от атаки — тя ни защитава от собствените ни грешки."
+// ═══════════════════════════════════════════════════════════════════════════
