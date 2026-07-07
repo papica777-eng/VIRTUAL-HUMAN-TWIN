@@ -1,0 +1,16 @@
+# Среда и тайни
+.env
+secrets.txt
+tmp_secrets_clean.txt
+
+# Временни папки от сканиране (МНОГО ВАЖНО!)
+workspaces/
+VIVISECTOR_REPORTS/
+.z3_input.json
+
+# Python
+__pycache__/
+*.pyc
+
+# Node.js / TypeScript
+node_modules/

@@ -1,0 +1,46 @@
+# AKASH STACK DEFINITION LANGUAGE (SDL) FOR AETERNA VORTEX
+# Deployment descriptor for decentralized hosting on Akash Network
+
+version: "2.0"
+
+services:
+  aeterna-vortex:
+    image: papica7777/aeterna:latest
+    expose:
+      - port: 3000
+        as: 80
+        to:
+          - global: true
+    env:
+      - NODE_ENV=production
+      - PORT=3000
+      - DATABASE_PATH=/tmp/vht_sovereign.db
+      - MAINNET_RPC_URL=https://soroban-testnet.stellar.org
+      - POOL_ADDRESS=CCZIOKORGUGT6PHL4PF2DH3ASSJQYAUSLHXDVJLJSGVX4PNIK4O7XRS5
+      - ADMIN_SECRET_KEY=SALI2HCZ2CWZOEFLWUDJ555HMTIH4QM5ZC5ZWDPTDYN4F6HFWP6OMBMT
+      - QUEST_SECRET=SBUGSLQ533IRX226M4ZZIXSRGT3TWP6KF6QEGEGODI2EIPBTRJGFF6XQ
+      - TELEGRAM_BOT_TOKEN=8138909334:AAGkP8CDqH_zkDIdWy80dwFsQRyv3cPkPEg
+      - TELEGRAM_CHAT_ID=1174432502
+
+profiles:
+  compute:
+    aeterna-vortex:
+      resources:
+        cpu:
+          units: 1.0
+        memory:
+          size: 1Gi
+        storage:
+          size: 2Gi
+  placement:
+    akash:
+      pricing:
+        aeterna-vortex:
+          denom: uakt
+          amount: 1000
+
+deployment:
+  aeterna-vortex:
+    akash:
+      profile: aeterna-vortex
+      count: 1
