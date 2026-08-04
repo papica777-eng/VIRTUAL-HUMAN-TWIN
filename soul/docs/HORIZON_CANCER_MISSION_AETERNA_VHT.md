@@ -8,7 +8,7 @@
 * **Type of Action:** HORIZON-RIA (Research and Innovation Action)
 * **Type of MGA:** HORIZON-AG
 * **Submitted Date:** 23 April 2026 17:57:11 (Brussels Local Time)
-* **Project Duration:** 36 Months
+* **Project Duration:** 48 Months
 * **Total Requested EU Contribution:** €9,850,000
 
 ---
@@ -54,42 +54,54 @@ graph TD
 
 ## 2. Technical and Biophysical Work Packages
 
-### WP1: High-Speed FHIR & Genomic Ingress (Lead: Partner 1)
+### WP1: High-Speed FHIR & Genomic Ingress (Lead: AETERNA Sovereign Labs)
 * **Objective:** Establish low-latency real-time clinical integration pathways.
 * **Deliverables:** LOINC mapping schemas for `TP53` [85337-4], `KRAS` [62358-7], `EGFR` [62357-9], and `PD-L1 TPS` [85147-7] molecular diagnostics.
 
-### WP2: Multi-Scale Tumor & Neurological Glioblastoma Simulation (Lead: Partner 2)
+### WP2: Multi-Scale Tumor & Neurological Glioblastoma Simulation (Lead: Barcelona Supercomputing Center & Institut Curie)
 * **Objective:** High-performance thermodynamic, physical, and neural twin simulation of mutated tumor boundaries, integrating closed-loop neuro-oncological feedback (BCI-FES & dynamic BDNF Hebbian facilitation).
 * **Deliverables:** The `APOPTOSIS_ENGINE` and `VHT-BRAIN` cores running on vectorized AVX-512 and CUDA architectures, simulating ligand-receptor affinity matrices at $<25\text{ms}$ latency, **98.50% Hebbian Synaptic Density Regeneration** via BDNF, and **54.20 mL/100g/min L-CBF perfusion recovery** in tumor margins.
 
-### WP3: Clinical Cohort Retrospective Validation (Lead: Clinical Partner 3)
+### WP3: Clinical Cohort Retrospective & Prospective Validation (Lead: Medical University Sofia)
 * **Objective:** Large-scale cohort benchmarking for both general oncological and high-grade glioma datasets to satisfy European Medicines Agency (EMA) and EU MDR Class III safety protocols.
 * **Milestones:**
   1. Retrospective analysis of a **5,000-patient cohort** demonstrating a measured Concordance Index ($C$-index) of **0.9713 (97.13% safety precision)**.
-  2. Average survival extended from 20.07 months (SOC) to 38.40 months (VHT-guided target therapeutics, ~91.8% improvement).
+  2. Multi-center prospective clinical pilot trial (200 patients) validating VHT-guided precision regimens.
   3. Demonstration of **2.10% mtDNA mutation load mitigation** under neurometabolic stress to arrest tumor-driven metabolic shifts.
+
+### WP4: Medical Regulatory & Compliance (Lead: AETERNA Sovereign Labs)
+* **Objective:** Class III SaMD compliance under EU MDR 2017/745 and High-Risk AI System certification under EU AI Act Annex III.
+
+### WP5: Exploitation, Dissemination & IP Management (Lead: LC Innoconsult International)
+* **Objective:** Freedom-to-Operate (FTO) patent mapping, business modeling, EU dissemination, and commercialization roadmap across EU health markets.
 
 ---
 
 ## 3. Financial Breakdown & Resource Allocation
 
-The total proposed budget of **€9,850,000** is meticulously allocated across zero-entropy milestones:
+The total proposed budget of **€9,850,000** is meticulously allocated across zero-entropy milestones and consortium beneficiaries:
 
-| Category | Budget (€) | Core Focus | Target Platform |
-| :--- | :--- | :--- | :--- |
-| **Personnel (R&D / Bio-Engineers)** | **€4,200,000** | High-performance Rust & C++ algorithm refinement | AMD Ryzen 7000 Substrates |
-| **Clinical Trial Infrastructure** | **€2,950,000** | EHR database synchronization & trial coordinator networks | HL7/FHIR Pipelines |
-| **Compute Infrastructure (Bare-Metal)** | **€1,500,000** | GPU cluster deployment (CUDA zero-copy memory arrays) | NVIDIA H100 Vector Cores |
-| **Dissemination & IP Protection** | **€700,000** | Patents, medical journal entries, and EMA audits | EU Central Registry |
-| **Indirect Costs (Overheads)** | **€500,000** | General admin and substrate operations | Local Nodes |
+| Beneficiary Name | Role | Country | Direct Costs (€) | Overheads (€) | Total Requested (€) |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **AETERNA Sovereign Labs** | Coordinator / Core VM | BG | €1,289,000 | €322,250 | **€1,611,250** |
+| **Medical University Sofia** | Clinical Trial Lead | BG | €1,800,000 | €450,000 | **€2,250,000** |
+| **Barcelona Supercomputing Ctr** | Supercompute Core | ES | €1,800,000 | €450,000 | **€2,250,000** |
+| **Institut Curie** | Oncology Validation | FR | €1,800,000 | €450,000 | **€2,250,000** |
+| **LC Innoconsult International** | WP5 Lead (D&E / IP) | HU | €256,000 | €64,000 | **€320,000** |
+| **Clinical Infrastructure Fund** | Patient Registries | EU | €935,000 | €233,750 | **€1,168,750** |
+| **TOTAL CONSORTIUM** | Full Project | EU | €7,880,000 | €1,970,000 | **€9,850,000** |
 
 ---
 
 ## 4. Consortium Partners & Physical Anchors
 
-1. **AETERNA Sovereign Labs** (Sofia, Bulgaria) — Core VM development, high-speed SIMD mathematical logic execution, and WebSocket telemetry integration.
-2. **Institute of Molecular Oncology** (Heidelberg, Germany) — Genomic pathway validation and biophysical ligand affinity testing.
-3. **Nordic EHR Alliance** (Stockholm, Sweden) — Federated databases, medical pipeline security, and multi-center retrospective trials.
+1. **AETERNA Sovereign Labs** (Sofia, Bulgaria) — Coordinator. Core VM development, high-speed SIMD mathematical logic execution, and WebSocket telemetry integration.
+2. **Medical University Sofia** (Sofia, Bulgaria) — Clinical Validation Lead. Multi-center prospective clinical pilot and retrospective trial oversight.
+3. **Barcelona Supercomputing Center (BSC CNS)** (Barcelona, Spain) — High-Performance Compute Infrastructure (MareNostrum 5) for multi-scale biophysical simulations.
+4. **Institut Curie** (Paris, France) — European Oncology Validation and cell-level patient tissue kinetics.
+5. **LC Innoconsult International** (Szeged, Hungary) — Dissemination, Exploitation & IP Freedom-to-Operate (FTO) Management.
+
+---
 
 ## 5. Technical Risk Mitigation: Unstructured EHR & FHIR Data Alignment
 

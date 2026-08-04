@@ -30,18 +30,15 @@ class NumberedCanvas(canvas.Canvas):
         self.setFont("Helvetica", 8)
         self.setFillColor(colors.HexColor("#475569"))
         
-        # Get custom properties from the canvas or use default
         doc_title = getattr(self, 'doc_title', "Horizon Europe Proposal")
         footer_text = getattr(self, 'doc_footer', "CONFIDENTIAL // HORIZON-MISS-2026-02-CANCER-01")
         
-        # Running header (skip on page 1 for a cleaner cover-like look)
         if self._pageNumber > 1:
             self.drawString(54, 750, f"HORIZON EUROPE CANCER MISSION // {doc_title}")
             self.setStrokeColor(colors.HexColor("#CBD5E1"))
             self.setLineWidth(0.5)
             self.line(54, 742, 558, 742)
         
-        # Running footer
         self.setStrokeColor(colors.HexColor("#CBD5E1"))
         self.setLineWidth(0.5)
         self.line(54, 60, 558, 60)
@@ -59,23 +56,18 @@ def make_canvas_with_metadata(doc_title, doc_footer):
     return CustomNumberedCanvas
 
 def clean_html_text(text):
-    # Convert tags to ReportLab supported XML
     text = text.replace('<strong>', '<b>').replace('</strong>', '</b>')
     text = text.replace('<em>', '<i>').replace('</em>', '</i>')
     
-    # Use robust regex for inline code blocks (replace <code> or <code class="...">)
     text = re.sub(r'<code[^>]*>', '<font face="Courier" color="#0F172A"><b>', text)
     text = text.replace('</code>', '</b></font>')
     
-    # Format links
     text = re.sub(r'<a href="([^"]+)">([^<]+)</a>', r'<font color="#2563EB"><a href="\1"><u>\2</u></a></font>', text)
     
-    # Strip emojis or replace them with safe equivalents
     text = text.replace('🧬', '').replace('🌌', '').replace('🛡️', '').replace('🎯', '').replace('📋', '')
     text = text.replace('🖋️', '').replace('🏛️', '').replace('🔮', '').replace('🪐', '').replace('🔱', '')
     text = text.replace('🔥', '').replace('🚀', '').replace('⚙️', '').replace('💎', '').replace('⚡', '')
     
-    # Format mathematical expressions for ReportLab text flow
     text = text.replace(r'\text{ms}', ' ms')
     text = text.replace(r'$C \ge 0.75$', '<b>C &ge; 0.75</b>')
     text = text.replace(r'$C$-index', 'C-index')
@@ -91,6 +83,9 @@ def clean_html_text(text):
 def html_to_flowables(soup, styles):
     flowables = []
     body = soup.body if soup.body else soup
+    
+    poster_path = r"C:\Users\papic\VIRTUAL-HUMAN-TWIN\soul\VHT_BRAIN_POSTER_PURPLE.png"
+    sig_path = r"C:\Users\papic\VIRTUAL-HUMAN-TWIN\soul\docs\assets\dimitar_p_signature.png"
     
     def process_node(node, list_level=0, list_type=None, item_num=1):
         nonlocal flowables
@@ -116,8 +111,7 @@ def html_to_flowables(soup, styles):
             img_tag = node.find('img')
             if img_tag:
                 src = img_tag.get('src', '')
-                if "VHT_BRAIN_POSTER_PURPLE.png" in src:
-                    poster_path = "z:\\soul\\VHT_BRAIN_POSTER_PURPLE.png"
+                if "VHT_BRAIN_POSTER_PURPLE" in src or "poster" in src.lower():
                     if os.path.exists(poster_path):
                         flowables.append(Spacer(1, 10))
                         flowables.append(Image(poster_path, width=480, height=270))
@@ -129,19 +123,16 @@ def html_to_flowables(soup, styles):
                         return
             
             text = clean_html_text(str(node.decode_contents()))
-            
-            # Check if we should insert the signature image
-            if "Dimitar Prodromov" in text and ("Sovereign Architect" in text or "Systems Architect" in text):
-                flowables.append(Paragraph(text, styles['CustomBody']))
-                flowables.append(Spacer(1, 5))
-                sig_path = "z:\\soul\\dimitar_p_signature.png"
-                if os.path.exists(sig_path):
-                    flowables.append(Image(sig_path, width=120, height=45))
+            if text:
+                if "Dimitar Prodromov" in text and ("Sovereign Architect" in text or "Systems Architect" in text or "Architect" in text):
+                    flowables.append(Paragraph(text, styles['CustomBody']))
                     flowables.append(Spacer(1, 5))
-                return
-                
-            flowables.append(Paragraph(text, styles['CustomBody']))
-            flowables.append(Spacer(1, 6))
+                    if os.path.exists(sig_path):
+                        flowables.append(Image(sig_path, width=120, height=45))
+                        flowables.append(Spacer(1, 5))
+                    return
+                flowables.append(Paragraph(text, styles['CustomBody']))
+                flowables.append(Spacer(1, 6))
             
         elif node.name in ['ul', 'ol']:
             li_nodes = node.find_all('li', recursive=False)
@@ -194,6 +185,8 @@ def html_to_flowables(soup, styles):
                     col_widths = [130, 85, 189, 100]
                 elif col_count == 5:
                     col_widths = [80, 80, 114, 115, 115]
+                elif col_count == 6:
+                    col_widths = [110, 95, 40, 75, 65, 85]
                 elif col_count == 3:
                     col_widths = [150, 154, 200]
                     
@@ -232,7 +225,6 @@ def html_to_flowables(soup, styles):
                 flowables.append(Paragraph("<i>[Structured Flowchart Model Integrated in Core Architecture]</i>", styles['CustomBody']))
                 flowables.append(Spacer(1, 6))
             else:
-                # SAFE XML EXTRACTOR FOR CODE BLOCKS
                 raw_code = code_text.strip('\n')
                 escaped_code = raw_code.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
                 code_style = ParagraphStyle(
@@ -283,11 +275,9 @@ def compile_md_to_pdf(md_file_path, pdf_file_path, doc_title, doc_footer):
     with open(md_file_path, 'r', encoding='utf-8') as f:
         md_content = f.read()
         
-    # Convert MD to HTML with tables, fenced_code, and blockquotes extensions
     html_content = markdown.markdown(md_content, extensions=['tables', 'fenced_code', 'sane_lists'])
     soup = BeautifulSoup(html_content, 'html.parser')
     
-    # Setup document
     doc = SimpleDocTemplate(
         pdf_file_path,
         pagesize=letter,
@@ -297,7 +287,6 @@ def compile_md_to_pdf(md_file_path, pdf_file_path, doc_title, doc_footer):
         bottomMargin=70
     )
     
-    # Define custom stylesheet
     styles = getSampleStyleSheet()
     
     custom_styles = {
@@ -307,7 +296,7 @@ def compile_md_to_pdf(md_file_path, pdf_file_path, doc_title, doc_footer):
             fontName='Helvetica-Bold',
             fontSize=18,
             leading=22,
-            textColor=colors.HexColor("#1E3A8A"), # Deep Blue
+            textColor=colors.HexColor("#1E3A8A"),
             spaceBefore=16,
             spaceAfter=10,
             keepWithNext=True
@@ -318,7 +307,7 @@ def compile_md_to_pdf(md_file_path, pdf_file_path, doc_title, doc_footer):
             fontName='Helvetica-Bold',
             fontSize=12,
             leading=16,
-            textColor=colors.HexColor("#2563EB"), # Premium Royal Blue
+            textColor=colors.HexColor("#2563EB"),
             spaceBefore=12,
             spaceAfter=8,
             keepWithNext=True
@@ -329,7 +318,7 @@ def compile_md_to_pdf(md_file_path, pdf_file_path, doc_title, doc_footer):
             fontName='Helvetica-Bold',
             fontSize=10,
             leading=13.5,
-            textColor=colors.HexColor("#1E293B"), # Slate Grey
+            textColor=colors.HexColor("#1E293B"),
             spaceBefore=8,
             spaceAfter=5,
             keepWithNext=True
@@ -340,7 +329,7 @@ def compile_md_to_pdf(md_file_path, pdf_file_path, doc_title, doc_footer):
             fontName='Helvetica',
             fontSize=9,
             leading=13,
-            textColor=colors.HexColor("#334155"), # Premium text charcoal
+            textColor=colors.HexColor("#334155"),
             spaceAfter=5
         ),
         'TableHeader': ParagraphStyle(
@@ -361,40 +350,48 @@ def compile_md_to_pdf(md_file_path, pdf_file_path, doc_title, doc_footer):
     
     flowables = html_to_flowables(soup, custom_styles)
     
-    # Build PDF using NumberedCanvas
     canvas_class = make_canvas_with_metadata(doc_title, doc_footer)
     doc.build(flowables, canvasmaker=canvas_class)
-    print(f"Success! Saved PDF at: {pdf_file_path}")
+    print(f"Success! Saved PDF at: {pdf_file_path} (Size: {os.path.getsize(pdf_file_path)} bytes)")
 
 def main():
-    target_dir = "z:\\soul\\clinical\\biogenesis"
-    os.makedirs(target_dir, exist_ok=True)
-    print(f"Ensured target directory: {target_dir}")
+    docs_dir = r"C:\Users\papic\VIRTUAL-HUMAN-TWIN\soul\docs"
+    pdf_dir = r"C:\Users\papic\VIRTUAL-HUMAN-TWIN\soul\docs\pdf"
+    desktop_dir = r"C:\Users\papic\Desktop"
+    finalupload_dir = r"C:\Users\papic\Desktop\FINALUPLOAD"
+    
+    os.makedirs(pdf_dir, exist_ok=True)
+    os.makedirs(finalupload_dir, exist_ok=True)
         
     tasks = [
         {
-            "md": "z:\\soul\\docs\\HORIZON_CANCER_MISSION_AETERNA_VHT.md",
-            "pdf": os.path.join(target_dir, "BIOGENESIS_PART_B.pdf"),
+            "md": os.path.join(docs_dir, "HORIZON_CANCER_MISSION_AETERNA_VHT.md"),
+            "pdf_docs": os.path.join(pdf_dir, "BIOGENESIS_PART_B.pdf"),
+            "pdf_desktop": os.path.join(finalupload_dir, "BIOGENESIS_PART_B.pdf"),
             "title": "Part B of Proposal - Technical Description",
             "footer": "PROPOSAL ID: 101347293 // TOPIC: HORIZON-MISS-2026-02-CANCER-01 // BIOGENESIS_PART_B.pdf"
         },
         {
-            "md": "z:\\soul\\docs\\VHT_CLINICAL_VALIDATION_REPORT.md",
-            "pdf": os.path.join(target_dir, "Clinical_studies.pdf"),
+            "md": os.path.join(docs_dir, "VHT_CLINICAL_VALIDATION_REPORT.md"),
+            "pdf_docs": os.path.join(pdf_dir, "Clinical_studies.pdf"),
+            "pdf_desktop": os.path.join(finalupload_dir, "Clinical_studies.pdf"),
             "title": "Clinical Validation Study Retrospective Report",
             "footer": "CLINICAL AUDIT ID: 101327948-2E80C6C8 // TCGA-GBM COHORT // Clinical_studies.pdf"
         },
         {
-            "md": "z:\\soul\\docs\\CANCER_MISSION_ETHICS_SECTION.md",
-            "pdf": os.path.join(target_dir, "Part_B_Ethics_section.pdf"),
+            "md": os.path.join(docs_dir, "CANCER_MISSION_ETHICS_SECTION.md"),
+            "pdf_docs": os.path.join(pdf_dir, "Part_B_Ethics_section.pdf"),
+            "pdf_desktop": os.path.join(finalupload_dir, "Part_B_Ethics_section.pdf"),
             "title": "Part B Ethics Section - Data Governance, Ethics & Regulations",
             "footer": "MDR-SAMD-CLASS-III-SECURED // EU AI ACT HIGH-RISK ALIGNMENT // Part_B_Ethics_section.pdf"
         }
     ]
     
     for t in tasks:
-        compile_md_to_pdf(t["md"], t["pdf"], t["title"], t["footer"])
-    print("\n--- ALL THREE HORIZON CANCER MISSION CLINICAL PDFS COMPILED SUCCESSFULY! ---")
+        compile_md_to_pdf(t["md"], t["pdf_docs"], t["title"], t["footer"])
+        compile_md_to_pdf(t["md"], t["pdf_desktop"], t["title"], t["footer"])
+        
+    print("\n--- ALL THREE HORIZON CANCER MISSION CLINICAL PDFS COMPILED SUCCESSFULLY WITH FULL HIGH-RES ASSETS! ---")
 
 if __name__ == "__main__":
     main()
