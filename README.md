@@ -4,7 +4,6 @@
 
 [![Horizon Europe: Submitted](https://img.shields.io/badge/Horizon_Europe-Cancer_Mission_Submitted-blue.svg)](#repository-directory-registry--sovereign-source-separation)
 [![EIC Accelerator: Submitted](https://img.shields.io/badge/EIC_Accelerator-Submitted_2026-blueviolet.svg)](#repository-directory-registry--sovereign-source-separation)
-[![CEF Digital: Benchmark](https://img.shields.io/badge/CEF_Digital-Submarine_Cables_Exemplary-emerald.svg)](#cyber-physical--critical-infrastructure-synergy)
 [![License: Proprietary / Academic Use Only](https://img.shields.io/badge/License-Proprietary-red.svg)](LICENSE)
 [![TRL: 7 Validated](https://img.shields.io/badge/TRL-7_Validated-amber.svg)](#scientific-validation-trl-7)
 [![Standard: HL7 / FHIR compliant](https://img.shields.io/badge/Standards-HL7_%2F_FHIR-cyan.svg)](#data-ingress-standards)
@@ -23,7 +22,6 @@
 > This project is officially submitted and verified under European research and scale-up programmes with a **Tier-1 World-Class Consortium**:
 > *   **Horizon Europe Cancer Mission (RIA)** — Proposal ID: `101347293` (Total Allocated Budget: **€9,850,000.00** / 48 Months).
 > *   **EIC Accelerator (2026)** — Proposal ID: `101327948` (Requested scale-up budget: **€7.5M**).
-> *   **CEF Digital Smart Submarine Cables** — Recognized as an **Exemplary Benchmark Project** for European critical digital infrastructure defense.
 
 ---
 
@@ -152,16 +150,6 @@ graph BT
     
     class Tissue_Level,Cellular_Level,Molecular_Level bio;
 ```
-
----
-
-## 🧬 Cyber-Physical & Critical Infrastructure Synergy
-
-The core sovereign computing substrate powering AETERNA-VHT is directly cross-pollinated with our **CEF Digital Smart Submarine Cables** architecture. Both domains share the fundamental AETERNA pillars:
-
-1. **Sub-25ms Telemetry Stride**: Hardware-level micro-second telemetry safeguards protecting both physical subsea cables and real-time surgical/oncological telemetry.
-2. **Zero-Entropy Cryptographic Audit**: Cryptographic SHA-512 audit logging for all patient simulation state transitions and network packet ingress.
-3. **Samsung Knox TEE Integration**: Hardware-isolated Trusted Execution Environments managing ephemeral patient genomic data leases and critical network keys.
 
 ---
 
