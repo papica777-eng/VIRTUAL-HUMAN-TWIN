@@ -11,7 +11,8 @@
 
 # VHT-BRAIN: The European Innovation Council Defense
 
-![VHT-BRAIN Cyber-Physical Shield](VHT_BRAIN_POSTER_PURPLE.png)
+ <img width="1024" height="1024" alt="virtual_human_twin_poster" src="https://github.com/user-attachments/assets/95d0cfdd-6b4a-462f-bb95-a1fbe0106d0e" />
+
 
 
 ------
