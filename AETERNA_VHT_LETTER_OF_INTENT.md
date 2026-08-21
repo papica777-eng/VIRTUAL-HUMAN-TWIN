@@ -1,7 +1,7 @@
 # LETTER OF INTENT (LOI) FOR ACADEMIC COOPERATION & CLINICAL EVALUATION
 ## ПИСМО ЗА НАМЕРЕНИЕ ЗА АКАДЕМИЧНО СЪТРУДНИЧЕСТВО И КЛИНИЧНА ОЦЕНКА
 
-**To:** AETERNA Sovereign Labs (Sofia, Bulgaria)  
+**To:** AETERNA Technologies (Sofia, Bulgaria)  
 **Attn:** Dimitar Prodromov (Architect & Project Director)  
 **Date:** [DD/MM/YYYY]  
 
@@ -13,7 +13,7 @@
 
 Dear Mr. Prodromov,
 
-We, the undersigned clinical institution, hereby express our strong interest in establishing a collaborative academic partnership with **AETERNA Sovereign Labs** regarding the computational simulation and predictive oncology tools developed within the **AETERNA-VHT (Virtual Human Twin)** framework.
+We, the undersigned clinical institution, hereby express our strong interest in establishing a collaborative academic partnership with **AETERNA Technologies** regarding the computational simulation and predictive oncology tools developed within the **AETERNA-VHT (Virtual Human Twin)** framework.
 
 As a progressive clinical and research organization, we recognize the immense scientific potential of multi-scale biophysical simulations in predicting tumor microenvironment responses to targeted therapeutics and understanding driver mutation dynamics (such as `KRAS G12D` and `TP53` loss-of-function).
 
@@ -36,7 +36,7 @@ This Letter of Intent does not constitute a legally binding contract or financia
 
 Уважаеми г-н Продромов,
 
-С настоящото писмо, долуподписаната медицинска институция изразява своя сериозен интерес към установяване на академично научно партньорство с **AETERNA Sovereign Labs** за съвместна оценка и тестване на компютърните модели за онкологични симулации, разработени в рамките на платформата **AETERNA-VHT (Virtual Human Twin)**.
+С настоящото писмо, долуподписаната медицинска институция изразява своя сериозен интерес към установяване на академично научно партньорство с **AETERNA Technologies** за съвместна оценка и тестване на компютърните модели за онкологични симулации, разработени в рамките на платформата **AETERNA-VHT (Virtual Human Twin)**.
 
 Като иновативна клинична и изследователска организация, ние оценяваме потенциала на мултимащабните биофизични симулации за предсказване на терапевтичния отговор в туморната микросреда и изследването на динамиката на мутационни маркери (като `KRAS G12D` и `TP53`).
 

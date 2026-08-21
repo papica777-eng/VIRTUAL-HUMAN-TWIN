@@ -61,7 +61,7 @@ The total proposed budget of **€9,850,000** is meticulously allocated across z
 
 ## 4. Consortium Partners & Physical Anchors
 
-1. **AETERNA Sovereign Labs** (Sofia, Bulgaria) — Core VM development, high-speed SIMD mathematical logic execution, and WebSocket telemetry integration.
+1. **AETERNA Technologies** (Sofia, Bulgaria) — Core VM development, high-speed SIMD mathematical logic execution, and WebSocket telemetry integration.
 2. **Institute of Molecular Oncology** (Heidelberg, Germany) — Genomic pathway validation and biophysical ligand affinity testing.
 3. **Nordic EHR Alliance** (Stockholm, Sweden) — Federated databases, medical pipeline security, and multi-center retrospective trials.
 
