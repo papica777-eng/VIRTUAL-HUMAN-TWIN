@@ -123,20 +123,20 @@ To enable seamless and legally-compliant hospital deployments, AETERNA-VHT align
 > 2. **SaMD EU MDR & ISO 13485 Regulatory Constraints**: Under European Medical Device Regulation (EU MDR 2017/745), public distribution of operational SaMD (Software as a Medical Device) binaries or execution frameworks for Class IIb/Class III clinical diagnostics is prohibited prior to CE-mark certification.
 > 3. **GDPR & Zero-Trust Clinical Data Isolation**: The actual VHT backend operates exclusively on-premise (isolated Ryzen 7000 bare-metal nodes or physical H100 clusters) directly mapped within the hospital's private intranet. Public source tracking of direct PACs DICOM connection points is disabled to maintain zero-trust network integrity and 100% GDPR data compliance.
 >
-> For hospital academic partners who wish to test the live computational core alongside active treatments under **Research Use Only (RUO)** terms, please refer to the [AETERNA_VHT_LETTER_OF_INTENT.md](file:///z:/VIRTUAL-HUMAN-TWIN/AETERNA_VHT_LETTER_OF_INTENT.md) to initiate physical on-premise deployment loops.
+> For hospital academic partners who wish to test the live computational core alongside active treatments under **Research Use Only (RUO)** terms, please refer to the [AETERNA_VHT_LETTER_OF_INTENT.md](AETERNA_VHT_LETTER_OF_INTENT.md) to initiate physical on-premise deployment loops.
 
 
-*   📂 [**`assets/`**](file:///z:/VIRTUAL-HUMAN-TWIN/assets/) — High-resolution previews of the simulation canvas, oncology calculators, and MoA flows.
-*   📄 [**`index.html`**](file:///z:/VIRTUAL-HUMAN-TWIN/index.html) — The premium, orange/amber glassmorphic research landing portal featuring responsive grid transitions.
-*   📄 [**`hud.html`**](file:///z:/VIRTUAL-HUMAN-TWIN/hud.html) — The interactive Tumor Apoptosis Simulation HUD. Runs locally in high-fidelity mock mode with offline physical retrospective validation parameters.
-*   📄 [**`AETERNA_VHT_CLINICAL_WHITE_PAPER.md`**](file:///z:/VIRTUAL-HUMAN-TWIN/AETERNA_VHT_CLINICAL_WHITE_PAPER.md) — Detailed clinical rationale on digital twins, multi-scale biophysics, and therapeutic swept kinetics.
-*   📄 [**`HORIZON_CANCER_MISSION_AETERNA_VHT.md`**](file:///z:/VIRTUAL-HUMAN-TWIN/HORIZON_CANCER_MISSION_AETERNA_VHT.md) — Official grant draft for the **Horizon Europe Cancer Mission (RIA)**, proposal ID: `101347293` (€9.85M requested contribution).
-*   📄 [**`EIC_ACCELERATOR_AETERNA_FULL_APPLICATION.md`**](file:///z:/VIRTUAL-HUMAN-TWIN/EIC_ACCELERATOR_AETERNA_FULL_APPLICATION.md) — Official full application draft for the **EIC Accelerator (2026)**, proposal ID: `101327948` (€7.5M scale-up budget).
-*   📄 [**`VHT_CLINICAL_VALIDATION_REPORT.md`**](file:///z:/VIRTUAL-HUMAN-TWIN/VHT_CLINICAL_VALIDATION_REPORT.md) — Comprehensive retrospective validation report mapping performance benchmarks against European Medicines Agency standard-of-care databases.
-*   📄 [**`CIRCAT_APPLICATION.md`**](file:///z:/VIRTUAL-HUMAN-TWIN/CIRCAT_APPLICATION.md) — Open Call proposal mapping autonomous forensics and cyber-physical security audits to industrial energy sectors.
-*   📄 [**`CLINICAL_DOCUMENTATION.md`**](file:///z:/VIRTUAL-HUMAN-TWIN/CLINICAL_DOCUMENTATION.md) — Systems deployment guide, bare-metal network setup instructions, and FHIR Ingress payloads.
-*   📄 [**`AETERNA_VHT_LETTER_OF_INTENT.md`**](file:///z:/VIRTUAL-HUMAN-TWIN/AETERNA_VHT_LETTER_OF_INTENT.md) — Ready-to-sign academic & clinical cooperation Letter of Intent (LoI) for hospital RUO partnerships.
-*   📄 [**`CNAME`**](file:///z:/VIRTUAL-HUMAN-TWIN/CNAME) — Direct routing configurations for static custom domains.
+*   📂 [**`assets/`**](assets/) — High-resolution previews of the simulation canvas, oncology calculators, and MoA flows.
+*   📄 [**`index.html`**](index.html) — The premium research landing portal featuring responsive grid transitions.
+*   📄 [**`hud.html`**](hud.html) — The interactive Tumor Apoptosis Simulation HUD. Runs locally in high-fidelity mode.
+*   📄 [**`CLINICAL_DOCTOR_PORTAL.html`**](CLINICAL_DOCTOR_PORTAL.html) — Physician and Clinical Research portal for precision oncology sweeps.
+*   📄 [**`AETERNA_VHT_CLINICAL_WHITE_PAPER.md`**](AETERNA_VHT_CLINICAL_WHITE_PAPER.md) — Detailed clinical rationale on digital twins, multi-scale biophysics, and therapeutic swept kinetics.
+*   📄 [**`HORIZON_CANCER_MISSION_AETERNA_VHT.md`**](HORIZON_CANCER_MISSION_AETERNA_VHT.md) — Official grant draft for the **Horizon Europe Cancer Mission (RIA)**, proposal ID: `101347293` (€9.85M requested contribution).
+*   📄 [**`EIC_ACCELERATOR_AETERNA_FULL_APPLICATION.md`**](EIC_ACCELERATOR_AETERNA_FULL_APPLICATION.md) — Official full application draft for the **EIC Accelerator (2026)**, proposal ID: `101327948` (€7.5M scale-up budget).
+*   📄 [**`VHT_CLINICAL_VALIDATION_REPORT.md`**](VHT_CLINICAL_VALIDATION_REPORT.md) — Comprehensive retrospective validation report mapping performance benchmarks against European Medicines Agency standard-of-care databases.
+*   📄 [**`CLINICAL_DOCUMENTATION.md`**](CLINICAL_DOCUMENTATION.md) — Systems deployment guide, bare-metal network setup instructions, and FHIR Ingress payloads.
+*   📄 [**`AETERNA_VHT_LETTER_OF_INTENT.md`**](AETERNA_VHT_LETTER_OF_INTENT.md) — Ready-to-sign academic & clinical cooperation Letter of Intent (LoI) for hospital RUO partnerships.
+
 
 ---
 
