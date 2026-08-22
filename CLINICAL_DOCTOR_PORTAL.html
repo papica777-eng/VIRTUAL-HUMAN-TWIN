@@ -923,10 +923,10 @@
                     </div>
                     <div>
                         <h3 class="text-base font-black text-slate-100 flex items-center gap-2" data-i18n="extModalTitle">
-                            <span>Суверенен Локален Backend Extension</span>
+                            <span>Sovereign Local Backend Extension</span>
                             <span class="text-[9px] px-2 py-0.5 bg-emerald-500/20 text-emerald-400 font-mono rounded font-bold">100% Cloud-Free</span>
                         </h3>
-                        <p class="text-xs text-slate-400" data-i18n="extModalSub">Детерминистичен In-Silico субстрат за онкология</p>
+                        <p class="text-xs text-slate-400" data-i18n="extModalSub">Deterministic In-Silico oncology compute substrate</p>
                     </div>
                 </div>
                 <button type="button" onclick="closeBackendModal()" class="text-slate-400 hover:text-slate-100 p-1 text-lg font-bold">✕</button>
@@ -935,10 +935,10 @@
             <div class="p-3.5 bg-cyan-950/40 border border-cyan-500/30 rounded-xl space-y-2">
                 <div class="text-xs font-bold text-cyan-300 flex items-center gap-1.5">
                     <i data-lucide="cpu" class="w-4 h-4 text-cyan-400"></i>
-                    <span data-i18n="extQuestionTitle">Активиране на локално изчисление:</span>
+                    <span data-i18n="extQuestionTitle">Activate Local Computation:</span>
                 </div>
                 <p class="text-xs text-slate-300 leading-relaxed" data-i18n="extModalDesc">
-                    Желаете ли да активирате <strong>Локалния Суверенен Backend Extension</strong> (WASM Tensor Core + RK4 Apoptosis Solver) за директно изчисление на вашето устройство без външни облачни зависимости (100% Cloud-Independent // GDPR Art. 9)?
+                    Do you want to engage the <strong>Sovereign Local Backend Extension</strong> (WASM Tensor Core + RK4 Apoptosis Solver) for direct execution on your device with zero cloud dependencies (100% Cloud-Independent // GDPR Art. 9 & HIPAA)?
                 </p>
             </div>
 
@@ -948,8 +948,8 @@
                     <div class="flex items-center gap-3 text-left">
                         <div class="w-8 h-8 rounded-lg bg-slate-950/20 text-slate-950 flex items-center justify-center font-black text-base">🟢</div>
                         <div>
-                            <div class="text-xs uppercase tracking-wider font-black text-slate-950" data-i18n="extBtnYesLocal">ДА, АКТИВИРАЙ ЛОКАЛНИЯ BACKEND EXTENSION</div>
-                            <div class="text-[10px] text-slate-900 font-semibold" data-i18n="extSubYesLocal">Директно In-Silico тензорно изчисление на това устройство (97.13% прецизност)</div>
+                            <div class="text-xs uppercase tracking-wider font-black text-slate-950" data-i18n="extBtnYesLocal">YES, ACTIVATE LOCAL BACKEND EXTENSION</div>
+                            <div class="text-[10px] text-slate-900 font-semibold" data-i18n="extSubYesLocal">Direct In-Silico tensor computation on this device (97.13% precision)</div>
                         </div>
                     </div>
                     <i data-lucide="check-circle-2" class="w-5 h-5 text-slate-950 group-hover:scale-110 transition-transform"></i>
@@ -960,8 +960,8 @@
                     <div class="flex items-center gap-3">
                         <div class="w-7 h-7 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-xs">⚡</div>
                         <div>
-                            <div class="text-xs font-bold text-cyan-300 group-hover:text-cyan-200" data-i18n="extBtnBridge">Свържи Native Desktop Bridge (Port 8890 / 8000)</div>
-                            <div class="text-[10px] text-slate-400" data-i18n="extSubBridge">Mojo RK4 PK/PD + Rust Guardrails локален процес</div>
+                            <div class="text-xs font-bold text-cyan-300 group-hover:text-cyan-200" data-i18n="extBtnBridge">Connect Native Desktop Bridge (Port 8890 / 8000)</div>
+                            <div class="text-[10px] text-slate-400" data-i18n="extSubBridge">Mojo RK4 PK/PD + Rust Guardrails local worker process</div>
                         </div>
                     </div>
                     <i data-lucide="arrow-right" class="w-4 h-4 text-cyan-400 group-hover:translate-x-1 transition-transform"></i>
@@ -970,29 +970,7 @@
 
             <div class="flex justify-end pt-1">
                 <button type="button" onclick="closeBackendModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-slate-200 text-xs font-bold rounded-lg border border-slate-700 transition-colors" data-i18n="extBtnCancel">
-                    Отказ
-                </button>
-            </div>
-        </div>
-    </div>
-                    <i data-lucide="arrow-right" class="w-4 h-4 text-cyan-400 group-hover:translate-x-1 transition-transform"></i>
-                </button>
-
-                <button type="button" onclick="executeSimulation(false)" class="w-full p-3.5 bg-gradient-to-r from-emerald-950 to-slate-900 hover:from-emerald-900 hover:to-slate-850 border border-emerald-500/40 hover:border-emerald-400 text-left rounded-xl transition-all flex items-center justify-between group cursor-pointer">
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">🛡️</div>
-                        <div>
-                            <div class="text-xs font-bold text-emerald-300 group-hover:text-emerald-200" data-i18n="extBtnLocal">Локален WASM Tensor Core (Вграден 97.13%)</div>
-                            <div class="text-[10px] text-slate-400" data-i18n="extSubLocal">Незабавна In-Silico детерминистична ODE прецизност без сървър</div>
-                        </div>
-                    </div>
-                    <i data-lucide="arrow-right" class="w-4 h-4 text-emerald-400 group-hover:translate-x-1 transition-transform"></i>
-                </button>
-            </div>
-
-            <div class="flex justify-end pt-2">
-                <button type="button" onclick="closeBackendModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold rounded-lg border border-slate-700 transition-colors" data-i18n="extBtnCancel">
-                    Отказ
+                    Cancel
                 </button>
             </div>
         </div>
@@ -1021,7 +999,7 @@
                         <h4 class="text-sm font-bold text-slate-100 flex items-center gap-1.5">
                             <span data-i18n="copilotTitle">AETERNA AI Copilot</span> <span class="text-[9px] px-1.5 py-0.5 bg-cyan-500/20 text-cyan-400 font-mono rounded">TRL 7</span>
                         </h4>
-                        <p class="text-[10px] text-slate-400" data-i18n="copilotSub">Детерминистичен асистент за лекари и оценители</p>
+                        <p class="text-[10px] text-slate-400" data-i18n="copilotSub">Deterministic assistant for doctors & evaluators</p>
                     </div>
                 </div>
                 <button onclick="toggleCopilotModal()" class="text-slate-400 hover:text-slate-100 p-1 text-lg font-bold">✕</button>
@@ -1032,21 +1010,21 @@
                 <!-- Welcome Assistant Message -->
                 <div class="p-3.5 bg-cyan-950/30 border border-cyan-500/20 rounded-xl space-y-2 text-slate-200">
                     <div class="font-bold text-cyan-400 flex items-center gap-1.5">
-                        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> <span data-i18n="copilotGreeting">Здравейте, Д-р Продромов!</span>
+                        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> <span data-i18n="copilotGreeting">Welcome, Clinician / Evaluator!</span>
                     </div>
                     <p class="text-[11px] leading-relaxed" data-i18n="copilotDesc">
-                        Аз съм AETERNA AI Clinical Copilot, обучен върху архитектурата ни за дигитални онкологични близнаци. Мога да ви разясня C-Index точността (97.13%), формулите за апоптоза, LOINC стандартизацията и изчисленията за преживяемост (+91.3%).
+                        I am the AETERNA AI Clinical Copilot, trained on our sovereign virtual human twin architecture. I can clarify our C-Index precision (97.13%), apoptosis rate formulas, LOINC genomic standardization, and predicted survival gains (+91.3%).
                     </p>
                     <div class="pt-1 flex flex-wrap gap-1.5">
-                        <button onclick="askCopilot('Как AETERNA постига C-Index 0.9713?')" class="px-2 py-1 bg-slate-800/80 hover:bg-cyan-500/20 text-[10px] text-cyan-300 rounded border border-cyan-500/30 transition-colors" data-i18n="copilotBtn1">⚡ Как работи C-Index 97.13%?</button>
-                        <button onclick="askCopilot('Какво означава KRAS G12D терапевтичния план?')" class="px-2 py-1 bg-slate-800/80 hover:bg-purple-500/20 text-[10px] text-purple-300 rounded border border-purple-500/30 transition-colors" data-i18n="copilotBtn2">🧬 Обясни KRAS G12D плана</button>
+                        <button onclick="askCopilot('How does AETERNA achieve C-Index 0.9713?')" class="px-2 py-1 bg-slate-800/80 hover:bg-cyan-500/20 text-[10px] text-cyan-300 rounded border border-cyan-500/30 transition-colors" data-i18n="copilotBtn1">⚡ How does C-Index 97.13% work?</button>
+                        <button onclick="askCopilot('Explain the KRAS G12D therapeutic protocol')" class="px-2 py-1 bg-slate-800/80 hover:bg-purple-500/20 text-[10px] text-purple-300 rounded border border-purple-500/30 transition-colors" data-i18n="copilotBtn2">🧬 Explain KRAS G12D plan</button>
                     </div>
                 </div>
             </div>
 
             <!-- Input Controls -->
             <div class="p-3 bg-slate-900/90 border-t border-slate-800 flex gap-2">
-                <input type="text" id="copilotInput" onkeypress="if(event.key==='Enter') sendCopilotMsg()" placeholder="Задайте въпрос относно архитектурата или пациента..." class="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-cyan-500">
+                <input type="text" id="copilotInput" onkeypress="if(event.key==='Enter') sendCopilotMsg()" placeholder="Ask a question about the architecture or patient protocol..." class="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-cyan-500">
                 <button onclick="sendCopilotMsg()" class="px-4 py-2 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black rounded-xl text-xs transition-colors flex items-center gap-1">
                     <i data-lucide="send" class="w-3.5 h-3.5"></i>
                 </button>
@@ -1255,6 +1233,17 @@
 
         const i18nDict = {
             bg: {
+                extModalTitle: "Суверенен Локален Backend Extension",
+                extModalSub: "Детерминистичен In-Silico субстрат за онкология",
+                extQuestionTitle: "Активиране на локално изчисление:",
+                extModalDesc: "Желаете ли да активирате Локалния Суверенен Backend Extension (WASM Tensor Core + RK4 Apoptosis Solver) за директно изчисление на вашето устройство без външни облачни зависимости (100% Cloud-Independent // GDPR Art. 9)?",
+                extBtnYesLocal: "🟢 ДА, АКТИВИРАЙ ЛОКАЛНИЯ BACKEND EXTENSION",
+                extSubYesLocal: "Директно In-Silico тензорно изчисление на това устройство (97.13% прецизност)",
+                extBtnBridge: "⚡ Свържи Native Desktop Bridge (Port 8890 / 8000)",
+                extSubBridge: "Mojo RK4 PK/PD + Rust Guardrails локален процес",
+                extBtnCancel: "Отказ",
+                extBtnLocal: "🛡️ Локален WASM Tensor Core (Вграден 97.13%)",
+                extSubLocal: "Незабавна In-Silico детерминистична ODE прецизност без сървър",
                 headerSub: "Суверенен Оптимизатор за Онкология с Дигитални Близнаци — Лекарски Интерфейс",
                 navEcosystem: "Основен Екосистема",
                 navDiabetes: "VHT Диабет & Кардио",
@@ -1324,6 +1313,17 @@
                 cellGeneClassLabel: "Генен Клас"
             },
             en: {
+                extModalTitle: "Sovereign Local Backend Extension",
+                extModalSub: "Deterministic In-Silico oncology compute substrate",
+                extQuestionTitle: "Activate Local Computation:",
+                extModalDesc: "Do you want to engage the Sovereign Local Backend Extension (WASM Tensor Core + RK4 Apoptosis Solver) for direct execution on your device with zero cloud dependencies (100% Cloud-Independent // GDPR Art. 9 & HIPAA)?",
+                extBtnYesLocal: "🟢 YES, ACTIVATE LOCAL BACKEND EXTENSION",
+                extSubYesLocal: "Direct In-Silico tensor computation on this device (97.13% precision)",
+                extBtnBridge: "⚡ Connect Native Desktop Bridge (Port 8890 / 8000)",
+                extSubBridge: "Mojo RK4 PK/PD + Rust Guardrails local worker process",
+                extBtnCancel: "Cancel",
+                extBtnLocal: "🛡️ Embedded WASM Tensor Core (97.13% In-Browser)",
+                extSubLocal: "Instant In-Silico deterministic ODE precision without external server",
                 headerSub: "Sovereign Virtual Human Twin Oncology Optimizer — Doctor Interface",
                 navEcosystem: "Main Ecosystem",
                 navDiabetes: "VHT Diabetes & Cardio",
