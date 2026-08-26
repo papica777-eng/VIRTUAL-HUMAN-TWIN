@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html lang="bg">
+<html lang="en">
 
 <head>
+    <script>if(location.protocol==="http:"&&location.hostname!=="localhost"&&location.hostname!=="127.0.0.1"){location.replace("https://"+location.host+location.pathname+location.search+location.hash);}</script>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AETERNA // Sovereign VHT HUD</title>
@@ -463,7 +465,7 @@
         // System state logic
         let state = {
             activeTab: "dashboard",
-            language: "bg",
+            language: "en",
             curedState: false,
             isTransitioning: false,
             entropy: 3.56,
@@ -778,7 +780,7 @@
         };
 
         function t(key, vars = {}) {
-            const lang = state.language || "bg";
+            const lang = state.language || "en";
             let txt = (translations[lang] && translations[lang][key]) || (translations["bg"] && translations["bg"][key]) || key;
             for (const [k, v] of Object.entries(vars)) {
                 txt = txt.replace(`{${k}}`, v);

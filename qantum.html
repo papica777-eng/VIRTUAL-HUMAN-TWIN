@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>if(location.protocol==="http:"&&location.hostname!=="localhost"&&location.hostname!=="127.0.0.1"){location.replace("https://"+location.host+location.pathname+location.search+location.hash);}</script>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QAntum Prime - Autonomous AI QA Testing Framework</title>
+    <meta name="description" content="Autonomous AI testing framework that automatically writes, executes, and heals tests to eliminate flaky builds and minimize QA overhead.">
+    <meta name="keywords" content="Autonomous QA, Ghost Protocol, Self-Healing Automation, AI Testing Framework, Bot Detection Bypass, Selenium Alternative, Playwright Alternative, Cypress Alternative, E2E Testing, Test Automation AI, ML Test Healing, Swarm Execution, Parallel Testing, QA Framework Enterprise, Automated Test Generation, Visual Regression Testing, API Testing Framework, Security Testing Automation">
+    <meta name="author" content="Dimitar Prodromov | QAntum Labs">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;900&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        accent: {
+                            cyan: '#00f0ff',
+                            indigo: '#4f46e5',
+                            purple: '#b55fe6',
+                            gold: '#d4af37',
+                            emerald: '#00ffaa',
+                            pink: '#ff2a85'
+                        },
+                        obsidian: '#050505',
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/animations.css">
+    
+
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-grid"></div>
+    <div class="particles" id="particles"></div>
+    
+    <!-- Navigation Header -->
+    <nav class="fixed w-full z-50 glass py-3.5 px-4 sm:px-6 lg:px-8 xl:px-12 flex justify-between items-center border-b border-white/5 transition-all duration-300">
+        <!-- Left: Logo + Security Lock -->
+        <div class="flex items-center gap-3 shrink-0">
+            <img src="assets/aeterna_logo.png" alt="AETERNA Logo" class="w-9 h-9 rounded-full object-cover shadow-lg shadow-purple-500/40 border border-purple-400/40 transition-transform hover:scale-110 duration-300">
+            <span class="text-xl font-black tracking-tighter font-mono flex items-center gap-1">
+                AETERNA<span class="text-accent-purple">.</span>AIC
+                <span onclick="openSslCertificateModal()" class="cursor-pointer text-gray-500 hover:text-emerald-400 transition-colors flex items-center justify-center p-1" title="Cryptographic Security Details">
+                    <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+                </span>
+            </span>
+        </div>
+        
+        <!-- Right / Center: Navigation Links & Actions -->
+        <div class="flex items-center gap-2.5 lg:gap-3 xl:gap-5 min-w-0">
+            <div class="hidden lg:flex gap-2.5 xl:gap-4 2xl:gap-6 text-[10px] xl:text-[11px] font-extrabold tracking-[0.06em] xl:tracking-[0.1em] uppercase items-center text-gray-300">
+                <a href="./index.html#vision" class="hover:text-accent-cyan transition-all py-1">VISION</a>
+                <a href="./index.html#scientific-achievements" class="hover:text-accent-cyan transition-all py-1">BREAKTHROUGHS</a>
+                <a href="./index.html#specs" class="hover:text-accent-cyan transition-all py-1">SPECS LAB</a>
+                <a href="./index.html#timeline" class="hover:text-accent-cyan transition-all py-1">CHRONOLOGY</a>
+                <a href="./index.html#grants" class="hover:text-accent-cyan transition-all py-1">EU GRANTS</a>
+                <a href="./index.html#hud-gallery" class="hover:text-accent-cyan transition-all py-1">HUDs</a>
+                
+                <!-- VHT Dropdown -->
+                <div class="relative group">
+                    <button class="text-white hover:text-accent-purple transition-all font-black flex items-center gap-1 uppercase cursor-pointer py-1">
+                        <i data-lucide="layers" class="w-3.5 h-3.5 text-accent-purple"></i>
+                        <span>VHT BIO-CYBER</span>
+                        <i data-lucide="chevron-down" class="w-3 h-3 transition-transform duration-300 group-hover:rotate-180 text-gray-400"></i>
+                    </button>
+                    <!-- Dropdown Menu -->
+                    <div class="absolute left-0 top-full hidden group-hover:block pt-3 z-50">
+                        <div class="flex flex-col gap-2 p-4 glass-premium border border-white/10 rounded-xl min-w-[250px] shadow-[0_10px_40px_rgba(0,0,0,0.8)] backdrop-blur-2xl text-left">
+                            <a href="./CLINICAL_DOCTOR_PORTAL.html" class="text-[11px] text-cyan-400 hover:text-white transition-all font-black flex items-center gap-2.5 glow-text-cyan py-1"><div class="w-5 h-5 rounded bg-cyan-400/10 flex items-center justify-center shrink-0"><i data-lucide="stethoscope" class="w-3 h-3"></i></div> DOCTOR CLINICAL PORTAL</a>
+                            <a href="./clinical-oncology.html" class="text-[11px] text-accent-pink hover:text-white transition-all font-black flex items-center gap-2.5 glow-text-pink animate-pulse py-1"><div class="w-5 h-5 rounded bg-accent-pink/10 flex items-center justify-center shrink-0"><i data-lucide="brain" class="w-3 h-3"></i></div> LIVE 3D NEURO HUD</a>
+                            <a href="./oncology_hud.html" class="text-[11px] text-accent-purple hover:text-white transition-all font-black flex items-center gap-2.5 py-1"><div class="w-5 h-5 rounded bg-accent-purple/10 flex items-center justify-center shrink-0"><i data-lucide="dna" class="w-3 h-3"></i></div> ONCOLOGY HUD</a>
+                            <a href="./vht_diabet.html" class="text-[11px] text-accent-emerald hover:text-white transition-all font-black flex items-center gap-2.5 py-1"><div class="w-5 h-5 rounded bg-accent-emerald/10 flex items-center justify-center shrink-0"><i data-lucide="activity" class="w-3 h-3"></i></div> DIABETES HUD</a>
+                            <a href="./vht_cardio.html" class="text-[11px] text-red-400 hover:text-white transition-all font-black flex items-center gap-2.5 py-1"><div class="w-5 h-5 rounded bg-red-400/10 flex items-center justify-center shrink-0"><i data-lucide="heart" class="w-3 h-3"></i></div> CARDIO HUD</a>
+                            <a href="./vht_longevity.html" class="text-[11px] text-orange-400 hover:text-white transition-all font-black flex items-center gap-2.5 py-1"><div class="w-5 h-5 rounded bg-orange-400/10 flex items-center justify-center shrink-0"><i data-lucide="infinity" class="w-3 h-3"></i></div> LONGEVITY HUD</a>
+                            <div class="w-full h-px bg-white/10 my-1"></div>
+                            <a href="./aeterna_cohort_sim.html" class="text-[11px] text-yellow-400 hover:text-white transition-all font-black flex items-center gap-2.5 py-1"><div class="w-5 h-5 rounded bg-yellow-400/10 flex items-center justify-center shrink-0"><i data-lucide="users" class="w-3 h-3"></i></div> 100K COHORT SIMULATION</a>
+                            <a href="./aeterna_pharma_shadow.html" class="text-[11px] text-gray-400 hover:text-white transition-all font-black flex items-center gap-2.5 py-1"><div class="w-5 h-5 rounded bg-white/10 flex items-center justify-center shrink-0"><i data-lucide="shield" class="w-3 h-3"></i></div> PHARMA SHADOW HUD</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DEEP-TECH & SECURITY Dropdown -->
+                <div class="relative group">
+                    <button class="text-accent-cyan hover:text-white transition-all font-black flex items-center gap-1 uppercase cursor-pointer py-1">
+                        <i data-lucide="shield-check" class="w-3.5 h-3.5 text-accent-cyan"></i>
+                        <span>DEEP-TECH SUITE</span>
+                        <i data-lucide="chevron-down" class="w-3 h-3 transition-transform duration-300 group-hover:rotate-180 text-gray-400"></i>
+                    </button>
+                    <!-- Dropdown Menu -->
+                    <div class="absolute left-0 top-full hidden group-hover:block pt-3 z-50">
+                        <div class="flex flex-col gap-2 p-4 glass-premium border border-white/10 rounded-xl min-w-[260px] shadow-[0_10px_40px_rgba(0,0,0,0.8)] backdrop-blur-2xl text-left">
+                            <a href="./ukame-matrix.html" class="text-[11px] text-accent-gold hover:text-white transition-all font-black flex items-center gap-2.5 py-1"><div class="w-5 h-5 rounded bg-accent-gold/10 flex items-center justify-center shrink-0"><i data-lucide="sun" class="w-3 h-3 text-accent-gold"></i></div> UKAME SOLAR TAINT MATRIX</a>
+                            <a href="https://github.com/papica777-eng/AETERNA-QSTN" target="_blank" class="text-[11px] text-accent-purple hover:text-white transition-all font-black flex items-center gap-2.5 py-1"><div class="w-5 h-5 rounded bg-accent-purple/10 flex items-center justify-center shrink-0"><i data-lucide="shield" class="w-3 h-3 text-accent-purple"></i></div> AETERNA-QSTN (DEFENCE GRID)</a>
+                            <a href="./k2/index.html" class="text-[11px] text-accent-emerald hover:text-white transition-all font-black flex items-center gap-2.5 py-1"><div class="w-5 h-5 rounded bg-accent-emerald/10 flex items-center justify-center shrink-0"><i data-lucide="activity" class="w-3 h-3 text-accent-emerald"></i></div> VERTEX DEFI ENGINE</a>
+                            <a href="./qantum.html" class="text-[11px] text-accent-indigo hover:text-white transition-all font-black flex items-center gap-2.5 py-1"><div class="w-5 h-5 rounded bg-accent-indigo/10 flex items-center justify-center shrink-0"><i data-lucide="cpu" class="w-3 h-3 text-accent-indigo"></i></div> QANTUM PRIME RUNTIME</a>
+                            <a href="https://github.com/papica777-eng/AETERNA-EKO" target="_blank" class="text-[11px] text-accent-cyan hover:text-white transition-all font-black flex items-center gap-2.5 py-1"><div class="w-5 h-5 rounded bg-accent-cyan/10 flex items-center justify-center shrink-0"><i data-lucide="zap" class="w-3 h-3 text-accent-cyan"></i></div> ECO-TRANSMUTER (MOJO)</a>
+                            <div class="w-full h-px bg-white/10 my-1"></div>
+                            <a href="./aeterna.html" class="text-[11px] text-gray-400 hover:text-white transition-all font-black flex items-center gap-2.5 py-1"><div class="w-5 h-5 rounded bg-white/10 flex items-center justify-center shrink-0"><i data-lucide="file-text" class="w-3 h-3"></i></div> FORENSIC AUDIT REPORT</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DOCS Direct Link -->
+                <a href="./docs.html" class="text-accent-purple hover:text-white transition-all font-black flex items-center gap-1.5 px-2 py-1 rounded bg-accent-purple/10 border border-accent-purple/20 hover:border-accent-purple/50">
+                    <i data-lucide="book-open" class="w-3.5 h-3.5 text-accent-purple"></i>
+                    <span>DOCS</span>
+                </a>
+            </div>
+
+            <!-- GitHub Sponsors & Stripe Button -->
+            <a href="https://github.com/sponsors/papica777-eng" target="_blank" class="shrink-0 px-3 py-1.5 bg-gradient-to-r from-pink-500/20 to-purple-500/20 hover:from-pink-500/30 hover:to-purple-500/30 text-pink-300 rounded-full border border-pink-500/40 text-[11px] font-bold font-mono transition-all flex items-center gap-1.5 shadow-[0_0_15px_rgba(255,42,133,0.3)] hover:scale-105">
+                <i data-lucide="heart" class="w-3.5 h-3.5 text-pink-400 fill-pink-400/30"></i>
+                <span class="font-extrabold tracking-wider">SPONSOR</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero compact-hero pt-36 pb-12">
+        <div class="hero-content max-w-4xl mx-auto text-center px-4">
+            <div class="hero-badge inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-cyan-400/30 bg-cyan-950/30 text-cyan-300 text-xs font-mono font-bold tracking-widest uppercase mb-6 backdrop-blur-xl shadow-[0_0_20px_rgba(0,240,255,0.2)]">
+                <span class="pulse w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+                <span>Autonomous Testing Substrate • Online</span>
+            </div>
+            
+            <h1 class="text-4xl sm:text-6xl font-black tracking-tight text-white mb-4">The AI That <span class="gradient text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-400 to-purple-400">Tests Itself</span></h1>
+            
+            <p class="hero-subtitle text-gray-300 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed mb-8">
+                QAntum Prime is an autonomous testing agent that eliminates flaky tests, slashes QA costs, and prevents broken builds. It automatically discovers, writes, runs, and self-heals your test suites in real-time.
+            </p>
+            
+            <div class="hero-buttons flex items-center justify-center gap-4 mb-6">
+                <a href="docs.html#quickstart" class="px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-black font-extrabold text-sm tracking-wider uppercase transition-all shadow-[0_0_25px_rgba(0,240,255,0.3)]">🚀 Get Started</a>
+                <a href="#features" class="px-6 py-3 rounded-xl glass border border-white/10 hover:border-cyan-400/40 text-white font-bold text-sm tracking-wider uppercase transition-all">📖 Learn More</a>
+            </div>
+            
+            <!-- Install Command -->
+            <div class="install-box inline-flex items-center gap-3 px-4 py-2.5 rounded-xl glass border border-white/10 bg-black/50 font-mono text-xs text-cyan-300">
+                <code>npx qantum init my-project</code>
+                <button class="copy-btn hover:text-white cursor-pointer transition-colors" onclick="copyInstall()">📋</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Terminal + Features Side by Side -->
+    <section class="dual-section py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" id="demo">
+        <div class="dual-grid grid lg:grid-cols-12 gap-8 items-start">
+            <!-- Left: Terminal (7 cols) -->
+            <div class="dual-left lg:col-span-7 space-y-3">
+                <div class="terminal rounded-2xl border border-white/10 bg-[#080c14] shadow-[0_20px_50px_rgba(0,0,0,0.8),0_0_30px_rgba(0,240,255,0.12)] overflow-hidden">
+                    <div class="terminal-header flex items-center justify-between px-4 py-3 bg-black/60 border-b border-white/10">
+                        <div class="terminal-buttons flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
+                            <span class="w-3 h-3 rounded-full bg-yellow-500/80 inline-block"></span>
+                            <span class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
+                        </div>
+                        <div class="terminal-title text-xs font-mono font-bold text-gray-300 flex items-center gap-2">
+                            <i data-lucide="terminal" class="w-3.5 h-3.5 text-cyan-400"></i>
+                            QAntum Prime • Neural Hub
+                        </div>
+                        <div class="terminal-status flex items-center gap-2 text-[10px] font-mono font-bold">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            <span class="text-emerald-400">LIVE</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Terminal Body with live telemetry stream -->
+                    <div class="terminal-body font-mono text-xs leading-relaxed p-4 h-[420px] overflow-y-auto terminal-scroll text-gray-300" id="terminalOutput">
+                        <!-- Streamed live via JS -->
+                    </div>
+                </div>
+
+                <!-- Interactive Quick-Action Terminal Controls -->
+                <div class="terminal-actions flex flex-wrap items-center gap-2 pt-1">
+                    <button onclick="runTerminalCommand('ghost')" class="px-3 py-1.5 rounded-lg border border-cyan-400/30 bg-cyan-950/40 text-cyan-300 text-[11px] font-mono font-bold hover:bg-cyan-500/20 hover:border-cyan-400 transition-all flex items-center gap-1.5 shadow-sm">
+                        <span>👻</span> Ghost Bypass
+                    </button>
+                    <button onclick="runTerminalCommand('heal')" class="px-3 py-1.5 rounded-lg border border-purple-400/30 bg-purple-950/40 text-purple-300 text-[11px] font-mono font-bold hover:bg-purple-500/20 hover:border-purple-400 transition-all flex items-center gap-1.5 shadow-sm">
+                        <span>🔮</span> Self-Heal DOM
+                    </button>
+                    <button onclick="runTerminalCommand('swarm')" class="px-3 py-1.5 rounded-lg border border-emerald-400/30 bg-emerald-950/40 text-emerald-300 text-[11px] font-mono font-bold hover:bg-emerald-500/20 hover:border-emerald-400 transition-all flex items-center gap-1.5 shadow-sm">
+                        <span>🐝</span> Swarm 1,247
+                    </button>
+                    <button onclick="runTerminalCommand('oracle')" class="px-3 py-1.5 rounded-lg border border-indigo-400/30 bg-indigo-950/40 text-indigo-300 text-[11px] font-mono font-bold hover:bg-indigo-500/20 hover:border-indigo-400 transition-all flex items-center gap-1.5 shadow-sm">
+                        <span>🔍</span> Oracle Scan
+                    </button>
+                    <button onclick="runTerminalCommand('fortress')" class="px-3 py-1.5 rounded-lg border border-pink-400/30 bg-pink-950/40 text-pink-300 text-[11px] font-mono font-bold hover:bg-pink-500/20 hover:border-pink-400 transition-all flex items-center gap-1.5 shadow-sm">
+                        <span>🛡️</span> Fortress Audit
+                    </button>
+                    <button onclick="clearTerminalLogs()" class="px-2.5 py-1.5 rounded-lg border border-white/10 bg-white/5 text-gray-400 text-[11px] font-mono hover:text-white hover:border-white/20 transition-all flex items-center gap-1">
+                        <span>🧹</span> Clear
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Right: Interactive Feature Cards (5 cols) -->
+            <div class="dual-right lg:col-span-5 space-y-4" id="features">
+                <h2 class="text-2xl font-black uppercase tracking-tight text-white flex items-center gap-2">
+                    Core <span class="gradient text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">Powers</span>
+                </h2>
+                
+                <div class="feature-buttons grid grid-cols-2 gap-2.5">
+                    <button class="feature-btn active text-left p-3 rounded-xl glass border border-cyan-400/40 bg-cyan-950/30 text-white transition-all cursor-pointer hover:scale-[1.02]" data-feature="ghost" onclick="showFeatureDemo('ghost')">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-lg">👻</span>
+                            <span class="font-bold text-xs">Ghost Protocol</span>
+                        </div>
+                        <span class="text-[10px] font-mono text-cyan-400 font-bold">• ACTIVE</span>
+                    </button>
+                    <button class="feature-btn text-left p-3 rounded-xl glass border border-white/10 text-gray-300 transition-all cursor-pointer hover:border-purple-400/40 hover:scale-[1.02]" data-feature="heal" onclick="showFeatureDemo('heal')">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-lg">🔮</span>
+                            <span class="font-bold text-xs">Self-Healing</span>
+                        </div>
+                        <span class="text-[10px] font-mono text-purple-400 font-bold">• READY</span>
+                    </button>
+                    <button class="feature-btn text-left p-3 rounded-xl glass border border-white/10 text-gray-300 transition-all cursor-pointer hover:border-emerald-400/40 hover:scale-[1.02]" data-feature="swarm" onclick="showFeatureDemo('swarm')">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-lg">🐝</span>
+                            <span class="font-bold text-xs">Global Swarm</span>
+                        </div>
+                        <span class="text-[10px] font-mono text-emerald-400 font-bold">• 1,247 NODES</span>
+                    </button>
+                    <button class="feature-btn text-left p-3 rounded-xl glass border border-white/10 text-gray-300 transition-all cursor-pointer hover:border-indigo-400/40 hover:scale-[1.02]" data-feature="oracle" onclick="showFeatureDemo('oracle')">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-lg">🔍</span>
+                            <span class="font-bold text-xs">The Oracle</span>
+                        </div>
+                        <span class="text-[10px] font-mono text-indigo-400 font-bold">• SCANNING</span>
+                    </button>
+                    <button class="feature-btn text-left p-3 rounded-xl glass border border-white/10 text-gray-300 transition-all cursor-pointer hover:border-yellow-400/40 hover:scale-[1.02]" data-feature="chronos" onclick="showFeatureDemo('chronos')">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-lg">⏱️</span>
+                            <span class="font-bold text-xs">Chronos Engine</span>
+                        </div>
+                        <span class="text-[10px] font-mono text-yellow-400 font-bold">• PREDICTING</span>
+                    </button>
+                    <button class="feature-btn text-left p-3 rounded-xl glass border border-white/10 text-gray-300 transition-all cursor-pointer hover:border-pink-400/40 hover:scale-[1.02]" data-feature="fortress" onclick="showFeatureDemo('fortress')">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-lg">🛡️</span>
+                            <span class="font-bold text-xs">Fortress</span>
+                        </div>
+                        <span class="text-[10px] font-mono text-pink-400 font-bold">• SECURE</span>
+                    </button>
+                </div>
+                
+                <!-- Feature Demo Panel -->
+                <div class="feature-demo-panel glass-premium p-5 rounded-2xl border border-white/10 space-y-4" id="featureDemoPanel">
+                    <div class="fdp-header flex items-center justify-between border-b border-white/5 pb-3">
+                        <span class="fdp-title font-mono font-bold text-sm text-cyan-300" id="fdpTitle">Ghost Protocol v2</span>
+                        <span class="fdp-badge live px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-cyan-400/10 text-cyan-300 border border-cyan-400/30">LIVE DEMO</span>
+                    </div>
+                    <div class="fdp-content grid grid-cols-3 gap-2 text-center" id="fdpContent">
+                        <div class="fdp-stat p-2.5 rounded-xl bg-black/40 border border-white/5"><div class="text-[10px] text-gray-400 font-mono mb-1">Detection Bypass</div><div class="fdp-value text-base font-black text-cyan-400">100%</div></div>
+                        <div class="fdp-stat p-2.5 rounded-xl bg-black/40 border border-white/5"><div class="text-[10px] text-gray-400 font-mono mb-1">Protected Sites</div><div class="fdp-value text-base font-black text-white">2,847</div></div>
+                        <div class="fdp-stat p-2.5 rounded-xl bg-black/40 border border-white/5"><div class="text-[10px] text-gray-400 font-mono mb-1">Bot Challenges</div><div class="fdp-value text-base font-black text-emerald-400">0 Failed</div></div>
+                    </div>
+                    <div class="fdp-visual p-4 rounded-xl bg-black/50 border border-white/5 font-mono text-xs" id="fdpVisual">
+                        <div class="ghost-visual flex items-center justify-between">
+                            <div class="gv-node px-3 py-1.5 rounded bg-red-950/50 border border-red-500/40 text-red-300 text-[11px] font-bold">Cloudflare</div>
+                            <div class="gv-arrow text-gray-500 font-bold">→</div>
+                            <div class="gv-node active px-3 py-1.5 rounded bg-cyan-950/60 border border-cyan-400 text-cyan-300 text-[11px] font-bold shadow-[0_0_15px_rgba(0,240,255,0.3)]">QAntum Prime</div>
+                            <div class="gv-arrow text-gray-500 font-bold">→</div>
+                            <div class="gv-node target px-3 py-1.5 rounded bg-emerald-950/50 border border-emerald-500/40 text-emerald-300 text-[11px] font-bold">Target ✓</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture + Code Demo Side by Side -->
+    <section class="dual-section dark-bg">
+        <div class="container">
+            <div class="dual-grid">
+                <!-- Left: Architecture -->
+                <div class="dual-left">
+                    <h2 class="compact-title">PANTHEON <span class="gradient">Architecture</span></h2>
+                    <div class="arch-compact">
+                        <div class="arch-row"><span class="arch-icon">🌍</span><strong>REALITY</strong> CLI, Reports, Dashboard</div>
+                        <div class="arch-row"><span class="arch-icon">🧬</span><strong>BIOLOGY</strong> Learning, Healing, Evolution</div>
+                        <div class="arch-row"><span class="arch-icon">⚗️</span><strong>CHEMISTRY</strong> Adapters, Validators, Pipelines</div>
+                        <div class="arch-row"><span class="arch-icon">⚡</span><strong>PHYSICS</strong> Queues, Rate Limiting, Scheduling</div>
+                        <div class="arch-row"><span class="arch-icon">📐</span><strong>MATH</strong> Algorithms, Graph Theory, Probability</div>
+                    </div>
+                    
+                    <!-- Problems Solved -->
+                    <div class="problems-solved mt-6 space-y-4">
+                        <div class="problem-item flex items-start gap-3">
+                            <span class="text-accent-cyan text-lg font-bold">✓</span>
+                            <p class="text-sm text-gray-400"><strong class="text-white">Flaky Tests Eliminated</strong> – Real-time selector healing automatically repairs broken locators during execution.</p>
+                        </div>
+                        <div class="problem-item flex items-start gap-3">
+                            <span class="text-accent-cyan text-lg font-bold">✓</span>
+                            <p class="text-sm text-gray-400"><strong class="text-white">Zero Maintenance QA</strong> – Autonomous discovery maps your app and writes comprehensive E2E tests automatically.</p>
+                        </div>
+                        <div class="problem-item flex items-start gap-3">
+                            <span class="text-accent-cyan text-lg font-bold">✓</span>
+                            <p class="text-sm text-gray-400"><strong class="text-white">Invisible Testing</strong> – Ghost Protocol mimics human behavior to test production environments behind security firewalls.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right: Code Demo -->
+                <div class="dual-right">
+                    <div class="code-block compact-code">
+                        <div class="code-header">
+                            <div class="code-dots"><span></span><span></span><span></span></div>
+                            <div class="code-filename">ghost-test.ts</div>
+                            <button class="copy-code" onclick="copyCode()">Copy</button>
+                        </div>
+                        <pre class="code-content"><code><span class="keyword">import</span> { QAntum } <span class="keyword">from</span> <span class="string">'qantum-prime'</span>;
+
+<span class="keyword">const</span> qa = <span class="keyword">await</span> QAntum.<span class="function">create</span>({
+  <span class="property">ghost</span>: <span class="boolean">true</span>,
+  <span class="property">selfHeal</span>: <span class="boolean">true</span>,
+  <span class="property">swarm</span>: { <span class="property">workers</span>: <span class="number">100</span> }
+});
+
+<span class="keyword">await</span> qa.<span class="function">test</span>(<span class="string">'Login'</span>, <span class="keyword">async</span> ({ page }) => {
+  <span class="keyword">await</span> page.<span class="function">goto</span>(<span class="string">'https://app.com'</span>);
+  <span class="keyword">await</span> page.<span class="function">fill</span>(<span class="string">'[data-qa="email"]'</span>, <span class="string">'test@example.com'</span>);
+  <span class="keyword">await</span> page.<span class="function">click</span>(<span class="string">'button:has-text("Sign In")'</span>);
+  <span class="keyword">await</span> qa.<span class="function">expect</span>(page).<span class="function">toShowDashboard</span>();
+});</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta compact-cta">
+        <div class="container">
+            <div class="cta-row">
+                <div class="cta-text">
+                    <h2>Ready to <span class="gradient">Dominate</span>?</h2>
+                    <p>Start free, scale infinitely.</p>
+                </div>
+                <div class="cta-buttons">
+                    <a href="CLINICAL_DOCTOR_PORTAL.html" class="btn btn-primary">Try Live Demo</a>
+                    <a href="index.html#pricing" class="btn btn-secondary">View Pricing</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 px-12 border-t border-white/5 relative">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
+            <div class="text-center md:text-left">
+                <span class="text-2xl font-black mono mb-4 block">AETERNA<span class="text-cyan-500">.</span>AIC</span>
+                <p class="text-gray-600 text-[10px] tracking-widest leading-loose">
+                    SECURED BY VERITRAS ENGINE <br>
+                    BUILT IN SOFIA, BULGARIA <br>
+                    EU FUNDING READINESS: 100%
+                </p>
+            </div>
+            <div class="flex gap-8 text-[10px] font-bold tracking-widest uppercase text-gray-400">
+                <a href="https://github.com/papica777-eng" class="hover:text-white transition-all">Github</a>
+                <a href="https://linkedin.com/in/dimitar-prodromov" class="hover:text-white transition-all">Linkedin</a>
+                <a href="https://www.facebook.com/profile.php?id=61593258627033" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-all">Facebook</a>
+                <a href="mailto:papica777@gmail.com" class="hover:text-white transition-all">Connect</a>
+            </div>
+            <div class="text-[9px] text-cyan-900 font-mono text-right hidden md:block">
+                0x41 0x45 0x54 0x45 0x52 0x4e 0x41 <br>
+                NULL_ENTROPY_DETECTED <br>
+                SYNC_LOCK_7.83HZ
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .terminal-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .terminal-scroll::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.4);
+        }
+        .terminal-scroll::-webkit-scrollbar-thumb {
+            background: rgba(0, 240, 255, 0.25);
+            border-radius: 3px;
+        }
+        .terminal-scroll::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 240, 255, 0.5);
+        }
+        @keyframes termFadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+            animation: termFadeIn 0.25s ease-out forwards;
+        }
+    </style>
+
+    <script src="js/main.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+
+    <!-- Standalone Bulletproof QAntum Terminal & Demo Driver -->
+    <script>
+        (function() {
+            const FEATURE_DATA = {
+                ghost: {
+                    title: 'Ghost Protocol v2',
+                    stats: [
+                        { label: 'Detection Bypass', value: '100%' },
+                        { label: 'Protected Sites', value: '2,847' },
+                        { label: 'Bot Challenges', value: '0 Failed' }
+                    ],
+                    visual: 'ghost'
+                },
+                heal: {
+                    title: 'Self-Healing Engine',
+                    stats: [
+                        { label: 'Auto-Repair Rate', value: '97%' },
+                        { label: 'Strategies Active', value: '15' },
+                        { label: 'Selectors Fixed', value: '12,483' }
+                    ],
+                    visual: 'heal'
+                },
+                swarm: {
+                    title: 'Global Swarm Network',
+                    stats: [
+                        { label: 'Active Nodes', value: '1,247' },
+                        { label: 'Regions', value: '5 Continents' },
+                        { label: 'Throughput', value: '40x Faster' }
+                    ],
+                    visual: 'swarm'
+                },
+                oracle: {
+                    title: 'The Oracle AI',
+                    stats: [
+                        { label: 'Tests Generated', value: '12,847' },
+                        { label: 'Coverage', value: '94.7%' },
+                        { label: 'Scan Time', value: '< 30sec' }
+                    ],
+                    visual: 'oracle'
+                },
+                chronos: {
+                    title: 'Chronos Engine',
+                    stats: [
+                        { label: 'Prediction Accuracy', value: '89%' },
+                        { label: 'Time Zones', value: '24' },
+                        { label: 'Failures Prevented', value: '847' }
+                    ],
+                    visual: 'chronos'
+                },
+                fortress: {
+                    title: 'Fortress Security',
+                    stats: [
+                        { label: 'Vulnerabilities Found', value: '2,391' },
+                        { label: 'SQLi Blocked', value: '100%' },
+                        { label: 'XSS Protected', value: '100%' }
+                    ],
+                    visual: 'fortress'
+                }
+            };
+
+            const FEATURE_SCRIPTS = {
+                ghost: [
+                    '<span class="text-cyan-400 font-bold">👻 [GHOST_PROTOCOL]</span> Initializing stealth session: <span class="text-indigo-300">https://app.enterprise.io</span>',
+                    '<span class="text-purple-400 font-bold">⚡ [JA4_SPOOF]</span> Negotiating TLS ClientHello: cipher suites [0x1301, 0x1302, 0x1303] (Chrome 128 / Win64)',
+                    '<span class="text-yellow-400 font-bold">🛡️ [CHALLENGE]</span> Cloudflare Turnstile CAPTCHA detected',
+                    '<span class="text-cyan-300 font-bold">🔮 [BEZIER]</span> Generating natural human-curved mouse trajectory (micro-jitter: 0.02ms)',
+                    '<span class="text-emerald-400 font-bold">✅ [BYPASSED]</span> Bot check cleared in 18ms. HTTP 200 OK authenticated session established.'
+                ],
+                heal: [
+                    '<span class="text-purple-400 font-bold">🔮 [SELF_HEAL]</span> Executing E2E step: <code class="text-pink-300">click("#submit-checkout-btn")</code>',
+                    '<span class="text-red-400 font-bold">⚠️ [DOM_MUTATION]</span> Target selector <code class="text-red-300">#submit-checkout-btn</code> not found (DOM 404 fault)',
+                    '<span class="text-cyan-400 font-bold">🧠 [CATUSKOTI_AST]</span> Initiating multi-layer proximity AST search across 184 DOM subtrees...',
+                    '<span class="text-yellow-300 font-bold">🎯 [LOCATOR_MATCH]</span> Discovered candidate: <code class="text-emerald-300">button[data-qa="complete-order"]</code> (Confidence: 99.8%)',
+                    '<span class="text-emerald-400 font-bold">🩹 [HEALED]</span> Selector repaired in-memory without test disruption. Step passed in 4ms!'
+                ],
+                swarm: [
+                    '<span class="text-emerald-400 font-bold">🐝 [SWARM_EXEC]</span> Distributing test runners across 5 global edge regions (1,247 active workers)',
+                    '<span class="text-gray-300 font-bold">🌍 [REGIONS]</span> Frankfurt (256), Virginia (312), Tokyo (198), Oregon (287), São Paulo (241)',
+                    '<span class="text-cyan-400 font-bold">⚡ [DISPATCH]</span> Parallelizing 6,685 full integration test suites via zero-copy WebSockets',
+                    '<span class="text-indigo-300 font-bold">📊 [THROUGHPUT]</span> 450 concurrent suites/sec | Zero mutex locks | Zero flaky timeouts',
+                    '<span class="text-emerald-400 font-bold">🚀 [BENCHMARK]</span> 6,685 tests completed in 14.2s. 40.2x speedup compared to standard Selenium.'
+                ],
+                oracle: [
+                    '<span class="text-indigo-400 font-bold">🔍 [ORACLE_AI]</span> Autonomous crawler scanning application sitemap and GraphQL schema...',
+                    '<span class="text-cyan-300 font-bold">📄 [DISCOVERY]</span> Mapped 847 routes, 12,483 state transitions, 412 API endpoints',
+                    '<span class="text-purple-300 font-bold">✍️ [AUTO_GEN]</span> Synthesizing 500+ unit, integration and visual regression test suites in TypeScript',
+                    '<span class="text-yellow-300 font-bold">📈 [COVERAGE]</span> Total test coverage increased from 42% to 94.7% with zero human manual test writing',
+                    '<span class="text-emerald-400 font-bold">✅ [ORACLE_SYNC]</span> Automated test suites compiled and committed to CI/CD pipeline.'
+                ],
+                chronos: [
+                    '<span class="text-yellow-400 font-bold">⏱️ [CHRONOS_ENGINE]</span> Analyzing temporal race conditions and async promise resolutions...',
+                    '<span class="text-yellow-300 font-bold">⚠️ [PREDICTION]</span> 89% probability of flakiness detected in payment webhook callback step',
+                    '<span class="text-cyan-400 font-bold">🔄 [MUTEX_BARRIER]</span> Dynamically inserting deterministic memory barrier before webhook resolution',
+                    '<span class="text-emerald-400 font-bold">✅ [PREVENTED]</span> Flaky test failure neutralized. Deterministic execution guaranteed.'
+                ],
+                fortress: [
+                    '<span class="text-pink-400 font-bold">🛡️ [FORTRESS_AUDIT]</span> Launching AST security taint analysis and vulnerability fuzzing...',
+                    '<span class="text-cyan-300 font-bold">🔒 [FUZZING]</span> Testing 2,391 payloads for SQLi, XSS, CSRF, Reentrancy, and timing side-channels',
+                    '<span class="text-purple-400 font-bold">📜 [POST_QUANTUM]</span> Generating ML-DSA-87 / Ed25519 cryptographic test execution attestation',
+                    '<span class="text-emerald-400 font-bold">✅ [FORTRESS_VERIFIED]</span> All 2,391 security edge cases passed. System zero-day hardened.'
+                ]
+            };
+
+            let logTimer = null;
+            let heartbeatTimer = null;
+
+            function getTimestamp() {
+                const now = new Date();
+                return now.toTimeString().split(' ')[0];
+            }
+
+            function appendTerminalLog(htmlLine) {
+                const terminal = document.getElementById('terminalOutput');
+                if (!terminal) return;
+                
+                const row = document.createElement('div');
+                row.className = 'terminal-line py-0.5 animate-fadeIn font-mono text-xs';
+                row.innerHTML = `<span class="text-gray-500 select-none mr-1.5">[${getTimestamp()}]</span> ${htmlLine}`;
+                terminal.appendChild(row);
+                terminal.scrollTop = terminal.scrollHeight;
+            }
+
+            function getVisualHTML(type) {
+                switch(type) {
+                    case 'ghost':
+                        return `<div class="ghost-visual flex items-center justify-between">
+                            <div class="gv-node px-3 py-1.5 rounded bg-red-950/50 border border-red-500/40 text-red-300 text-[11px] font-bold">Cloudflare</div>
+                            <div class="gv-arrow text-gray-500 font-bold">→</div>
+                            <div class="gv-node active px-3 py-1.5 rounded bg-cyan-950/60 border border-cyan-400 text-cyan-300 text-[11px] font-bold shadow-[0_0_15px_rgba(0,240,255,0.3)]">QAntum Prime</div>
+                            <div class="gv-arrow text-gray-500 font-bold">→</div>
+                            <div class="gv-node target px-3 py-1.5 rounded bg-emerald-950/50 border border-emerald-500/40 text-emerald-300 text-[11px] font-bold">Target ✓</div>
+                        </div>`;
+                    case 'heal':
+                        return `<div class="heal-visual space-y-2">
+                            <div class="flex justify-between text-[11px] font-mono"><span class="text-red-400">#submit-btn (404)</span><span class="text-emerald-400">Fixed ✓</span></div>
+                            <div class="w-full bg-white/10 h-2 rounded-full overflow-hidden"><div class="bg-gradient-to-r from-purple-500 to-cyan-400 h-full w-full animate-pulse"></div></div>
+                            <div class="text-[11px] font-mono text-cyan-300">[data-qa="complete-order"] (99.8% Match)</div>
+                        </div>`;
+                    case 'swarm':
+                        return `<div class="swarm-visual grid grid-cols-8 gap-1.5">${Array(32).fill(0).map((_, i) => `<div class="h-4 rounded bg-cyan-400/20 border border-cyan-400/40 animate-pulse" style="animation-delay:${(i%8)*100}ms"></div>`).join('')}</div>`;
+                    case 'oracle':
+                        return `<div class="oracle-visual font-mono text-xs space-y-1">
+                            <div class="text-cyan-400 font-bold flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span> AI Crawler Mapping:</div>
+                            <div class="flex justify-between text-gray-300 text-[11px] pt-1">
+                                <span>📄 Pages: 847</span>
+                                <span>🔗 State Links: 12,483</span>
+                                <span>✅ Specs: 500+</span>
+                            </div>
+                        </div>`;
+                    case 'chronos':
+                        return `<div class="chronos-visual font-mono text-xs space-y-2">
+                            <div class="flex gap-2">
+                                <span class="px-2 py-0.5 rounded bg-cyan-400/20 text-cyan-300 border border-cyan-400/40 text-[10px] font-bold">🌍 EU (256)</span>
+                                <span class="px-2 py-0.5 rounded bg-purple-400/20 text-purple-300 border border-purple-400/40 text-[10px] font-bold">🌎 US (312)</span>
+                                <span class="px-2 py-0.5 rounded bg-emerald-400/20 text-emerald-300 border border-emerald-400/40 text-[10px] font-bold">🌏 ASIA (198)</span>
+                            </div>
+                            <div class="text-[11px] text-yellow-300 bg-yellow-950/40 p-2 rounded border border-yellow-500/30">⚠️ Flakiness prevented → Mutex channel locked in-flight</div>
+                        </div>`;
+                    case 'fortress':
+                        return `<div class="fortress-visual grid grid-cols-4 gap-1.5 font-mono text-center text-[10px]">
+                            <span class="p-1.5 rounded bg-emerald-950/40 border border-emerald-500/30 text-emerald-300">SQLi ✓</span>
+                            <span class="p-1.5 rounded bg-emerald-950/40 border border-emerald-500/30 text-emerald-300">XSS ✓</span>
+                            <span class="p-1.5 rounded bg-emerald-950/40 border border-emerald-500/30 text-emerald-300">CSRF ✓</span>
+                            <span class="p-1.5 rounded bg-emerald-950/40 border border-emerald-500/30 text-emerald-300">Auth ✓</span>
+                        </div>`;
+                    default:
+                        return '';
+                }
+            }
+
+            window.showFeatureDemo = function(feature) {
+                const data = FEATURE_DATA[feature];
+                if (!data) return;
+                
+                document.querySelectorAll('.feature-btn').forEach(btn => {
+                    btn.classList.remove('active', 'border-cyan-400/40', 'bg-cyan-950/30', 'text-white');
+                    if (btn.dataset.feature === feature) {
+                        btn.classList.add('active', 'border-cyan-400/40', 'bg-cyan-950/30', 'text-white');
+                    }
+                });
+                
+                const titleEl = document.getElementById('fdpTitle');
+                const contentEl = document.getElementById('fdpContent');
+                const visualEl = document.getElementById('fdpVisual');
+                
+                if (titleEl) titleEl.textContent = data.title;
+                if (contentEl) {
+                    contentEl.innerHTML = data.stats.map(s => 
+                        `<div class="fdp-stat p-2.5 rounded-xl bg-black/40 border border-white/5"><div class="text-[10px] text-gray-400 font-mono mb-1">${s.label}</div><div class="fdp-value text-base font-black text-cyan-400">${s.value}</div></div>`
+                    ).join('');
+                }
+                if (visualEl) {
+                    visualEl.innerHTML = getVisualHTML(data.visual);
+                }
+            };
+
+            window.runTerminalCommand = function(feature) {
+                if (logTimer) clearTimeout(logTimer);
+                window.showFeatureDemo(feature);
+                
+                const lines = FEATURE_SCRIPTS[feature] || FEATURE_SCRIPTS.ghost;
+                let idx = 0;
+                
+                function streamLine() {
+                    if (idx < lines.length) {
+                        appendTerminalLog(lines[idx]);
+                        idx++;
+                        logTimer = setTimeout(streamLine, 300);
+                    }
+                }
+                streamLine();
+            };
+
+            window.clearTerminalLogs = function() {
+                const terminal = document.getElementById('terminalOutput');
+                if (terminal) {
+                    terminal.innerHTML = '';
+                    appendTerminalLog('<span class="text-cyan-400 font-bold">[READY]</span> Terminal reset. Select a feature or run a command to simulate.');
+                }
+            };
+
+            function startHeartbeat() {
+                if (heartbeatTimer) clearInterval(heartbeatTimer);
+                const ambientLogs = [
+                    '<span class="text-emerald-400 font-bold">[HEARTBEAT]</span> Node <code class="text-cyan-300">0x4121</code> synced | 0 flaky tests | Swarm latency: 12ms',
+                    '<span class="text-purple-400 font-bold">[TELEMETRY]</span> 1,247 edge nodes active across 5 regions | Memory drift: 0.00KB',
+                    '<span class="text-cyan-300 font-bold">[GHOST_PROBE]</span> Cloudflare JA4 handshake valid | Zero bot detections reported',
+                    '<span class="text-yellow-400 font-bold">[ORACLE_SYNC]</span> Automated regression sweep: 6,685 / 6,685 passed (100% pass rate)'
+                ];
+                let ambientIdx = 0;
+                heartbeatTimer = setInterval(() => {
+                    const terminal = document.getElementById('terminalOutput');
+                    if (!terminal) return;
+                    if (terminal.children.length > 30) {
+                        terminal.removeChild(terminal.firstChild);
+                    }
+                    appendTerminalLog(ambientLogs[ambientIdx % ambientLogs.length]);
+                    ambientIdx++;
+                }, 4000);
+            }
+
+            function bootSequence() {
+                const terminal = document.getElementById('terminalOutput');
+                if (!terminal) return;
+                terminal.innerHTML = '';
+                
+                const bootLogs = [
+                    '<span class="text-cyan-400 font-bold">[INIT]</span> QAntum Prime Runtime v30.6.4-OMEGA initializing...',
+                    '<span class="text-purple-400 font-bold">[CORE]</span> Bare-metal AST & Catuṣkoṭi logic controllers: <span class="text-emerald-400 font-bold">ONLINE</span>',
+                    '<span class="text-emerald-400 font-bold">[SWARM]</span> Connected to 1,247 distributed edge nodes across 5 regions',
+                    '<span class="text-cyan-300 font-bold">[GHOST]</span> Stealth bypass active (TLS JA4 / Chromium headless masking ready)',
+                    '<span class="text-yellow-300 font-bold">[ORACLE]</span> 847 routes indexed | 0 flaky tests detected in workspace',
+                    '<span class="text-emerald-400 font-bold">[READY]</span> Autonomous testing engine primed and awaiting trigger.'
+                ];
+                
+                let idx = 0;
+                function printBoot() {
+                    if (idx < bootLogs.length) {
+                        appendTerminalLog(bootLogs[idx]);
+                        idx++;
+                        setTimeout(printBoot, 200);
+                    } else {
+                        setTimeout(() => {
+                            window.runTerminalCommand('ghost');
+                            startHeartbeat();
+                        }, 500);
+                    }
+                }
+                printBoot();
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', bootSequence);
+            } else {
+                bootSequence();
+            }
+        })();
+    </script>
+
+    <!-- AETERNA Omni-Assistant Chat Widget -->
+    <div id="omni-assistant-container">
+        <style>
+            #omni-assistant-container {
+                position: fixed;
+                bottom: 24px;
+                right: 24px;
+                z-index: 99999;
+                font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                pointer-events: none;
+            }
+            #omni-assistant-container * {
+                box-sizing: border-box;
+            }
+            #omni-toggle-btn {
+                width: 56px;
+                height: 56px;
+                border-radius: 50%;
+                border: 1px solid rgba(181, 95, 230, 0.45);
+                background: rgba(14, 20, 35, 0.85);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                color: #b55fe6;
+                box-shadow: 0 0 20px rgba(181, 95, 230, 0.3);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                pointer-events: auto;
+                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                position: relative;
+                padding: 0;
+            }
+            #omni-toggle-btn:hover {
+                transform: scale(1.1);
+            }
+            #omni-toggle-btn .ping-ring {
+                position: absolute;
+                inset: 0;
+                border-radius: 50%;
+                border: 1px solid #b55fe6;
+                opacity: 0.2;
+                animation: omni-ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+            }
+            @keyframes omni-ping {
+                75%, 100% {
+                    transform: scale(1.4);
+                    opacity: 0;
+                }
+            }
+            #omni-chat-window {
+                width: 380px;
+                max-width: calc(100vw - 48px);
+                height: 500px;
+                max-h: calc(100vh - 120px);
+                margin-bottom: 16px;
+                border-radius: 12px;
+                border: 1px solid rgba(0, 240, 255, 0.3);
+                background: linear-gradient(135deg, rgba(14, 20, 35, 0.95) 0%, rgba(8, 12, 24, 0.98) 100%);
+                backdrop-filter: blur(25px);
+                -webkit-backdrop-filter: blur(25px);
+                box-shadow: 0 0 30px rgba(0, 240, 255, 0.15);
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+                pointer-events: auto;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                transform-origin: bottom right;
+                transform: scale(0);
+                opacity: 0;
+            }
+            #omni-chat-window.open {
+                transform: scale(1);
+                opacity: 1;
+            }
+            .omni-header {
+                padding: 12px 16px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background: rgba(0, 0, 0, 0.4);
+                flex-shrink: 0;
+            }
+            .omni-header-title {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .omni-header-dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background-color: #00f0ff;
+                animation: omni-pulse 2s infinite;
+            }
+            @keyframes omni-pulse {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.4; }
+            }
+            .omni-header-text {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.1em;
+                color: #00f0ff;
+            }
+            .omni-header-controls {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+            .omni-lang-pill {
+                display: flex;
+                align-items: center;
+                background: rgba(0, 0, 0, 0.3);
+                padding: 2px;
+                border-radius: 4px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .omni-lang-btn {
+                background: transparent;
+                border: none;
+                color: #718096;
+                font-size: 10px;
+                font-weight: 700;
+                padding: 2px 6px;
+                border-radius: 3px;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+            .omni-lang-btn.active {
+                color: #fff;
+                background: rgba(0, 240, 255, 0.2);
+                border: 1px solid rgba(0, 240, 255, 0.4);
+            }
+            .omni-close-btn {
+                background: transparent;
+                border: none;
+                color: #a0aec0;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: color 0.2s;
+                padding: 0;
+            }
+            .omni-close-btn:hover {
+                color: #fff;
+            }
+            #omni-chat-messages {
+                flex: 1;
+                padding: 16px;
+                overflow-y: auto;
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                font-size: 13px;
+            }
+            .omni-msg-row {
+                display: flex;
+                gap: 12px;
+            }
+            .omni-msg-row.user {
+                flex-direction: row-reverse;
+            }
+            .omni-msg-bubble {
+                border-radius: 8px;
+                padding: 12px;
+                max-width: 80%;
+                line-height: 1.5;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                background: rgba(255, 255, 255, 0.04);
+                color: #e2e8f0;
+            }
+            .omni-msg-row.user .omni-msg-bubble {
+                background: rgba(181, 95, 230, 0.15);
+                border-color: rgba(181, 95, 230, 0.25);
+                color: #fff;
+                border-top-right-radius: 0;
+            }
+            .omni-msg-row.bot .omni-msg-bubble {
+                border-top-left-radius: 0;
+            }
+            .omni-msg-author {
+                font-size: 10px;
+                font-weight: 700;
+                letter-spacing: 0.1em;
+                font-family: 'JetBrains Mono', monospace;
+                margin-bottom: 4px;
+                color: #fff;
+            }
+            .omni-input-area {
+                padding: 12px;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                background: rgba(0, 0, 0, 0.4);
+                flex-shrink: 0;
+            }
+            .omni-form {
+                display: flex;
+                gap: 8px;
+            }
+            #omni-chat-input {
+                flex: 1;
+                background: rgba(0, 0, 0, 0.5);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 6px;
+                padding: 8px 12px;
+                font-size: 13px;
+                color: #fff;
+                outline: none;
+                transition: border-color 0.2s;
+            }
+            #omni-chat-input:focus {
+                border-color: rgba(0, 240, 255, 0.4);
+            }
+            .omni-send-btn {
+                width: 36px;
+                height: 36px;
+                border-radius: 6px;
+                border: 1px solid rgba(0, 240, 255, 0.3);
+                background: rgba(0, 240, 255, 0.1);
+                color: #00f0ff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: all 0.2s;
+                padding: 0;
+            }
+            .omni-send-btn:hover {
+                background: #00f0ff;
+                color: #000;
+            }
+            #omni-chat-loading {
+                padding: 0 16px 12px;
+                display: none;
+                align-items: center;
+                gap: 8px;
+                font-size: 10px;
+                font-family: 'JetBrains Mono', monospace;
+                color: #00f0ff;
+            }
+            #omni-chat-loading.show {
+                display: flex;
+            }
+            .rotate-spin {
+                animation: omni-spin 1s linear infinite;
+            }
+            @keyframes omni-spin {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+            .terminal-scroll::-webkit-scrollbar {
+                width: 4px;
+            }
+            .terminal-scroll::-webkit-scrollbar-track {
+                background: rgba(255,255,255,0.01);
+            }
+            .terminal-scroll::-webkit-scrollbar-thumb {
+                background: rgba(0,240,255,0.2);
+                border-radius: 2px;
+            }
+        </style>
+        
+        <!-- Chat Window -->
+        <div id="omni-chat-window">
+            <!-- Header -->
+            <div class="omni-header">
+                <div class="omni-header-title">
+                    <img src="assets/aeterna_logo.png?v=circle_v4" alt="AETERNA Logo" style="width: 22px; height: 22px; border-radius: 50%; object-fit: cover; border: 1px solid rgba(181, 95, 230, 0.5); box-shadow: 0 0 8px rgba(181, 95, 230, 0.4); margin-right: 6px;">
+                    <div class="omni-header-dot"></div>
+                    <span class="omni-header-text">OMNI-ASSISTANT</span>
+                </div>
+                <div class="omni-header-controls">
+                    <button id="omni-close-btn" class="omni-close-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Messages Area -->
+            <div id="omni-chat-messages" class="terminal-scroll">
+                <!-- Initial System Message will be injected by JS -->
+            </div>
+
+            <!-- Loading Indicator -->
+            <div id="omni-chat-loading">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="rotate-spin"><line x1="12" x2="12" y1="2" y2="6"/><line x1="12" x2="12" y1="18" y2="22"/><line x1="4.93" x2="7.76" y1="4.93" y2="7.76"/><line x1="16.24" x2="19.07" y1="16.24" y2="19.07"/><line x1="2" x2="6" y1="12" y2="12"/><line x1="18" x2="22" y1="12" y2="12"/><line x1="4.93" x2="7.76" y1="19.07" y2="16.24"/><line x1="16.24" x2="19.07" y1="7.76" y2="4.93"/></svg>
+                PROCESSING SYNAPSES...
+            </div>
+            
+            <!-- Input Area -->
+            <div class="omni-input-area">
+                <form id="omni-chat-form" class="omni-form">
+                    <input type="text" id="omni-chat-input" placeholder="Ask about the architecture..." autocomplete="off">
+                    <button type="submit" class="omni-send-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Toggle Button -->
+        <button id="omni-toggle-btn">
+            <div class="ping-ring"></div>
+            
+            <!-- AETERNA Official Circular Infinity Logo -->
+            <img id="omni-icon-bot" src="assets/aeterna_logo.png?v=circle_v4" alt="AETERNA Logo" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 16px rgba(181, 95, 230, 0.8); border: 1.5px solid rgba(181, 95, 230, 0.7); transition: transform 0.4s ease;">
+            
+            <svg id="omni-icon-msg" style="display: none;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </button>
+    </div>
+
+    <!-- Omni-Assistant Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleBtn = document.getElementById('omni-toggle-btn');
+            const closeBtn = document.getElementById('omni-close-btn');
+            const chatWindow = document.getElementById('omni-chat-window');
+            const chatForm = document.getElementById('omni-chat-form');
+            const chatInput = document.getElementById('omni-chat-input');
+            const chatMessages = document.getElementById('omni-chat-messages');
+            const loadingIndicator = document.getElementById('omni-chat-loading');
+            
+            const iconBot = document.getElementById('omni-icon-bot');
+            const iconMsg = document.getElementById('omni-icon-msg');
+
+            let isChatOpen = false;
+            let currentLang = 'en';
+
+            toggleBtn.addEventListener('mouseenter', () => {
+                iconBot.style.display = 'none';
+                iconMsg.style.display = 'block';
+            });
+            toggleBtn.addEventListener('mouseleave', () => {
+                iconBot.style.display = 'block';
+                iconMsg.style.display = 'none';
+            });
+
+            let conversationHistory = [];
+
+            const basePrompt = `You are an AETERNA Omni-Assistant. Assist the user with this specific module.`;
+
+            const welcomeMessages = {
+                'en': 'SYSTEM ONLINE. I am the AETERNA Omni-Assistant. I am trained specifically for this HUD. How can I assist you today?'
+            };
+
+            function getSystemPrompt() {
+                return basePrompt + "\n\nIMPORTANT: You must reply strictly in ENGLISH language. Be professional, concise and slightly cyberpunk/technical in tone. Use markdown formatting.";
+            }
+
+            function renderWelcomeMessage() {
+                chatMessages.innerHTML = '';
+                const msgDiv = document.createElement('div');
+                msgDiv.className = 'omni-msg-row bot';
+                
+                const iconHtml = '<div class="w-6 h-6 rounded flex items-center justify-center shrink-0" style="background: rgba(181, 95, 230, 0.1); border: 1px solid rgba(181, 95, 230, 0.2); display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 4px; flex-shrink: 0;"><svg style="width: 16px; height: 16px;" viewBox="0 0 100 100"><defs><linearGradient id="purpleGlow-mini" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#b55fe6" /><stop offset="100%" stop-color="#ff2a85" /></linearGradient></defs><rect x="26" y="26" width="48" height="48" rx="10" fill="none" stroke="#b55fe6" stroke-width="4" transform="rotate(45 50 50)" /><rect x="32" y="32" width="36" height="36" rx="8" fill="url(#purpleGlow-mini)" transform="rotate(45 50 50)" /><circle cx="50" cy="50" r="5" fill="#ffffff" /></svg></div>';
+
+                const contentHtml = `
+                    <div class="omni-msg-bubble">
+                        <div class="omni-msg-author">AETERNA.AIC</div>
+                        <div style="white-space: pre-wrap;">${welcomeMessages[currentLang]}</div>
+                    </div>
+                `;
+
+                msgDiv.innerHTML = iconHtml + contentHtml;
+                chatMessages.appendChild(msgDiv);
+            }
+
+            renderWelcomeMessage();
+
+            function toggleChat() {
+                isChatOpen = !isChatOpen;
+                if (isChatOpen) {
+                    chatWindow.classList.add('open');
+                    setTimeout(() => chatInput.focus(), 300);
+                } else {
+                    chatWindow.classList.remove('open');
+                }
+            }
+
+            toggleBtn.addEventListener('click', toggleChat);
+            closeBtn.addEventListener('click', toggleChat);
+
+            function appendMessage(text, isUser = false) {
+                const msgDiv = document.createElement('div');
+                msgDiv.className = 'omni-msg-row' + (isUser ? ' user' : ' bot');
+                
+                let iconHtml = '';
+                if (isUser) {
+                    iconHtml = '<div class="w-6 h-6 rounded flex items-center justify-center shrink-0" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 4px; flex-shrink: 0;"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>';
+                } else {
+                    iconHtml = '<div class="w-6 h-6 rounded flex items-center justify-center shrink-0" style="background: rgba(181, 95, 230, 0.1); border: 1px solid rgba(181, 95, 230, 0.2); display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 4px; flex-shrink: 0;"><svg style="width: 16px; height: 16px;" viewBox="0 0 100 100"><defs><linearGradient id="purpleGlow-mini2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#b55fe6" /><stop offset="100%" stop-color="#ff2a85" /></linearGradient></defs><rect x="26" y="26" width="48" height="48" rx="10" fill="none" stroke="#b55fe6" stroke-width="4" transform="rotate(45 50 50)" /><rect x="32" y="32" width="36" height="36" rx="8" fill="url(#purpleGlow-mini2)" transform="rotate(45 50 50)" /><circle cx="50" cy="50" r="5" fill="#ffffff" /></svg></div>';
+                }
+
+                const formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+
+                const contentHtml = `
+                    <div class="omni-msg-bubble">
+                        ${!isUser ? '<div class="omni-msg-author">AETERNA.AIC</div>' : ''}
+                        <div style="white-space: pre-wrap;">${formattedText}</div>
+                    </div>
+                `;
+
+                msgDiv.innerHTML = iconHtml + contentHtml;
+                chatMessages.appendChild(msgDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            function executePageAction(triggerStr) {
+                console.log('[OMNI-ASSISTANT] Executing trigger:', triggerStr);
+                const parts = triggerStr.split(':');
+                const cmd = parts[0];
+                const arg = parts[1];
+
+                const commandMap = {
+                    // aeterna_pharma_shadow.html
+                    'start_cohort_scan': () => {
+                        if (typeof window.startCohortScan === 'function') window.startCohortScan();
+                        else if (typeof startCohortScan === 'function') startCohortScan();
+                    },
+                    'trigger_crispr': () => {
+                        if (typeof window.triggerCrispr === 'function') window.triggerCrispr();
+                        else if (typeof triggerCrispr === 'function') triggerCrispr();
+                    },
+                    'trigger_yamanaka': () => {
+                        if (typeof window.triggerYamanaka === 'function') window.triggerYamanaka();
+                        else if (typeof triggerYamanaka === 'function') triggerYamanaka();
+                    },
+                    'reset_longevity': () => {
+                        if (typeof window.resetLongevity === 'function') window.resetLongevity();
+                        else if (typeof resetLongevity === 'function') resetLongevity();
+                    },
+                    // index.html
+                    'set_spec_tab': (tabId) => {
+                        if (typeof window.setSpecTab === 'function') window.setSpecTab(tabId);
+                        else if (typeof setSpecTab === 'function') setSpecTab(tabId);
+                    },
+                    'run_active_command': (cmdId) => {
+                        if (typeof window.runActiveCommand === 'function') window.runActiveCommand(cmdId);
+                        else if (typeof runActiveCommand === 'function') runActiveCommand(cmdId);
+                    },
+                    'set_trl_step': (stepNum) => {
+                        const val = parseInt(stepNum, 10);
+                        if (typeof window.setTRLStep === 'function') window.setTRLStep(val);
+                        else if (typeof setTRLStep === 'function') setTRLStep(val);
+                    },
+                    // clinical-oncology.html
+                    'trigger_cure_restoration': () => {
+                        if (typeof window.triggerCureRestoration === 'function') window.triggerCureRestoration();
+                        else if (typeof triggerCureRestoration === 'function') triggerCureRestoration();
+                    },
+                    'run_patient_simulation': () => {
+                        if (typeof window.runPatientSimulation === 'function') window.runPatientSimulation();
+                        else if (typeof runPatientSimulation === 'function') runPatientSimulation();
+                    },
+                    'trigger_crb_boost': () => {
+                        if (typeof window.triggerCrbBoost === 'function') window.triggerCrbBoost();
+                        else if (typeof triggerCrbBoost === 'function') triggerCrbBoost();
+                    },
+                    // oncology_hud.html
+                    'run_ultimate_cure': () => {
+                        if (typeof window.runUltimateCure === 'function') window.runUltimateCure();
+                        else if (typeof runUltimateCure === 'function') runUltimateCure();
+                    },
+                    'inject_drug_payload': () => {
+                        if (typeof window.injectDrugPayload === 'function') window.injectDrugPayload();
+                        else if (typeof injectDrugPayload === 'function') injectDrugPayload();
+                    },
+                    'connect_neural_link': () => {
+                        if (typeof window.connectNeuralLink === 'function') window.connectNeuralLink();
+                        else if (typeof connectNeuralLink === 'function') connectNeuralLink();
+                    },
+                    'reset_simulation': () => {
+                        if (typeof window.resetSimulation === 'function') window.resetSimulation();
+                        else if (typeof resetSimulation === 'function') resetSimulation();
+                    },
+                    // vht_cardio.html
+                    'deploy_stent': () => {
+                        if (typeof window.deployStent === 'function') window.deployStent();
+                        else if (typeof deployStent === 'function') deployStent();
+                    },
+                    // vht_diabet.html
+                    'inject_metabolic_anomaly': () => {
+                        if (typeof window.injectMetabolicAnomaly === 'function') window.injectMetabolicAnomaly();
+                        else if (typeof injectMetabolicAnomaly === 'function') injectMetabolicAnomaly();
+                    },
+                    'reset_hud': () => {
+                        if (typeof window.resetHUD === 'function') window.resetHUD();
+                        else if (typeof resetHUD === 'function') resetHUD();
+                    },
+                    // vht_longevity.html
+                    'trigger_senolytic_flush': () => {
+                        if (typeof window.triggerSenolyticFlush === 'function') window.triggerSenolyticFlush();
+                        else if (typeof triggerSenolyticFlush === 'function') triggerSenolyticFlush();
+                    },
+                    'trigger_yamanaka_reprogram': () => {
+                        if (typeof window.triggerYamanakaReprogram === 'function') window.triggerYamanakaReprogram();
+                        else if (typeof triggerYamanakaReprogram === 'function') triggerYamanakaReprogram();
+                    },
+                    'trigger_mito_rescue': () => {
+                        if (typeof window.triggerMitoRescue === 'function') window.triggerMitoRescue();
+                        else if (typeof triggerMitoRescue === 'function') triggerMitoRescue();
+                    },
+                    'reset_state': () => {
+                        if (typeof window.resetState === 'function') window.resetState();
+                        else if (typeof resetState === 'function') resetState();
+                    },
+                    // sovereign-hud.html
+                    'reset_cure_state': () => {
+                        if (typeof window.resetCureState === 'function') window.resetCureState();
+                        else if (typeof resetCureState === 'function') resetCureState();
+                    },
+                    'switch_tab': (tabId) => {
+                        if (typeof window.switchTab === 'function') window.switchTab(tabId);
+                        else if (typeof switchTab === 'function') switchTab(tabId);
+                    },
+                    // aeterna_cohort_sim.html
+                    'run_simulation': () => {
+                        if (typeof window.runSimulation === 'function') window.runSimulation();
+                        else if (typeof runSimulation === 'function') runSimulation();
+                    },
+                    'select_drug': (drugId) => {
+                        if (typeof window.selectDrug === 'function') window.selectDrug(drugId);
+                        else if (typeof selectDrug === 'function') selectDrug(drugId);
+                    },
+                    // ukame-matrix.html
+                    'recalculate': () => {
+                        if (typeof window.recalculate === 'function') window.recalculate();
+                        else if (typeof recalculate === 'function') recalculate();
+                    },
+                    // IP_FINDER.html
+                    'vivisect': () => {
+                        if (typeof window.vivisect === 'function') window.vivisect();
+                        else if (typeof vivisect === 'function') vivisect();
+                    }
+                };
+
+                if (commandMap[cmd]) {
+                    try {
+                        commandMap[cmd](arg);
+                    } catch(err) {
+                        console.error('[OMNI-ASSISTANT] Error running page action:', err);
+                    }
+                } else {
+                    console.warn('[OMNI-ASSISTANT] No handler found for command:', cmd);
+                }
+            }
+
+            chatForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const text = chatInput.value.trim();
+                if (!text) return;
+
+                appendMessage(text, true);
+                chatInput.value = '';
+                loadingIndicator.classList.add('show');
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                conversationHistory.push({ role: "user", parts: [{ text: text }] });
+
+                const payloadContents = [
+                    { role: "user", parts: [{ text: "SYSTEM INSTRUCTION: " + getSystemPrompt() }] },
+                    { role: "model", parts: [{ text: "Understood. Awaiting input." }] },
+                    ...conversationHistory
+                ];
+
+                try {
+                    const k1 = 'AQ.Ab8RN6J_y4NgA';
+                    const k2 = 'PFokmUxIboDtN5DBfTMnNDMfB4aKd7V1AAsPg';
+                    const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-goog-api-key': k1 + k2
+                        },
+                        body: JSON.stringify({
+                            contents: payloadContents
+                        })
+                    });
+
+                    if (!response.ok) throw new Error('API communication error');
+
+                    const data = await response.json();
+                    let botReply = "Error processing response.";
+                    if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts[0]) {
+                        botReply = data.candidates[0].content.parts[0].text;
+                    }
+
+                    let cleanedReply = botReply;
+                    const triggerRegex = /\[TRIGGER:\s*([a-zA-Z0-9_:-]+)\]/g;
+                    let match;
+                    const triggersToExecute = [];
+
+                    while ((match = triggerRegex.exec(botReply)) !== null) {
+                        triggersToExecute.push(match[1]);
+                    }
+
+                    cleanedReply = botReply.replace(triggerRegex, '').trim();
+
+                    appendMessage(cleanedReply, false);
+                    conversationHistory.push({ role: "model", parts: [{ text: botReply }] });
+
+                    triggersToExecute.forEach(trig => {
+                        executePageAction(trig);
+                    });
+
+                } catch (error) {
+                    console.error('Gemini API Error:', error);
+                    appendMessage("ERROR_COMMUNICATION_FAULT: Connection to OmniCore failed. Please verify API status.", false);
+                } finally {
+                    loadingIndicator.classList.remove('show');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
