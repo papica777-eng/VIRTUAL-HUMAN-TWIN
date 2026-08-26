@@ -22,6 +22,12 @@
 > This project has been **officially submitted** for European research and scale-up funding:
 > *   **Horizon Europe Cancer Mission (RIA)** — Proposal ID: `101347293` (Requested contribution: **€9.85M**).
 > *   **EIC Accelerator (2026)** — Proposal ID: `101327948` (Requested scale-up budget: **€7.5M**).
+>
+> **🏛️ Official European Cancer Mission Consortium (Proposal ID: `101347293`):**
+> *   🇧🇬 **AETERNA Technologies (Coordinator)** — *Lead System Architect & Coordinator* (PIC: `865986222`)
+> *   🇧🇬 **Medical University Sofia (МУ София)** — *Clinical Oncology Trials, Biobanking & Genomic NGS Cohorts* (PIC: `999868726`)
+> *   🇪🇸 **Barcelona Supercomputing Center (BSC-CNS / MareNostrum 5)** — *Tier-0 HPC In-Silico Partition & GPU Tensor Sweeps* (PIC: `999655524`)
+> *   🇫🇷 **Institut Curie (Paris)** — *Comprehensive Cancer Center, Organoid Screening & Apoptosis Validation* (PIC: `999896759`)
 
 ---
 
