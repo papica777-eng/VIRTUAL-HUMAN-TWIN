@@ -1,0 +1,31 @@
+# AETERNA-VHT // Proprietary Compute Kernel Exclusion
+*.mojo
+*.zig
+*.cu
+*.rs
+*.so
+*.dll
+*.dylib
+*.exe
+*.bin
+*.pt
+*.onnx
+
+# Build and Temp Caches
+__pycache__/
+*.py[cod]
+*$py.class
+node_modules/
+.venv/
+env/
+.DS_Store
+Thumbs.db
+doctor_extension.zip
+
+# Proprietary Directories
+mojo/
+core-engine/
+soul/
+polyglot_engines/
+polyglot_modules/
+Blockchain_Ledger/
