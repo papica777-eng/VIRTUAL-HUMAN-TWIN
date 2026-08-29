@@ -66,17 +66,15 @@
             text-shadow: 0 0 15px rgba(6, 182, 212, 0.6);
         }
 
-        .glow-emerald {
-            text-shadow: 0 0 15px rgba(16, 185, 129, 0.6);
-        }
-
-        .pulse-subtle {
-            animation: pulse-glow 3s infinite ease-in-out;
-        }
-
-        @keyframes pulse-glow {
-            0%, 100% { opacity: 0.85; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.02); }
+        .custom-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #06b6d4;
+            cursor: pointer;
+            box-shadow: 0 0 10px #06b6d4;
         }
 
         /* Custom Scrollbar */
@@ -137,38 +135,34 @@
                 </div>
             </div>
 
-            <!-- Portal Links -->
-            <div class="hidden md:flex items-center gap-1 text-xs font-medium text-slate-300">
-                <a href="#simulator" class="px-3 py-1.5 rounded-lg hover:bg-slate-800 hover:text-cyan-400 transition flex items-center gap-1.5">
+            <!-- Main App Nav Tabs -->
+            <div class="flex items-center gap-1.5 text-xs font-medium">
+                <button onclick="switchMainTab('simulator')" id="nav-btn-sim" class="px-3 py-1.5 rounded-lg bg-cyan-950 border border-cyan-500/40 text-cyan-300 font-bold transition flex items-center gap-1.5">
                     <i data-lucide="play-circle" class="w-4 h-4 text-cyan-400"></i>
                     <span data-i18n="nav_sim">Live Simulator</span>
-                </a>
-                <a href="clinical-oncology.html" target="_blank" class="px-3 py-1.5 rounded-lg hover:bg-slate-800 hover:text-emerald-400 transition flex items-center gap-1.5">
-                    <i data-lucide="activity" class="w-4 h-4 text-emerald-400"></i>
-                    <span data-i18n="nav_hud">Oncology HUD</span>
-                </a>
-                <a href="CLINICAL_DOCTOR_PORTAL.html" target="_blank" class="px-3 py-1.5 rounded-lg hover:bg-slate-800 hover:text-purple-400 transition flex items-center gap-1.5">
+                </button>
+                <button onclick="switchMainTab('doctor')" id="nav-btn-doctor" class="px-3 py-1.5 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-purple-400 transition flex items-center gap-1.5">
                     <i data-lucide="stethoscope" class="w-4 h-4 text-purple-400"></i>
                     <span data-i18n="nav_doctor">Doctor Portal</span>
+                </button>
+                <a href="clinical-oncology.html" target="_blank" class="px-3 py-1.5 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-emerald-400 transition flex items-center gap-1.5">
+                    <i data-lucide="activity" class="w-4 h-4 text-emerald-400"></i>
+                    <span data-i18n="nav_hud">3D Neuro/Onco HUD</span>
                 </a>
-                <a href="#cohort" class="px-3 py-1.5 rounded-lg hover:bg-slate-800 hover:text-amber-400 transition flex items-center gap-1.5">
+                <a href="#cohort" class="hidden md:flex px-3 py-1.5 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-amber-400 transition items-center gap-1.5">
                     <i data-lucide="users" class="w-4 h-4 text-amber-400"></i>
                     <span data-i18n="nav_cohort">5,000 Cohort</span>
                 </a>
-                <a href="#workpackages" class="px-3 py-1.5 rounded-lg hover:bg-slate-800 hover:text-slate-100 transition flex items-center gap-1.5">
-                    <i data-lucide="layers" class="w-4 h-4 text-blue-400"></i>
-                    <span data-i18n="nav_wps">Work Packages</span>
-                </a>
-                <a href="#dossiers" class="px-3 py-1.5 rounded-lg bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-900/80 transition flex items-center gap-1.5">
+                <a href="#dossiers" class="hidden md:flex px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700 text-slate-300 hover:text-cyan-300 transition items-center gap-1.5">
                     <i data-lucide="file-text" class="w-4 h-4 text-cyan-400"></i>
-                    <span data-i18n="nav_docs">Proposal Dossiers</span>
+                    <span data-i18n="nav_docs">Dossiers</span>
                 </a>
             </div>
         </div>
     </nav>
 
     <!-- HERO SECTION -->
-    <section class="relative py-12 lg:py-16 px-4 sm:px-6 max-w-7xl mx-auto w-full">
+    <section class="relative py-10 px-4 sm:px-6 max-w-7xl mx-auto w-full">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
             <div class="lg:col-span-7 space-y-5">
@@ -207,18 +201,18 @@
                 </div>
 
                 <!-- Action CTAs -->
-                <div class="flex flex-wrap items-center gap-3 pt-3">
-                    <a href="#simulator" class="px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-600 to-indigo-600 text-white font-bold text-sm shadow-lg shadow-cyan-500/25 hover:brightness-110 transition flex items-center gap-2">
+                <div class="flex flex-wrap items-center gap-3 pt-2">
+                    <button onclick="switchMainTab('simulator')" class="px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-600 to-indigo-600 text-white font-bold text-sm shadow-lg shadow-cyan-500/25 hover:brightness-110 transition flex items-center gap-2">
                         <i data-lucide="play" class="w-4 h-4"></i>
-                        <span data-i18n="btn_launch_sim">Launch Live In-Silico Simulator</span>
-                    </a>
-                    <a href="clinical-oncology.html" target="_blank" class="px-5 py-3 rounded-xl glass-panel text-cyan-300 font-semibold text-sm hover:bg-slate-800 transition flex items-center gap-2">
-                        <i data-lucide="external-link" class="w-4 h-4 text-cyan-400"></i>
-                        <span data-i18n="btn_open_hud">Open 3D Oncology HUD</span>
-                    </a>
-                    <a href="#fhir-module" class="px-4 py-3 rounded-xl glass-panel text-slate-300 font-medium text-sm hover:bg-slate-800 transition flex items-center gap-2">
-                        <i data-lucide="code" class="w-4 h-4 text-emerald-400"></i>
-                        <span>HL7 FHIR R4</span>
+                        <span data-i18n="btn_launch_sim">In-Silico Simulation Lab</span>
+                    </button>
+                    <button onclick="switchMainTab('doctor')" class="px-5 py-3 rounded-xl bg-purple-950 border border-purple-500/40 text-purple-300 font-bold text-sm hover:bg-purple-900 transition flex items-center gap-2">
+                        <i data-lucide="stethoscope" class="w-4 h-4 text-purple-400"></i>
+                        <span data-i18n="btn_open_doctor">Doctor Clinical Portal</span>
+                    </button>
+                    <a href="clinical-oncology.html" target="_blank" class="px-4 py-3 rounded-xl glass-panel text-slate-300 font-medium text-sm hover:bg-slate-800 transition flex items-center gap-2">
+                        <i data-lucide="external-link" class="w-4 h-4 text-emerald-400"></i>
+                        <span>3D HUD</span>
                     </a>
                 </div>
             </div>
@@ -229,36 +223,36 @@
                     <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
                         <div class="flex items-center gap-2">
                             <span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse"></span>
-                            <span class="text-xs font-bold font-mono text-slate-200" data-i18n="live_patient_tag">PATIENT TWIN #VHT-8402 (NSCLC)</span>
+                            <span class="text-xs font-bold font-mono text-slate-200">PATIENT TWIN #VHT-8402 (NSCLC)</span>
                         </div>
                         <span class="text-[11px] px-2 py-0.5 rounded bg-emerald-950 border border-emerald-500/40 text-emerald-400 font-mono font-bold">APOPTOSIS: 94.2%</span>
                     </div>
 
                     <!-- Mini Live Canvas Display -->
-                    <div class="relative bg-slate-950 rounded-xl border border-slate-800 h-52 flex items-center justify-center overflow-hidden">
+                    <div class="relative bg-slate-950 rounded-xl border border-slate-800 h-48 flex items-center justify-center overflow-hidden">
                         <canvas id="hero-mini-canvas" class="w-full h-full"></canvas>
                         <div class="absolute bottom-2 left-2 right-2 flex justify-between text-[10px] font-mono text-slate-400 bg-slate-900/80 px-2.5 py-1 rounded backdrop-blur border border-slate-800">
                             <span>TME Hypoxia: <strong class="text-rose-400">1.8% O₂</strong></span>
                             <span>CD8+ Lysis: <strong class="text-cyan-400">88.4%</strong></span>
-                            <span>MTD Safety: <strong class="text-emerald-400">PASS (0.42)</strong></span>
+                            <span>MTD: <strong class="text-emerald-400">PASS (0.42)</strong></span>
                         </div>
                     </div>
 
                     <!-- Driver Mutations Detected -->
-                    <div class="mt-4 space-y-2 text-xs">
+                    <div class="mt-3 space-y-1.5 text-xs">
                         <div class="flex justify-between items-center bg-slate-900/90 p-2 rounded-lg border border-slate-800">
                             <div class="flex items-center gap-2">
                                 <span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>
                                 <span class="font-mono font-bold text-slate-200">KRAS G12D (VAF: 46.2%)</span>
                             </div>
-                            <span class="text-[10px] px-1.5 py-0.5 rounded bg-rose-950 text-rose-300 font-mono">ONCOGENIC TIER 1</span>
+                            <span class="text-[10px] px-1.5 py-0.5 rounded bg-rose-950 text-rose-300 font-mono">LOINC 62358-7</span>
                         </div>
                         <div class="flex justify-between items-center bg-slate-900/90 p-2 rounded-lg border border-slate-800">
                             <div class="flex items-center gap-2">
                                 <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
                                 <span class="font-mono font-bold text-slate-200">TP53 R175H (LoF)</span>
                             </div>
-                            <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-950 text-amber-300 font-mono">APOPTOSIS EVASION</span>
+                            <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-950 text-amber-300 font-mono">LOINC 85337-4</span>
                         </div>
                         <div class="flex justify-between items-center bg-emerald-950/40 p-2 rounded-lg border border-emerald-500/30">
                             <span class="text-slate-300 font-semibold" data-i18n="rec_combo">Recommended Combination:</span>
@@ -271,8 +265,8 @@
         </div>
     </section>
 
-    <!-- SECTION 1: INTERACTIVE LIVE ONCOLOGY TWIN SIMULATOR -->
-    <section id="simulator" class="py-12 border-t border-slate-800/80 bg-slate-950/60 px-4 sm:px-6">
+    <!-- TAB 1: INTERACTIVE IN-SILICO SIMULATOR -->
+    <section id="tab-simulator" class="py-10 border-t border-slate-800/80 bg-slate-950/60 px-4 sm:px-6">
         <div class="max-w-7xl mx-auto space-y-6">
             
             <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-800 pb-4">
@@ -312,9 +306,7 @@
                             <span class="text-[10px] font-mono text-cyan-400 bg-cyan-950 px-1.5 py-0.5 rounded border border-cyan-800">COSMIC / ClinVar</span>
                         </div>
 
-                        <div id="genomic-chips" class="space-y-2 text-xs">
-                            <!-- Dynamic Chips Injected by JS -->
-                        </div>
+                        <div id="genomic-chips" class="space-y-2 text-xs"></div>
 
                         <div class="pt-2 border-t border-slate-800/80">
                             <div class="text-[11px] text-slate-400 flex justify-between mb-1">
@@ -460,6 +452,185 @@
         </div>
     </section>
 
+    <!-- TAB 2: INTEGRATED PROFESSIONAL CLINICAL DOCTOR PORTAL -->
+    <section id="tab-doctor" class="hidden py-10 border-t border-slate-800/80 bg-slate-950/70 px-4 sm:px-6">
+        <div class="max-w-7xl mx-auto space-y-6">
+            
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-800 pb-4">
+                <div>
+                    <div class="inline-flex items-center gap-2 text-xs font-mono text-purple-400 uppercase tracking-wider mb-1">
+                        <i data-lucide="stethoscope" class="w-4 h-4"></i>
+                        <span>Molecular Tumor Board & Physician Decision Support</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-black text-white">Professional Clinician Oncology Portal (RUO)</h2>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="text-xs px-3 py-1 rounded-full bg-emerald-950 border border-emerald-500/30 text-emerald-400 font-bold font-mono">C-Index: 97.13%</span>
+                    <a href="CLINICAL_DOCTOR_PORTAL.html" target="_blank" class="text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition flex items-center gap-1.5">
+                        <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
+                        <span>Open Fullscreen Window</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- DOCTOR PORTAL GRID -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+                <!-- Left Column: Quick Presets & Patient Clinical Input Form -->
+                <div class="lg:col-span-5 space-y-4">
+                    
+                    <!-- Quick Preset Selector -->
+                    <div class="glass-panel p-4 space-y-3">
+                        <h4 class="text-xs font-bold text-cyan-400 uppercase tracking-wide flex items-center gap-1.5">
+                            <i data-lucide="zap" class="w-4 h-4"></i> 1. Rapid Clinical Oncology Presets
+                        </h4>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+                            <button onclick="loadDoctorPreset('pancreatic')" class="p-2 bg-slate-900 hover:bg-cyan-950 border border-slate-800 hover:border-cyan-500/50 rounded-lg text-left transition">
+                                <div class="font-bold text-slate-200">Pancreatic</div>
+                                <div class="text-[10px] text-slate-400 font-mono">KRAS G12D | Ki67 78%</div>
+                            </button>
+                            <button onclick="loadDoctorPreset('lung')" class="p-2 bg-slate-900 hover:bg-emerald-950 border border-slate-800 hover:border-emerald-500/50 rounded-lg text-left transition">
+                                <div class="font-bold text-slate-200">NSCLC Lung</div>
+                                <div class="text-[10px] text-slate-400 font-mono">EGFR L858R | Ki67 65%</div>
+                            </button>
+                            <button onclick="loadDoctorPreset('colorectal')" class="p-2 bg-slate-900 hover:bg-amber-950 border border-slate-800 hover:border-amber-500/50 rounded-lg text-left transition">
+                                <div class="font-bold text-slate-200">Colorectal</div>
+                                <div class="text-[10px] text-slate-400 font-mono">BRAF V600E | Ki67 72%</div>
+                            </button>
+                            <button onclick="loadDoctorPreset('breast')" class="p-2 bg-slate-900 hover:bg-rose-950 border border-slate-800 hover:border-rose-500/50 rounded-lg text-left transition">
+                                <div class="font-bold text-slate-200">Breast TNBC</div>
+                                <div class="text-[10px] text-slate-400 font-mono">BRCA1 Del | Ki67 55%</div>
+                            </button>
+                            <button onclick="loadDoctorPreset('glioblastoma')" class="p-2 bg-slate-900 hover:bg-purple-950 border border-slate-800 hover:border-purple-500/50 rounded-lg text-left transition">
+                                <div class="font-bold text-slate-200">Glioblastoma</div>
+                                <div class="text-[10px] text-slate-400 font-mono">TP53 Loss | Ki67 85%</div>
+                            </button>
+                            <button onclick="loadDoctorPreset('melanoma')" class="p-2 bg-slate-900 hover:bg-orange-950 border border-slate-800 hover:border-orange-500/50 rounded-lg text-left transition">
+                                <div class="font-bold text-slate-200">Melanoma</div>
+                                <div class="text-[10px] text-slate-400 font-mono">NRAS Q61K | Ki67 80%</div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Clinical Input Form -->
+                    <div class="glass-panel p-5 space-y-4 text-xs">
+                        <h4 class="font-bold text-slate-200 flex items-center justify-between border-b border-slate-800 pb-2">
+                            <span class="flex items-center gap-1.5">
+                                <i data-lucide="user-check" class="w-4 h-4 text-cyan-400"></i>
+                                <span>2. Patient Record & Oncopanel LOINC Ingress</span>
+                            </span>
+                            <span class="text-[10px] font-mono text-slate-400">HL7 / FHIR R4</span>
+                        </h4>
+
+                        <div class="space-y-3">
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-slate-400 font-semibold mb-1">Patient Dossier ID:</label>
+                                    <input type="text" id="doc-patient-id" value="PT-2026-8890" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 font-mono text-slate-100">
+                                </div>
+                                <div>
+                                    <label class="block text-slate-400 font-semibold mb-1">Patient Age (Years):</label>
+                                    <input type="number" id="doc-patient-age" value="62" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 font-mono text-slate-100">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-slate-400 font-semibold mb-1">Genomic Driver Mutation (87-Gene Suite):</label>
+                                <select id="doc-gene-mutation" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 font-mono text-slate-100 text-xs">
+                                    <option value="KRAS_G12D">KRAS G12D (LOINC 62358-7) — Pancreatic / Colorectal</option>
+                                    <option value="EGFR_L858R">EGFR L858R (LOINC 62357-9) — Non-Small Cell Lung</option>
+                                    <option value="BRAF_V600E">BRAF V600E (LOINC 69548-6) — Melanoma / Colorectal</option>
+                                    <option value="TP53_LOSS">TP53 Loss-of-Function (LOINC 85337-4) — Pan-Cancer</option>
+                                    <option value="BRCA1_DEL">BRCA1 185delAG (LOINC 55207-5) — Breast / Ovarian</option>
+                                    <option value="HER2">HER2 / ERBB2 (LOINC 48676-1) — Breast Amplification</option>
+                                    <option value="CD274">CD274 / PD-L1 (LOINC 85147-7) — Checkpoint Camouflage</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between text-[11px] mb-1">
+                                    <span class="font-semibold text-slate-400">Ki-67 Proliferation Index (%):</span>
+                                    <span id="doc-ki67-val" class="font-mono font-bold text-cyan-400">78%</span>
+                                </div>
+                                <input type="range" id="doc-ki67" min="10" max="95" value="78" oninput="document.getElementById('doc-ki67-val').innerText = this.value + '%'" class="w-full h-2 bg-slate-800 rounded-lg appearance-none custom-slider">
+                            </div>
+
+                            <div>
+                                <label class="block text-slate-400 font-semibold mb-1">Tumor Primary Diameter (cm):</label>
+                                <input type="number" step="0.1" id="doc-tumor-size" value="3.4" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 font-mono text-slate-100">
+                            </div>
+
+                            <button onclick="runDoctorSimulation()" class="w-full py-3 bg-gradient-to-r from-purple-600 to-indigo-600 hover:brightness-110 text-white font-bold rounded-xl text-xs uppercase tracking-wider transition shadow-lg shadow-purple-500/25 flex items-center justify-center gap-2">
+                                <i data-lucide="play" class="w-4 h-4"></i>
+                                <span>Execute Treatment Optimization Sweep</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Right Column: Doctor Decision Support & Survival Kinetics -->
+                <div class="lg:col-span-7 space-y-4">
+                    
+                    <div id="doc-results-box" class="glass-panel p-5 space-y-4">
+                        <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                            <span class="text-xs font-bold text-slate-200 uppercase tracking-wide flex items-center gap-1.5">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+                                <span>VHT Molecular Tumor Board Recommendation</span>
+                            </span>
+                            <span class="text-[10px] font-mono text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-500/40">Concordance: 97.13%</span>
+                        </div>
+
+                        <!-- KPI Summary Cards -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                            <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">
+                                <div class="text-[10px] text-slate-400 font-medium">Targeted Regimen</div>
+                                <div id="doc-regimen" class="text-sm font-bold text-cyan-300 font-mono mt-1">MRTX1133 + SHP2i</div>
+                                <div class="text-[10px] text-emerald-400 mt-0.5">Tier 2 Synergy (Bliss +0.38)</div>
+                            </div>
+                            <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">
+                                <div class="text-[10px] text-slate-400 font-medium">Predicted Overall Survival</div>
+                                <div id="doc-survival" class="text-sm font-bold text-emerald-300 font-mono mt-1">104.2 Months</div>
+                                <div class="text-[10px] text-emerald-400 mt-0.5">+412% vs Standard Chemo</div>
+                            </div>
+                            <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">
+                                <div class="text-[10px] text-slate-400 font-medium">Estimated 24h Apoptosis</div>
+                                <div id="doc-apoptosis" class="text-sm font-bold text-purple-300 font-mono mt-1">94.8% Lysis</div>
+                                <div class="text-[10px] text-purple-400 mt-0.5">Cas-3/7 Cleavage Active</div>
+                            </div>
+                        </div>
+
+                        <!-- Volumetric Shrinkage Curve -->
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                            <div class="flex justify-between items-center mb-2 text-xs">
+                                <span class="font-bold text-slate-200">Tumor Volumetric Regression Timeline (Weeks 0 - 24)</span>
+                                <span class="text-[10px] font-mono text-cyan-400">RECIST 1.1: Complete Response</span>
+                            </div>
+                            <div class="h-44">
+                                <canvas id="chart-doc-shrinkage"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Doctor Action Bar -->
+                        <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
+                            <div class="text-[11px] font-mono text-slate-400">
+                                Cryptographic Signature: <strong class="text-slate-200">SHA-512-VERIFIED</strong>
+                            </div>
+                            <button onclick="downloadFhirJson()" class="px-3 py-1.5 bg-cyan-950 border border-cyan-500/40 text-cyan-300 text-xs font-semibold rounded-lg hover:bg-cyan-900 transition flex items-center gap-1.5">
+                                <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                                <span>Export FHIR DiagnosticReport</span>
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
     <!-- SECTION 2: 5,000-PATIENT COHORT CLINICAL VALIDATION & KAPLAN-MEIER -->
     <section id="cohort" class="py-12 px-4 sm:px-6 max-w-7xl mx-auto w-full">
         <div class="space-y-6">
@@ -595,7 +766,6 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            
             <div class="glass-panel p-4 space-y-2 border-t-2 border-t-cyan-500">
                 <div class="flex justify-between items-center text-xs">
                     <span class="font-bold text-cyan-400 font-mono">WP1</span>
@@ -661,7 +831,6 @@
                     AETERNA Technologies EOOD (Coordinator), Medical University of Sofia, Barcelona Supercomputing Center (BSC CNS), and Institut Curie (Paris).
                 </p>
             </div>
-
         </div>
     </section>
 
@@ -820,7 +989,7 @@
         let chartApoptosis = null;
         let chartPk = null;
         let chartKm = null;
-        let simulationAnimFrame = null;
+        let chartDocShrinkage = null;
         let particles = [];
 
         // Initialize App on DOM Ready
@@ -830,8 +999,32 @@
             initCharts();
             initTmeCanvas();
             initHeroMiniCanvas();
+            initDoctorChart();
             updateFhirPreview();
         });
+
+        // Tab Switcher between Simulator and Doctor Portal
+        function switchMainTab(tab) {
+            const tabSim = document.getElementById('tab-simulator');
+            const tabDoc = document.getElementById('tab-doctor');
+            const btnSim = document.getElementById('nav-btn-sim');
+            const btnDoc = document.getElementById('nav-btn-doctor');
+
+            if (tab === 'doctor') {
+                tabSim.classList.add('hidden');
+                tabDoc.classList.remove('hidden');
+                btnSim.className = "px-3 py-1.5 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-cyan-400 transition flex items-center gap-1.5";
+                btnDoc.className = "px-3 py-1.5 rounded-lg bg-purple-950 border border-purple-500/40 text-purple-300 font-bold transition flex items-center gap-1.5";
+                tabDoc.scrollIntoView({ behavior: 'smooth' });
+                runDoctorSimulation();
+            } else {
+                tabDoc.classList.add('hidden');
+                tabSim.classList.remove('hidden');
+                btnDoc.className = "px-3 py-1.5 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-purple-400 transition flex items-center gap-1.5";
+                btnSim.className = "px-3 py-1.5 rounded-lg bg-cyan-950 border border-cyan-500/40 text-cyan-300 font-bold transition flex items-center gap-1.5";
+                tabSim.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
 
         // Load Patient Profile
         function loadPatientProfile(key) {
@@ -888,7 +1081,6 @@
         }
 
         function triggerTreatmentPulse() {
-            // Add flash and burst of CD8+ lysis
             for (let i = 0; i < 40; i++) {
                 particles.push({
                     x: canvasWidth / 2 + (Math.random() - 0.5) * 100,
@@ -907,9 +1099,95 @@
             loadPatientProfile(document.getElementById('patient-selector').value);
         }
 
-        // Initialize Charts
+        // Doctor Presets & Simulation Logic
+        function loadDoctorPreset(type) {
+            if (type === 'pancreatic') {
+                document.getElementById('doc-patient-id').value = "PT-PANC-901";
+                document.getElementById('doc-patient-age').value = 64;
+                document.getElementById('doc-gene-mutation').value = "KRAS_G12D";
+                document.getElementById('doc-ki67').value = 78;
+                document.getElementById('doc-tumor-size').value = 3.4;
+            } else if (type === 'lung') {
+                document.getElementById('doc-patient-id').value = "PT-LUNG-412";
+                document.getElementById('doc-patient-age').value = 58;
+                document.getElementById('doc-gene-mutation').value = "EGFR_L858R";
+                document.getElementById('doc-ki67').value = 65;
+                document.getElementById('doc-tumor-size').value = 2.8;
+            } else if (type === 'colorectal') {
+                document.getElementById('doc-patient-id').value = "PT-COLON-738";
+                document.getElementById('doc-patient-age').value = 61;
+                document.getElementById('doc-gene-mutation').value = "BRAF_V600E";
+                document.getElementById('doc-ki67').value = 72;
+                document.getElementById('doc-tumor-size').value = 4.1;
+            } else if (type === 'breast') {
+                document.getElementById('doc-patient-id').value = "PT-BREAST-551";
+                document.getElementById('doc-patient-age').value = 49;
+                document.getElementById('doc-gene-mutation').value = "BRCA1_DEL";
+                document.getElementById('doc-ki67').value = 55;
+                document.getElementById('doc-tumor-size').value = 2.2;
+            } else if (type === 'glioblastoma') {
+                document.getElementById('doc-patient-id').value = "PT-GBM-109";
+                document.getElementById('doc-patient-age').value = 55;
+                document.getElementById('doc-gene-mutation').value = "TP53_LOSS";
+                document.getElementById('doc-ki67').value = 85;
+                document.getElementById('doc-tumor-size').value = 3.9;
+            }
+            document.getElementById('doc-ki67-val').innerText = document.getElementById('doc-ki67').value + '%';
+            runDoctorSimulation();
+        }
+
+        function runDoctorSimulation() {
+            const gene = document.getElementById('doc-gene-mutation').value;
+            const ki67 = parseInt(document.getElementById('doc-ki67').value);
+            const size = parseFloat(document.getElementById('doc-tumor-size').value);
+
+            let regimen = "MRTX1133 + SHP2i";
+            let survival = "104.2 Months";
+            let apoptosis = "94.8% Lysis";
+
+            if (gene === 'EGFR_L858R') {
+                regimen = "Osimertinib + Atezolizumab";
+                survival = "98.5 Months";
+                apoptosis = "92.1% Lysis";
+            } else if (gene === 'BRAF_V600E') {
+                regimen = "Dabrafenib + Trametinib";
+                survival = "89.4 Months";
+                apoptosis = "93.4% Lysis";
+            } else if (gene === 'BRCA1_DEL') {
+                regimen = "Olaparib + Immunotherapy";
+                survival = "112.0 Months";
+                apoptosis = "96.2% Lysis";
+            }
+
+            document.getElementById('doc-regimen').innerText = regimen;
+            document.getElementById('doc-survival').innerText = survival;
+            document.getElementById('doc-apoptosis').innerText = apoptosis;
+
+            // Update Doctor Volumetric Shrinkage Curve
+            if (chartDocShrinkage) {
+                chartDocShrinkage.data.datasets[0].data = [size, size * 0.72, size * 0.45, size * 0.22, size * 0.08, size * 0.02, 0.0];
+                chartDocShrinkage.data.datasets[1].data = [size, size * 0.92, size * 0.88, size * 0.82, size * 0.80, size * 0.85, size * 0.95];
+                chartDocShrinkage.update();
+            }
+        }
+
+        function initDoctorChart() {
+            const ctx = document.getElementById('chart-doc-shrinkage').getContext('2d');
+            chartDocShrinkage = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Week 0', 'Week 4', 'Week 8', 'Week 12', 'Week 16', 'Week 20', 'Week 24'],
+                    datasets: [
+                        { label: 'VHT Targeted Combination (cm)', data: [3.4, 2.4, 1.5, 0.7, 0.2, 0.05, 0.0], borderColor: '#10b981', backgroundColor: 'rgba(16,185,129,0.1)', fill: true, tension: 0.3 },
+                        { label: 'Standard Chemotherapy (cm)', data: [3.4, 3.1, 2.9, 2.7, 2.6, 2.8, 3.2], borderColor: '#f43f5e', borderDash: [4, 4], fill: false, tension: 0.3 }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false, scales: { x: { grid: { color: '#1e293b' } }, y: { grid: { color: '#1e293b' }, title: { display: true, text: 'Tumor Diameter (cm)', color: '#94a3b8' } } } }
+            });
+        }
+
+        // Initialize General Charts
         function initCharts() {
-            // 1. Apoptosis Curve Chart
             const ctxApop = document.getElementById('chart-apoptosis').getContext('2d');
             chartApoptosis = new Chart(ctxApop, {
                 type: 'line',
@@ -923,7 +1201,6 @@
                 options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: true, grid: { color: '#1e293b' } }, y: { display: false } } }
             });
 
-            // 2. PK Chart
             const ctxPk = document.getElementById('chart-pk').getContext('2d');
             chartPk = new Chart(ctxPk, {
                 type: 'line',
@@ -937,7 +1214,6 @@
                 options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: true, grid: { color: '#1e293b' } }, y: { display: false } } }
             });
 
-            // 3. Kaplan-Meier Survival Chart
             const ctxKm = document.getElementById('chart-km').getContext('2d');
             chartKm = new Chart(ctxKm, {
                 type: 'line',
@@ -972,7 +1248,6 @@
             canvasWidth = canvas.width;
             canvasHeight = canvas.height;
 
-            // Generate Tumor and CD8 cells
             particles = [];
             for (let i = 0; i < 90; i++) {
                 particles.push({
@@ -1001,7 +1276,6 @@
                 ctx.fillStyle = '#05070c';
                 ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
-                // Draw central tumor core aura
                 const grad = ctx.createRadialGradient(canvasWidth / 2, canvasHeight / 2, 20, canvasWidth / 2, canvasHeight / 2, 120);
                 grad.addColorStop(0, 'rgba(244, 63, 94, 0.15)');
                 grad.addColorStop(1, 'transparent');
@@ -1010,17 +1284,14 @@
                 ctx.arc(canvasWidth / 2, canvasHeight / 2, 120, 0, Math.PI * 2);
                 ctx.fill();
 
-                // Draw particles
                 for (let i = particles.length - 1; i >= 0; i--) {
                     const p = particles[i];
                     p.x += p.vx;
                     p.y += p.vy;
 
-                    // Boundaries
                     if (p.x < 10 || p.x > canvasWidth - 10) p.vx *= -1;
                     if (p.y < 10 || p.y > canvasHeight - 10) p.vy *= -1;
 
-                    // Draw
                     ctx.fillStyle = p.color;
                     ctx.beginPath();
                     ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
@@ -1040,12 +1311,11 @@
         function updateParticlesSpeed(apopRate) {
             particles.forEach(p => {
                 if (p.type === 'tumor' && apopRate > 80) {
-                    p.color = '#8b5cf6'; // Shift to apoptotic
+                    p.color = '#8b5cf6';
                 }
             });
         }
 
-        // Hero Mini Canvas
         function initHeroMiniCanvas() {
             const canvas = document.getElementById('hero-mini-canvas');
             if (!canvas) return;
@@ -1080,7 +1350,6 @@
             drawMini();
         }
 
-        // Update FHIR Preview JSON
         function updateFhirPreview() {
             const fhir = {
                 resourceType: "DiagnosticReport",
@@ -1114,16 +1383,15 @@
             a.click();
         }
 
-        // Multilingual Translation Engine (EN / BG)
         const TRANSLATIONS = {
             en: {
                 nav_subtitle: "Deterministic Virtual Human Twin for Verifiable Precision Oncology",
                 nav_sim: "Live Simulator",
-                nav_hud: "Oncology HUD",
+                nav_hud: "3D Neuro/Onco HUD",
                 nav_doctor: "Doctor Portal",
                 nav_cohort: "5,000 Cohort",
                 nav_wps: "Work Packages",
-                nav_docs: "Proposal Dossiers",
+                nav_docs: "Dossiers",
                 hero_badge: "EU HORIZON EUROPE RIA // CANCER MISSION 2026",
                 hero_title_1: "Deterministic Virtual Human Twin for",
                 hero_title_2: "Verifiable Precision Oncology",
@@ -1132,8 +1400,8 @@
                 metric_drugs: "Targeted Therapeutics",
                 metric_latency: "Simulation Latency",
                 metric_cohort: "Validated Patient Cases",
-                btn_launch_sim: "Launch Live In-Silico Simulator",
-                btn_open_hud: "Open 3D Oncology HUD",
+                btn_launch_sim: "In-Silico Simulation Lab",
+                btn_open_doctor: "Doctor Clinical Portal",
                 sim_section_tag: "Interactive Virtual Hybrid Tumor Engine",
                 sim_title: "Multi-Scale Oncological In-Silico Simulation",
                 label_preset: "Select Patient Profile:",
@@ -1148,12 +1416,12 @@
             },
             bg: {
                 nav_subtitle: "Детерминистичен виртуален близнак на човека за прецизна онкология",
-                nav_sim: "Симулатор на живо",
-                nav_hud: "Онкологичен HUD",
+                nav_sim: "Симулатор",
+                nav_hud: "3D HUD",
                 nav_doctor: "Лекарски портал",
                 nav_cohort: "5,000 Кохорта",
                 nav_wps: "Работни пакети",
-                nav_docs: "Проектни досиета",
+                nav_docs: "Досиета",
                 hero_badge: "ЕС HORIZON EUROPE RIA // МИСИЯ СРЕЩУ РАКА 2026",
                 hero_title_1: "Детерминистичен виртуален близнак за",
                 hero_title_2: "Верифицируема прецизна онкология",
@@ -1162,8 +1430,8 @@
                 metric_drugs: "Таргетни медикамента",
                 metric_latency: "Латентност на симулация",
                 metric_cohort: "Валидирани пациентски случая",
-                btn_launch_sim: "Стартирай симулатора",
-                btn_open_hud: "Отвори 3D онкологичен HUD",
+                btn_launch_sim: "In-Silico Симулатор",
+                btn_open_doctor: "Лекарски клиничен портал",
                 sim_section_tag: "Интерактивен виртуален туморен енджин",
                 sim_title: "Мултимащабна онкологична In-Silico симулация",
                 label_preset: "Избери профил на пациент:",
