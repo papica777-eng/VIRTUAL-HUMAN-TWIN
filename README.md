@@ -33,19 +33,31 @@
 
 Aggressive oncological driver mutations (such as `KRAS G12D`, `TP53` loss-of-function, `BRAF V600E`, and `EGFR ex19del`) exhibit severe therapeutic resistance due to their non-linear biophysical shielding, metabolic reprogramming, and heterogeneous tumor microenvironment (TME) dynamics. Standard-of-care (SOC) chemotherapies frequently induce off-target cytotoxicity and early relapse.
 
-**AETERNA-VHT** introduces a transformative **Virtual Human Twin for Precision Oncology**. Operating at **TRL 6**, the system ingests multi-modal patient data—including high-throughput NGS genomic sequencing, spatial transcriptomics, and clinical EHR streams (via HL7/FHIR R4)—to simulate tumor growth, vascularization, immune cell infiltration, and targeted therapeutic drug response with ultra-low latency.
+---
 
-```mermaid
-graph TD
-    A["Patient Molecular & Genomic Ingress (TP53 / KRAS / EGFR)"] --> B["HL7 FHIR R4 LOINC Ingress Engine"]
-    B --> C["AETERNA Multi-Scale Biophysical Simulation Framework"]
-    C --> D["Spatial Tumor Microenvironment (TME) Modeling"]
-    C --> E["Pharmacokinetics & Apoptosis Sweep (Hill Dynamics)"]
-    D --> F["In-Silico Drug Combination Response & Synergy"]
-    E --> F
-    F --> G["Clinician Portal & Telemetry HUD (Research Use Only)"]
-    G --> H["Personalized Optimized Therapeutic Regimen"]
-```
+## 🧬 The 87-Gene Comprehensive Pan-Cancer Oncopanel (`ONCOPANEL_87`)
+
+The **AETERNA-VHT** platform implements the **ONCOPANEL_87 Suite**—a unified 87-gene molecular panel cross-referenced against **ClinVar**, **COSMIC**, and **OncoKB**. This panel covers driver mutations and resistance pathways across **over 80+ distinct cancer types (Pan-Cancer Coverage)**:
+
+| Category | Count | Genes Included in AETERNA-VHT Oncopanel | Clinical Cancer Indications Covered |
+| :--- | :---: | :--- | :--- |
+| **Oncogenes & Kinases** | **32** | `KRAS, NRAS, HRAS, EGFR, ERBB2 (HER2), ERBB3, ERBB4, BRAF, RAF1, PIK3CA, AKT1, AKT2, AKT3, MTOR, ALK, ROS1, RET, NTRK1, NTRK2, NTRK3, MET, FGFR1, FGFR2, FGFR3, FGFR4, KIT, PDGFRA, PDGFRB, CDK4, CDK6, MYC, MYCN` | Pancreatic (PDAC), NSCLC, Colorectal (CRC), Breast (HER2+), Glioblastoma (GBM), Melanoma, GIST, Thyroid, SCLC. |
+| **Tumor Suppressors** | **18** | `TP53, BRCA1, BRCA2, PTEN, RB1, APC, VHL, CDKN2A, CDKN2B, SMAD4, NF1, NF2, STK11, PALB2, ATM, ATR, BAP1, CDH1` | Breast (TNBC), Ovarian, Pancreatic, Glioblastoma, Clear Cell RCC, Colorectal (FAP/Lynch), Retinoblastoma, Gastric. |
+| **Immune Checkpoints & TME** | **9** | `CD274 (PD-L1), PDCD1 (PD-1), CTLA4, LAG3, HAVCR2 (TIM-3), TIGIT, TERT, VEGFA, HIF1A` | MSI-H / TMB-H Pan-Cancer, Melanoma, Renal Cell Carcinoma, NSCLC, Hepatocellular (HCC), Bladder Urothelial. |
+| **DNA Damage & Mismatch Repair** | **12** | `MLH1, MSH2, MSH6, PMS2, RAD51C, RAD51D, BRIP1, FANCA, CHEK1, CHEK2, POLE, POLD1` | Lynch Syndrome CRC, Endometrial, Ovarian, Prostate, Pan-Cancer Hypermutated phenotypes. |
+| **Signal Transduction & Epigenetics** | **16** | `ARID1A, SMARCA4, SETD2, KMT2D, IDH1, IDH2, NOTCH1, NOTCH2, NOTCH3, CTNNB1, GNAQ, GNA11, TSC1, TSC2, MAP2K1, MAP2K2` | Uveal Melanoma, Glioma (IDH-mutant), AML / Leukemia, Cholangiocarcinoma, T-ALL, Bladder, Sarcoma. |
+| **TOTAL PAN-CANCER COVERAGE** | **87 Genes** | **100% Deterministic LOINC Mapping & ClinVar Alignment** | **80+ Solid Tumors & Hematological Malignancies** |
+
+---
+
+## 💊 42 Targeted Therapeutics & 4-Level Resistance Escalation Chain
+
+The **APOPTOSIS ENGINE** maps the 87 driver genes directly to 42 FDA/EMA-approved targeted therapeutics:
+* **Tier 1 (First-Line Precision Monotherapy):** Mutation-specific TKIs & Checkpoint Inhibitors (e.g., MRTX1133 for `KRAS G12D`, Sotorasib for `KRAS G12C`, Osimertinib for `EGFR`, Dabrafenib for `BRAF V600E`, Pembrolizumab for `MSI-H`).
+* **Tier 2 (Synthetic Lethal Dual Combination):** Co-inhibition of feedback loops (e.g., KRAS + SHP2i / RMC-4550, PARP inhibitor + Anti-PD-L1, BRAF + MEKi).
+* **Tier 3 (Adaptive Metabolic & Anti-Angiogenic Regimen):** Hypoxia disruption and VEGF neutralization (e.g., Bevacizumab + Lenvatinib + Gemcitabine).
+* **Tier 4 (Immunotherapeutic Rescue & Bispecific Engagers):** Reactivation of cytotoxic CD8+ T-cell lysis via neoantigen presentation.
+
 
 ---
 

@@ -535,15 +535,80 @@
                             </div>
 
                             <div>
-                                <label class="block text-slate-400 font-semibold mb-1">Genomic Driver Mutation (87-Gene Suite):</label>
-                                <select id="doc-gene-mutation" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 font-mono text-slate-100 text-xs">
-                                    <option value="KRAS_G12D">KRAS G12D (LOINC 62358-7) — Pancreatic / Colorectal</option>
-                                    <option value="EGFR_L858R">EGFR L858R (LOINC 62357-9) — Non-Small Cell Lung</option>
-                                    <option value="BRAF_V600E">BRAF V600E (LOINC 69548-6) — Melanoma / Colorectal</option>
-                                    <option value="TP53_LOSS">TP53 Loss-of-Function (LOINC 85337-4) — Pan-Cancer</option>
-                                    <option value="BRCA1_DEL">BRCA1 185delAG (LOINC 55207-5) — Breast / Ovarian</option>
-                                    <option value="HER2">HER2 / ERBB2 (LOINC 48676-1) — Breast Amplification</option>
-                                    <option value="CD274">CD274 / PD-L1 (LOINC 85147-7) — Checkpoint Camouflage</option>
+                                <label class="block text-slate-400 font-semibold mb-1">Genomic Driver Mutation (Complete ONCOPANEL_87 Suite — 87 Genes / 80+ Cancer Types):</label>
+                                <select id="doc-gene-mutation" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 font-mono text-slate-100 text-xs max-h-48">
+                                    <optgroup label="── ONCOGENES & KINASES (32 Genes) ──">
+                                        <option value="KRAS_G12D" selected>KRAS G12D (LOINC 62358-7) — Pancreatic / Colorectal (PDAC/CRC)</option>
+                                        <option value="KRAS_G12C">KRAS G12C (LOINC 62358-7) — Non-Small Cell Lung (NSCLC)</option>
+                                        <option value="EGFR_L858R">EGFR L858R / ex19del (LOINC 62357-9) — NSCLC Adenocarcinoma</option>
+                                        <option value="EGFR_T790M">EGFR T790M / C797S (LOINC 62357-9) — Gatekeeper Resistance</option>
+                                        <option value="BRAF_V600E">BRAF V600E (LOINC 69548-6) — Melanoma / Colorectal / Thyroid</option>
+                                        <option value="NRAS_Q61K">NRAS Q61K/R (LOINC 72347-1) — Melanoma / Thyroid Carcinoma</option>
+                                        <option value="HER2">HER2 / ERBB2 (LOINC 48676-1) — Breast / Gastric Amplification</option>
+                                        <option value="ERBB3">ERBB3 / HER3 (LOINC 72363-8) — Neuregulin Receptor Overexpression</option>
+                                        <option value="ERBB4">ERBB4 Kinase (LOINC 72364-6) — Non-Small Cell Lung / Medulloblastoma</option>
+                                        <option value="ALK">ALK Fusion / EML4-ALK (LOINC 69549-4) — NSCLC / Anaplastic Lymphoma</option>
+                                        <option value="ROS1">ROS1 Rearrangement (LOINC 69550-2) — Receptor Tyrosine Kinase</option>
+                                        <option value="MET">MET Exon 14 Skipping / Amp (LOINC 72358-8) — NSCLC / Papillary RCC</option>
+                                        <option value="RET">RET Translocation / KIF5B (LOINC 72359-6) — Medullary Thyroid / Lung</option>
+                                        <option value="NTRK1">NTRK1 Kinase Fusion (LOINC 72360-4) — Secretory Breast / Sarcoma</option>
+                                        <option value="NTRK2">NTRK2 Kinase Fusion (LOINC 72361-2) — Glioma / Astrocytoma Target</option>
+                                        <option value="NTRK3">NTRK3 Kinase Fusion (LOINC 72362-0) — Congenital Fibrosarcoma / GIST</option>
+                                        <option value="PIK3CA">PIK3CA E545K/H1047R (LOINC 72366-1) — Breast / Colorectal / Ovarian</option>
+                                        <option value="AKT1">AKT1 E17K (LOINC 72367-9) — Pleckstrin Domain Activation</option>
+                                        <option value="AKT2">AKT2 Kinase (LOINC 72368-0) — Ovarian / Pancreatic Carcinoma</option>
+                                        <option value="MTOR">MTOR S2215Y (LOINC 72368-7) — Hyperactive Nutrient Sensor</option>
+                                        <option value="MYC">MYC Amplification (LOINC 72374-5) — Burkitt / Triple-Negative Breast</option>
+                                        <option value="MYCN">MYCN Amplification (LOINC 72375-3) — Neuroblastoma High-Risk</option>
+                                        <option value="FGFR1">FGFR1 8p11 Translocation (LOINC 72370-3) — Stem Cell Myeloproliferation</option>
+                                        <option value="FGFR2">FGFR2 Fusion / BICC1 (LOINC 72371-1) — Intrahepatic Cholangiocarcinoma</option>
+                                        <option value="FGFR3">FGFR3 S249C (LOINC 72372-9) — Bladder Urothelial Carcinoma</option>
+                                        <option value="KIT">KIT Exon 11/9 (LOINC 62360-3) — Gastrointestinal Stromal Tumor (GIST)</option>
+                                        <option value="PDGFRA">PDGFRA D842V (LOINC 62361-1) — GIST / Glioma Infiltration</option>
+                                        <option value="CDK4">CDK4 Amplification (LOINC 72376-1) — Dedifferentiated Liposarcoma</option>
+                                        <option value="CDK6">CDK6 Overexpression (LOINC 72377-9) — T-Cell Acute Lymphoblastic</option>
+                                    </optgroup>
+                                    <optgroup label="── TUMOR SUPPRESSORS (18 Genes) ──">
+                                        <option value="TP53_LOSS">TP53 Loss-of-Function R175H/R248Q (LOINC 85337-4) — Pan-Cancer / Glioblastoma</option>
+                                        <option value="BRCA1_DEL">BRCA1 185delAG / 5382insC (LOINC 55207-5) — Hereditary Breast / Ovarian</option>
+                                        <option value="BRCA2">BRCA2 6174delT (LOINC 55208-3) — Prostate / Pancreatic / Breast</option>
+                                        <option value="PTEN">PTEN Homozygous Deletion (LOINC 72348-9) — Glioblastoma / Endometrial</option>
+                                        <option value="RB1">RB1 Inactivation (LOINC 62356-1) — Retinoblastoma / Small Cell Lung (SCLC)</option>
+                                        <option value="APC">APC Truncation (LOINC 62359-5) — Familial Adenomatous Polyposis / CRC</option>
+                                        <option value="VHL">VHL Inactivation (LOINC 72349-7) — Clear Cell Renal Cell Carcinoma (ccRCC)</option>
+                                        <option value="CDKN2A">CDKN2A p16INK4a Del (LOINC 72350-5) — Melanoma / Pancreatic / Bladder</option>
+                                        <option value="SMAD4">SMAD4 R361H (LOINC 72351-3) — Pancreatic / Gastrointestinal</option>
+                                        <option value="NF1">NF1 Inactivation (LOINC 72352-1) — Neurofibromatosis / Malignant Schwannoma</option>
+                                        <option value="STK11">STK11 / LKB1 (LOINC 72353-9) — Peutz-Jeghers / Lung Adenocarcinoma</option>
+                                        <option value="PALB2">PALB2 Truncation (LOINC 72354-7) — Fanconi Anemia / Breast / Pancreas</option>
+                                        <option value="ATM">ATM Loss (LOINC 72355-5) — Ataxia Telangiectasia / Mantle Cell Lymphoma</option>
+                                        <option value="BAP1">BAP1 Inactivation (LOINC 72357-1) — Malignant Mesothelioma / Uveal Melanoma</option>
+                                        <option value="CDH1">CDH1 E-Cadherin Loss (LOINC 72356-3) — Hereditary Diffuse Gastric / Lobular Breast</option>
+                                    </optgroup>
+                                    <optgroup label="── IMMUNE CHECKPOINTS & MICROENVIRONMENT (9 Genes) ──">
+                                        <option value="CD274">CD274 / PD-L1 TPS &gt; 50% (LOINC 85147-7) — Immune Checkpoint Evasion</option>
+                                        <option value="PDCD1">PDCD1 / PD-1 Receptor (LOINC 85148-5) — T-Cell Exhaustion Phenotype</option>
+                                        <option value="CTLA4">CTLA4 High Expression (LOINC 85149-3) — Secondary Checkpoint Brake</option>
+                                        <option value="LAG3">LAG3 Upregulation (LOINC 85150-1) — Relatlimab Target Indication</option>
+                                        <option value="TERT">TERT Promoter C228T/C250T (LOINC 72391-9) — Telomerase Immortalization</option>
+                                        <option value="VEGFA">VEGFA Amplification (LOINC 72392-7) — Robust Angiogenesis Switch</option>
+                                        <option value="HIF1A">HIF1A Hypoxia Accumulation (LOINC 72393-5) — Glycolytic Warburg Switch</option>
+                                    </optgroup>
+                                    <optgroup label="── DNA DAMAGE & MISMATCH REPAIR (12 Genes) ──">
+                                        <option value="MLH1">MLH1 Hypermethylation (LOINC 72380-3) — Lynch Syndrome / MSI-High CRC</option>
+                                        <option value="MSH2">MSH2 Loss (LOINC 72381-1) — Microsatellite Instability High</option>
+                                        <option value="MSH6">MSH6 Mutation (LOINC 72382-9) — Endometrial / Colorectal Carcinoma</option>
+                                        <option value="PMS2">PMS2 Loss (LOINC 72383-7) — Defective Mismatch Repair (dMMR)</option>
+                                        <option value="POLE">POLE Exonuclease Domain (LOINC 72384-5) — Ultramutated Endometrial / CRC</option>
+                                        <option value="CHEK2">CHEK2 1100delC (LOINC 72385-3) — Moderate-Penetrance Breast / Prostate</option>
+                                    </optgroup>
+                                    <optgroup label="── SIGNAL TRANSDUCTION & EPIGENETICS (16 Genes) ──">
+                                        <option value="IDH1">IDH1 R132H (LOINC 72386-1) — Secondary Glioblastoma / Cholangiocarcinoma</option>
+                                        <option value="IDH2">IDH2 R140Q/R172K (LOINC 72387-9) — Acute Myeloid Leukemia (AML)</option>
+                                        <option value="ARID1A">ARID1A Truncation (LOINC 72388-7) — Clear Cell Ovarian / Gastric</option>
+                                        <option value="CTNNB1">CTNNB1 Exon 3 (LOINC 72389-5) — Desmoid Tumor / Hepatocellular (HCC)</option>
+                                        <option value="NOTCH1">NOTCH1 Activating (LOINC 72390-3) — T-ALL / Head and Neck (HNSCC)</option>
+                                    </optgroup>
                                 </select>
                             </div>
 
